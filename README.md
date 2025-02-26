@@ -1,2 +1,2 @@
 # juapache.github.io
-A personal blog
+A personal blog of a peace and conflict researcher
