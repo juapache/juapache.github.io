@@ -1,0 +1,132 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* System font stack */
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px; /* Narrower container */
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center; /* Center content */
+}
+
+/* Header */
+header {
+    padding: 2rem 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out; /* Subtle transition */
+}
+
+nav ul li a:hover {
+    color: #777; /* Lighter gray on hover */
+}
+
+/* Hero Section */
+#hero {
+    padding: 4rem 0;
+}
+
+#hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle{
+    color: #777;
+    margin-bottom: 2rem;
+}
+
+/* Sections */
+section {
+    padding: 4rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Links */
+a {
+    color: #0077cc; /* Example: light blue */
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #005fa3; /* Darker blue on hover */
+    text-decoration: underline;
+}
+
+/* Gallery */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.gallery-item {
+    max-width: 300px;
+    margin-bottom: 1rem;
+}
+
+.gallery-item img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+/* Blog*/
+.blog-post{
+    margin-bottom: 2rem;
+}
+
+.blog-post h3 a{
+    color: #333;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    margin-top: auto; /* Push footer to the bottom */
+    text-align: center;
+    padding: 2rem;
+    background-color: #f4f4f4;
+    border-top: 1px solid #eee;
+}
