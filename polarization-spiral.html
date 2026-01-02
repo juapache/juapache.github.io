@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Polarization Spiral | Data Lab</title>
+  <meta name="description" content="Interactive sandbox showing how media fragmentation, echo chambers, and dialogue tighten or expand the polarization spiral." />
+  <link rel="canonical" href="https://juapache.github.io/polarization-spiral.html" />
+  <link rel="alternate" href="https://juapache.github.io/polarization-spiral.html" hreflang="en" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --red: #ff4b5c;
+      --blue: #4ba3ff;
+      --neutral-1: #0f1b2c;
+      --neutral-2: #122239;
+      --neutral-3: #1b2f4a;
+      --neutral-4: #233a5a;
+      --glow-red: rgba(255, 75, 92, 0.35);
+      --glow-blue: rgba(75, 163, 255, 0.35);
+    }
+
+    body {
+      background: radial-gradient(120% 120% at 70% 10%, rgba(75,163,255,0.16), transparent 55%),
+                  radial-gradient(120% 120% at 15% 25%, rgba(255,75,92,0.14), transparent 55%),
+                  var(--bg);
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .controls-panel h3 {
+      margin-bottom: 12px;
+    }
+
+    .slider-group {
+      margin-bottom: 20px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .slider-label h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .slider-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .slider-description {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 10px;
+      border-radius: 6px;
+      background: var(--card);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.06);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--red));
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+      transform: scale(1.06);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+    }
+
+    .svg-wrapper {
+      background: linear-gradient(145deg, #101c2d, #0f1726);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .svg-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06), transparent 55%);
+      pointer-events: none;
+    }
+
+    #spiral-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #spiral-path {
+      fill: none;
+      stroke: #566b89;
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: 0.85;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
+      transition: stroke 0.3s ease;
+    }
+
+    .spiral-glow-high {
+      stroke: #ff7d8b;
+    }
+
+    .community-dot {
+      stroke: #fff;
+      stroke-width: 2;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45));
+      transition: transform 0.4s ease, r 0.4s ease;
+    }
+
+    .dot-red {
+      fill: var(--red);
+    }
+
+    .dot-blue {
+      fill: var(--blue);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    .insight-box {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 18px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+    }
+
+    .insight-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--stroke);
+      color: var(--text);
+    }
+
+    .scenario-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .scenario-buttons button,
+    .reset-btn {
+      border: 1px solid var(--stroke);
+      background: var(--neutral-2);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.2s ease, border 0.2s ease;
+      font-weight: 600;
+    }
+
+    .scenario-buttons button:hover,
+    .reset-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent-2);
+      background: var(--neutral-3);
+    }
+
+    .reset-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    .how-it-works, .solutions, .community-spectrum {
+      margin-top: 32px;
+    }
+
+    .spectrum-bars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .spectrum-track {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      height: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spectrum-fill-left {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, rgba(255,75,92,0.8), rgba(255,75,92,0.2));
+      border-right: 1px solid rgba(255,255,255,0.3);
+      transition: width 0.35s ease;
+    }
+
+    .spectrum-fill-right {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(270deg, rgba(75,163,255,0.8), rgba(75,163,255,0.2));
+      border-left: 1px solid rgba(255,255,255,0.3);
+      transition: width 0.35s ease;
+    }
+
+    .overlap-band {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 25%;
+      right: 25%;
+      background: rgba(255,255,255,0.06);
+      border-left: 1px dashed rgba(255,255,255,0.25);
+      border-right: 1px dashed rgba(255,255,255,0.25);
+      pointer-events: none;
+    }
+
+    .conflict-meter {
+      margin-top: 12px;
+      padding: 14px;
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: 10px;
+    }
+
+    .meter-bar {
+      position: relative;
+      width: 100%;
+      height: 12px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #1fa572, #f5c04d, #f37055, #ff4b5c);
+      overflow: hidden;
+    }
+
+    .meter-indicator {
+      position: absolute;
+      top: -4px;
+      width: 2px;
+      height: 20px;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+      transition: left 0.35s ease;
+    }
+
+    .pulse {
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.78; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .reset-row {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <nav>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="teaching.html">Teaching</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="data-lab.html">Data Lab</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="lang-switch"><a href="polarization-spiral-es.html">ES</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="polarization-spiral-page">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Data Lab / Interactive</p>
+          <h1>The Polarization Spiral</h1>
+          <p>Adjust media fragmentation, echo chambers, and dialogue to watch societies spiral apart—or pull together.</p>
+        </div>
+
+        <div class="layout-grid">
+          <div class="panel controls-panel">
+            <h3>Adjust the drivers</h3>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <h4>Media Fragmentation</h4>
+                <span class="slider-value" id="fragmentation-value">65%</span>
+              </div>
+              <p class="slider-description">How siloed information sources are. Low = diverse viewpoints; High = tightly siloed feeds.</p>
+              <input type="range" min="0" max="100" value="65" id="fragmentation-slider">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <h4>Echo Chamber Strength</h4>
+                <span class="slider-value" id="echo-value">70%</span>
+              </div>
+              <p class="slider-description">How much algorithms amplify extreme content and isolate people. Low = diversity; High = radicalizing loops.</p>
+              <input type="range" min="0" max="100" value="70" id="echo-slider">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <h4>Cross-Community Dialogue</h4>
+                <span class="slider-value" id="dialogue-value">30%</span>
+              </div>
+              <p class="slider-description">Frequency and quality of meaningful conversations across divides. Low = no contact; High = regular bridge-building.</p>
+              <input type="range" min="0" max="100" value="30" id="dialogue-slider">
+            </div>
+
+            <div class="scenario-buttons">
+              <button data-scenario="healthy">Healthy Democracy</button>
+              <button data-scenario="filter">Filter Bubble Era</button>
+              <button data-scenario="crisis">Social Media Crisis</button>
+              <button data-scenario="reconcile">Post-Conflict Reconciliation</button>
+            </div>
+
+            <div class="reset-row">
+              <button class="reset-btn" id="reset-btn">Reset to defaults</button>
+            </div>
+          </div>
+
+          <div class="svg-wrapper panel" style="min-height: 520px;">
+            <svg id="spiral-svg" viewBox="0 0 500 500" aria-label="Polarization spiral visualization">
+              <defs>
+                <linearGradient id="spiralGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#4ba3ff" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#ff4b5c" stop-opacity="0.9" />
+                </linearGradient>
+              </defs>
+              <g id="spiral-group" transform="translate(250 250)">
+                <path id="spiral-path" stroke="url(#spiralGrad)" d="" />
+                <circle id="dot-left" class="community-dot dot-red" r="9" cx="0" cy="0" />
+                <circle id="dot-right" class="community-dot dot-blue" r="9" cx="0" cy="0" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-value" id="polarization-index">0%</div>
+            <div class="metric-label">Polarization Index</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="diversity-score">0%</div>
+            <div class="metric-label">Information Diversity</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="dialogue-score">0%</div>
+            <div class="metric-label">Cross-Community Understanding</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="conflict-score">0%</div>
+            <div class="metric-label">Conflict Likelihood (heuristic)</div>
+          </div>
+        </div>
+
+        <div class="insight-box" id="insight-box">
+          <div class="insight-title" id="insight-title">Insight</div>
+          <p id="insight-text" style="margin-top: 8px; color: var(--muted);"></p>
+          <div id="context-flags" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"></div>
+        </div>
+
+        <div class="community-spectrum panel">
+          <h3>Community positions on the spectrum</h3>
+          <p class="slider-description">As polarization grows, each community clusters around more extreme positions. Dialogue increases overlap.</p>
+          <div class="spectrum-bars">
+            <div>
+              <div style="display:flex; justify-content:space-between; color:var(--muted); font-size:0.9rem; margin-bottom:6px;">
+                <span>Community A (Red)</span><span id="left-avg">Avg: 0</span>
+              </div>
+              <div class="spectrum-track">
+                <div class="overlap-band"></div>
+                <div class="spectrum-fill-left" id="left-spectrum" style="width:40%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; color:var(--muted); font-size:0.9rem; margin-bottom:6px;">
+                <span>Community B (Blue)</span><span id="right-avg">Avg: 0</span>
+              </div>
+              <div class="spectrum-track">
+                <div class="overlap-band"></div>
+                <div class="spectrum-fill-right" id="right-spectrum" style="width:40%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="conflict-meter">
+            <div style="display:flex; justify-content:space-between; color:var(--muted); margin-bottom:6px; font-size:0.9rem;">
+              <span>Shared values</span><span id="shared-values">0%</span>
+            </div>
+            <div class="meter-bar">
+              <div class="meter-indicator" id="meter-indicator" style="left:0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-it-works panel">
+          <h3>How it works</h3>
+          <p style="color: var(--muted); line-height:1.7;">The Polarization Spiral shows how three factors create feedback loops: when media is fragmented and algorithms amplify extreme views, people retreat into ideological bubbles. Without cross-community dialogue, stereotypes grow and trust erodes. As polarization deepens, people trust different sources of information, making dialogue harder. But when communities dialogue regularly, media diversity increases, algorithms can promote understanding, and the spiral can reverse.</p>
+        </div>
+
+        <div class="solutions panel">
+          <h3>Possible solutions</h3>
+          <ul id="solutions-list" style="color: var(--muted); line-height:1.7; margin-left: 18px;">
+            <li>Support independent journalism, regulate algorithms.</li>
+            <li>Redesign recommendation systems to promote diverse views.</li>
+            <li>Fund community dialogue programs and inter-community events.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer">
+      <p>&copy; 2026 Juan José Vásquez-Pacheco.</p>
+      <a class="deep-link" href="data-lab.html">← Back to Data Lab</a>
+    </div>
+  </footer>
+
+  <script>
+    const fragSlider = document.getElementById('fragmentation-slider');
+    const echoSlider = document.getElementById('echo-slider');
+    const dialogueSlider = document.getElementById('dialogue-slider');
+
+    const fragValue = document.getElementById('fragmentation-value');
+    const echoValue = document.getElementById('echo-value');
+    const dialogueValue = document.getElementById('dialogue-value');
+
+    const polMetric = document.getElementById('polarization-index');
+    const diversityMetric = document.getElementById('diversity-score');
+    const dialogueMetric = document.getElementById('dialogue-score');
+    const conflictMetric = document.getElementById('conflict-score');
+
+    const spiralPath = document.getElementById('spiral-path');
+    const spiralGroup = document.getElementById('spiral-group');
+    const dotLeft = document.getElementById('dot-left');
+    const dotRight = document.getElementById('dot-right');
+
+    const insightTitle = document.getElementById('insight-title');
+    const insightText = document.getElementById('insight-text');
+    const contextFlags = document.getElementById('context-flags');
+
+    const leftSpectrum = document.getElementById('left-spectrum');
+    const rightSpectrum = document.getElementById('right-spectrum');
+    const leftAvg = document.getElementById('left-avg');
+    const rightAvg = document.getElementById('right-avg');
+    const sharedValues = document.getElementById('shared-values');
+    const meterIndicator = document.getElementById('meter-indicator');
+
+    const solutionsList = document.getElementById('solutions-list');
+
+    const scenarios = {
+      healthy: { frag: 25, echo: 20, dialogue: 80 },
+      filter: { frag: 75, echo: 80, dialogue: 25 },
+      crisis: { frag: 90, echo: 90, dialogue: 10 },
+      reconcile: { frag: 45, echo: 35, dialogue: 85 }
+    };
+
+    function clamp(val, min, max) {
+      return Math.min(Math.max(val, min), max);
+    }
+
+    function buildSpiralPath(turns, maxR) {
+      const steps = 420;
+      const pts = [];
+      for (let i = 0; i <= steps; i++) {
+        const t = (i / steps) * turns * Math.PI * 2;
+        const r = (i / steps) * maxR;
+        const x = Math.cos(t) * r;
+        const y = Math.sin(t) * r;
+        pts.push(`${x.toFixed(2)},${y.toFixed(2)}`);
+      }
+      return 'M ' + pts.join(' L ');
+    }
+
+    function updateSpiral(polarization, frag, echo, dialogue) {
+      const maxR = 90 + polarization * 1.1; // grows with polarization
+      const turns = 4.5 + (polarization / 100) * 2.5; // more turns when polarized
+      const pathD = buildSpiralPath(turns, maxR);
+      spiralPath.setAttribute('d', pathD);
+
+      const scale = 0.7 + (polarization / 100) * 0.8;
+      spiralGroup.setAttribute('transform', `translate(250 250) scale(${scale})`);
+
+      const separation = 12 + polarization * 1.6 + (frag * 0.3) - (dialogue * 0.4);
+      const angle = (polarization / 100) * Math.PI * 3 + (echo / 100) * Math.PI * 0.5;
+      const radius = Math.min(maxR, 110 + polarization * 0.6);
+      const lx = Math.cos(angle) * radius * -1;
+      const ly = Math.sin(angle) * radius * -1;
+      const rx = Math.cos(angle) * radius;
+      const ry = Math.sin(angle) * radius;
+      dotLeft.setAttribute('cx', lx - separation / 2);
+      dotLeft.setAttribute('cy', ly);
+      dotRight.setAttribute('cx', rx + separation / 2);
+      dotRight.setAttribute('cy', ry);
+
+      const pulseNeeded = polarization >= 75;
+      dotLeft.classList.toggle('pulse', pulseNeeded);
+      dotRight.classList.toggle('pulse', pulseNeeded);
+      spiralPath.classList.toggle('spiral-glow-high', polarization >= 60);
+    }
+
+    function updateMetrics() {
+      const frag = parseInt(fragSlider.value, 10);
+      const echo = parseInt(echoSlider.value, 10);
+      const dialogue = parseInt(dialogueSlider.value, 10);
+
+      fragValue.textContent = `${frag}%`;
+      echoValue.textContent = `${echo}%`;
+      dialogueValue.textContent = `${dialogue}%`;
+
+      const polarizationIndex = clamp((frag * 0.35) + (echo * 0.35) - (dialogue * 0.3), 0, 100);
+      const diversity = clamp(100 - frag, 0, 100);
+      const dialogueScore = clamp(dialogue, 0, 100);
+      const conflictLikelihood = clamp((polarizationIndex * 0.6) + ((100 - dialogue) * 0.4), 0, 100);
+
+      polMetric.textContent = `${polarizationIndex.toFixed(0)}%`;
+      diversityMetric.textContent = `${diversity.toFixed(0)}%`;
+      dialogueMetric.textContent = `${dialogueScore.toFixed(0)}%`;
+      conflictMetric.textContent = `${conflictLikelihood.toFixed(0)}%`;
+
+      updateSpiral(polarizationIndex, frag, echo, dialogue);
+      updateInsights(polarizationIndex, frag, echo, dialogue);
+      updateSpectrum(polarizationIndex, dialogue, frag, echo);
+      updateSolutions(frag, echo, dialogue, polarizationIndex);
+    }
+
+    function badge(text) {
+      const span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = text;
+      return span;
+    }
+
+    function updateInsights(polarization, frag, echo, dialogue) {
+      contextFlags.innerHTML = '';
+      let title = 'Insight';
+      let body = '';
+
+      if (polarization < 25) {
+        title = 'Healthy Discourse';
+        body = 'Communities engage in good-faith dialogue. Media is diverse, algorithms promote understanding, and people interact across divides.';
+      } else if (polarization < 51) {
+        title = 'Caution';
+        body = 'Polarization is increasing. Media silos are forming and algorithms are starting to amplify differences. Consider boosting dialogue initiatives.';
+      } else if (polarization < 76) {
+        title = '\u26a0 Critical Warning';
+        body = 'Deep polarization is entrenched. Communities rarely interact, media is fragmented, and algorithms reinforce division. Intervention is urgent.';
+      } else {
+        title = '\ud83d\udea8 Point of No Return';
+        body = 'Polarization is extreme. Communities see each other as threats. Conflict risk is high; recovery needs structural changes.';
+      }
+
+      if (frag > 80) contextFlags.appendChild(badge('Information sources are completely siloed'));
+      if (echo > 80) contextFlags.appendChild(badge('Algorithms are actively radicalizing users'));
+      if (dialogue < 20) contextFlags.appendChild(badge('Almost no meaningful contact'));
+      if (dialogue > 60 && frag < 40) contextFlags.appendChild(badge('Dialogue is countering polarization'));
+
+      insightTitle.textContent = title;
+      insightText.textContent = body;
+    }
+
+    function updateSpectrum(polarization, dialogue, frag, echo) {
+      const extremity = clamp(polarization + echo * 0.2, 0, 140);
+      const overlapBoost = dialogue * 0.7;
+      const leftWidth = clamp(30 + extremity * 0.4 - dialogue * 0.3, 10, 90);
+      const rightWidth = clamp(30 + extremity * 0.4 - dialogue * 0.3, 10, 90);
+      leftSpectrum.style.width = `${leftWidth}%`;
+      rightSpectrum.style.width = `${rightWidth}%`;
+
+      const leftMean = -clamp(polarization * 0.45, 0, 90).toFixed(0);
+      const rightMean = clamp(polarization * 0.45, 0, 90).toFixed(0);
+      leftAvg.textContent = `Avg: ${leftMean}`;
+      rightAvg.textContent = `Avg: ${rightMean}`;
+
+      const shared = clamp(40 + overlapBoost - polarization * 0.4 - frag * 0.25, 0, 90);
+      sharedValues.textContent = `${shared.toFixed(0)}% shared values`;
+      meterIndicator.style.left = `${clamp(shared, 0, 100)}%`;
+    }
+
+    function updateSolutions(frag, echo, dialogue, polarization) {
+      const items = [];
+      if (frag > 60) items.push('Support independent journalism and reduce media siloing; consider public-interest media funds.');
+      if (echo > 60) items.push('Redesign recommendation systems to reward diversity and downrank outrage-only content.');
+      if (dialogue < 40) items.push('Invest in dialogue programs, joint community projects, and moderated deliberation spaces.');
+      if (frag > 75 && echo > 75 && dialogue < 25) items.push('Require multi-level interventions: media reforms, algorithmic accountability, and sustained bridge-building.');
+      if (items.length === 0) items.push('Maintain healthy dialogue and transparent algorithms while monitoring emerging silos.');
+
+      solutionsList.innerHTML = items.map(i => `<li>${i}</li>`).join('');
+    }
+
+    function setScenario(key) {
+      const s = scenarios[key];
+      if (!s) return;
+      fragSlider.value = s.frag;
+      echoSlider.value = s.echo;
+      dialogueSlider.value = s.dialogue;
+      updateMetrics();
+    }
+
+    function resetDefaults() {
+      fragSlider.value = 65;
+      echoSlider.value = 70;
+      dialogueSlider.value = 30;
+      updateMetrics();
+    }
+
+    document.querySelectorAll('.scenario-buttons button').forEach(btn => {
+      btn.addEventListener('click', () => setScenario(btn.dataset.scenario));
+    });
+
+    [fragSlider, echoSlider, dialogueSlider].forEach(slider => {
+      slider.addEventListener('input', updateMetrics);
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', resetDefaults);
+
+    // Initialize
+    resetDefaults();
+  </script>
+</body>
+</html>
