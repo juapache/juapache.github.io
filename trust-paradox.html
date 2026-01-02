@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Trust Paradox | Data Lab</title>
+  <meta name="description" content="Interactive exploration of positive and negative peace dynamics through the lens of trust, security, and institutions." />
+  <link rel="canonical" href="https://juapache.github.io/trust-paradox.html" />
+  <link rel="alternate" href="https://juapache.github.io/trust-paradox.html" hreflang="en" />
+  <link rel="alternate" href="https://juapache.github.io/trust-paradox-es.html" hreflang="es" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .interactive-section {
+      margin-top: 48px;
+    }
+
+    .controls-panel {
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .slider-group {
+      margin-bottom: 32px;
+    }
+
+    .slider-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .slider-label h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .slider-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .slider-description {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--card);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: #13b898;
+      transform: scale(1.1);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+      background: #13b898;
+      transform: scale(1.1);
+    }
+
+    .visualization-panel {
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 40px;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .peace-indicator {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .peace-score {
+      font-size: 4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .peace-label {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .peace-description {
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+      width: 100%;
+    }
+
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-label {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .info-box {
+      background: rgba(58, 166, 185, 0.1);
+      border: 1px solid var(--accent-2);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-top: 32px;
+    }
+
+    .info-box h4 {
+      color: var(--accent-2);
+      margin-bottom: 12px;
+    }
+
+    .info-box p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <nav>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="teaching.html">Teaching</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="data-lab.html">Data Lab</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="lang-switch"><a href="trust-paradox-es.html">ES</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="trust-paradox-page">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Data Lab / Interactive</p>
+          <h1>The Trust Paradox</h1>
+          <p>Explore how trust, security, and institutional strength shape the dynamics between positive and negative peace.</p>
+        </div>
+
+        <div class="info-box">
+          <h4>About This Tool</h4>
+          <p>This interactive visualization helps you understand the relationship between different dimensions of peace. Adjust the sliders below to see how changes in trust, security measures, and institutional capacity affect overall peace outcomes. The concepts are based on peace studies frameworks distinguishing between negative peace (absence of violence) and positive peace (presence of justice and wellbeing).</p>
+        </div>
+
+        <div class="interactive-section">
+          <div class="controls-panel">
+            <h3 style="margin-bottom: 24px; color: var(--text);">Adjust Parameters</h3>
+            
+            <div class="slider-group">
+              <div class="slider-label">
+                <h4>Social Trust</h4>
+                <span class="slider-value" id="trust-value">50</span>
+              </div>
+              <p class="slider-description">Level of trust between community members and towards institutions. Higher trust enables cooperation and reduces the need for coercive security measures.</p>
+              <input type="range" min="0" max="100" value="50" id="trust-slider">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <h4>Security Measures</h4>
+                <span class="slider-value" id="security-value">50</span>
+              </div>
+              <p class="slider-description">Intensity of surveillance, policing, and enforcement mechanisms. Can reduce violence but may undermine trust if overused.</p>
+              <input type="range" min="0" max="100" value="50" id="security-slider">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <h4>Institutional Strength</h4>
+                <span class="slider-value" id="institutions-value">50</span>
+              </div>
+              <p class="slider-description">Capacity of governance structures to deliver justice, services, and inclusive decision-making. Strong institutions support both trust and effective security.</p>
+              <input type="range" min="0" max="100" value="50" id="institutions-slider">
+            </div>
+          </div>
+
+          <div class="visualization-panel">
+            <div class="peace-indicator">
+              <div class="peace-score" id="peace-score">0.0</div>
+              <div class="peace-label" id="peace-label">Calculating...</div>
+              <p class="peace-description" id="peace-description">Adjust the parameters above to see how different factors influence peace dynamics.</p>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-value" id="negative-peace">0</div>
+                <div class="metric-label">Negative Peace</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-value" id="positive-peace">0</div>
+                <div class="metric-label">Positive Peace</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-value" id="sustainability">0</div>
+                <div class="metric-label">Sustainability</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 48px;">
+          <h3>Understanding the Model</h3>
+          <p style="margin-bottom: 16px;">This tool models peace as a multidimensional phenomenon:</p>
+          <ul style="color: var(--muted); line-height: 1.8; margin-left: 20px;">
+            <li><strong style="color: var(--text);">Negative Peace</strong> measures the absence of direct violence, influenced primarily by security measures and institutional capacity to maintain order.</li>
+            <li><strong style="color: var(--text);">Positive Peace</strong> represents the presence of structural conditions for wellbeing: trust, justice, and inclusive institutions.</li>
+            <li><strong style="color: var(--text);">The Paradox</strong> emerges when heavy security measures reduce violence but erode trust, making peace unsustainable. Conversely, high trust with weak institutions may leave communities vulnerable.</li>
+            <li><strong style="color: var(--text);">Sustainability</strong> reflects whether the peace configuration can be maintained long-term without degradation.</li>
+          </ul>
+          <p style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--stroke);">
+            <em>Note: Content and formulas for this interactive will be provided. This is a placeholder structure awaiting detailed specifications.</em>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer">
+      <p>&copy; 2026 Juan José Vásquez-Pacheco.</p>
+      <a class="deep-link" href="data-lab.html">← Back to Data Lab</a>
+    </div>
+  </footer>
+
+  <script>
+    // Get all sliders and value displays
+    const trustSlider = document.getElementById('trust-slider');
+    const securitySlider = document.getElementById('security-slider');
+    const institutionsSlider = document.getElementById('institutions-slider');
+    
+    const trustValue = document.getElementById('trust-value');
+    const securityValue = document.getElementById('security-value');
+    const institutionsValue = document.getElementById('institutions-value');
+    
+    const peaceScore = document.getElementById('peace-score');
+    const peaceLabel = document.getElementById('peace-label');
+    const peaceDescription = document.getElementById('peace-description');
+    
+    const negativePeace = document.getElementById('negative-peace');
+    const positivePeace = document.getElementById('positive-peace');
+    const sustainability = document.getElementById('sustainability');
+
+    // Update display values when sliders move
+    trustSlider.addEventListener('input', function() {
+      trustValue.textContent = this.value;
+      calculatePeace();
+    });
+
+    securitySlider.addEventListener('input', function() {
+      securityValue.textContent = this.value;
+      calculatePeace();
+    });
+
+    institutionsSlider.addEventListener('input', function() {
+      institutionsValue.textContent = this.value;
+      calculatePeace();
+    });
+
+    // Placeholder calculation function
+    // TODO: Replace with actual formulas when provided
+    function calculatePeace() {
+      const trust = parseInt(trustSlider.value);
+      const security = parseInt(securitySlider.value);
+      const institutions = parseInt(institutionsSlider.value);
+
+      // Placeholder calculations - to be replaced with actual model
+      const negPeace = Math.round((security * 0.6 + institutions * 0.4));
+      const posPeace = Math.round((trust * 0.5 + institutions * 0.5));
+      const sust = Math.round((trust * 0.4 + institutions * 0.4 - Math.abs(security - trust) * 0.2));
+      
+      const overallScore = ((negPeace + posPeace) / 2).toFixed(1);
+
+      // Update displays
+      negativePeace.textContent = negPeace;
+      positivePeace.textContent = posPeace;
+      sustainability.textContent = Math.max(0, Math.min(100, sust));
+      peaceScore.textContent = overallScore;
+
+      // Update label based on score
+      if (overallScore >= 80) {
+        peaceLabel.textContent = 'Robust Peace';
+        peaceDescription.textContent = 'High levels of both security and social cohesion create a stable, sustainable peace environment.';
+      } else if (overallScore >= 60) {
+        peaceLabel.textContent = 'Moderate Peace';
+        peaceDescription.textContent = 'Balanced conditions support peace, but vulnerabilities remain in certain dimensions.';
+      } else if (overallScore >= 40) {
+        peaceLabel.textContent = 'Fragile Peace';
+        peaceDescription.textContent = 'Peace exists but is vulnerable to shocks. Imbalances between security, trust, and institutions create risks.';
+      } else {
+        peaceLabel.textContent = 'Critical State';
+        peaceDescription.textContent = 'Low trust, weak institutions, or security deficits create conditions for instability or violence.';
+      }
+    }
+
+    // Initialize on page load
+    calculatePeace();
+  </script>
+</body>
+</html>
