@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Portfolio</title>
+    <title>Juan José Vásquez-Pacheco | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div class="container">
+        <div class="container nav-bar">
+            <div class="brand">Juan José Vásquez-Pacheco</div>
             <nav>
                 <ul>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#data-lab">Data Lab</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#blog">Writing</a></li>
                     <li><a href="#teaching">Teaching</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -23,71 +29,211 @@
 
     <main>
         <section id="hero">
-            <div class="container">
-                <h1>Juan José Vásquez-Pacheco</h1>
-                <p class="subtitle">Researcher (Peace and Conflict, AI, Law)</p>
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <p class="eyebrow">AI Governance | Peace Innovation | Technodiversity</p>
+                    <h1>Bridging AI law with Global South realities.</h1>
+                    <div class="profile-photo" aria-label="Portrait of Juan José Vásquez-Pacheco">
+                        <img src="assets/images/jjvp.jpg" alt="Portrait of Juan José Vásquez-Pacheco">
+                    </div>
+                    <p class="subtitle">Lawyer and researcher focused on AI governance, conflict sensitivity, and ethical deployment of emerging technologies.</p>
+                    <div class="cta-group">
+                        <a class="btn primary" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio" target="_blank" rel="noopener">View Research Portfolio</a>
+                        <a class="btn ghost" href="https://github.com/juapache/research-workspace/tree/main/Data-Analysis-Portfolio" target="_blank" rel="noopener">Explore Data Projects</a>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <h3>Latest focus</h3>
+                    <p class="pill">AI Strategy NLP</p>
+                    <p class="hero-card-text">Comparing how national AI strategies frame Safety/Ethics vs Development/Access using TF-IDF and spaCy pipelines.</p>
+                    <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/05-ai-strategy-nlp" target="_blank" rel="noopener">See project →</a>
+                </div>
             </div>
         </section>
 
         <section id="about">
-            <div class="container">
-                <h2>About Me</h2>
-                <p>Write a brief introduction about yourself here. Your skills, interests, and career goals. You can add more paragraphs here as needed.</p>
-            </div>
-        </section>
-
-        <section id="portfolio">
-            <div class="container">
-                <h2>Portfolio</h2>
-                <div class="gallery">
-                    <div class="gallery-item">
-                        <img src="images/project1.jpg" alt="Project 1">
-                        <p>Project 1 Description</p>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/project2.jpg" alt="Project 2">
-                        <p>Project 2 Description</p>
-                    </div>
+            <div class="container two-col">
+                <div>
+                    <h2>About</h2>
+                    <p>I work at the intersection of AI law, peacebuilding, and technology governance. My research threads legal analysis with reproducible data workflows to keep policy debates grounded in evidence.</p>
+                </div>
+                <div class="badge-stack">
+                    <span class="tag">EU AI Act</span>
+                    <span class="tag">Technodiversity</span>
+                    <span class="tag">Peace Innovation</span>
+                    <span class="tag">Open Science</span>
                 </div>
             </div>
         </section>
-        <section id="blog">
+
+        <section id="research">
             <div class="container">
-                <h2>Blog</h2>
-                <article class="blog-post">
-                  <h3><a href="#">Blog Post Title 1</a></h3>
-                  <p>Short description of the blog post...</p>
-                </article>
-                <article class="blog-post">
-                  <h3><a href="#">Blog Post Title 2</a></h3>
-                  <p>Short description of the blog post...</p>
-                </article>
+                <div class="section-heading">
+                    <h2>Research Portfolio</h2>
+                    <p>Conceptual frameworks and working papers housed in Research-Portfolio.</p>
+                </div>
+                <div class="card-grid">
+                    <article class="card">
+                        <p class="pill">01</p>
+                        <h3>Technodiversity & Decolonization</h3>
+                        <p>Epistemic sovereignty and material impacts of AI supply chains; centering indigenous data governance.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/01-technodiversity-and-decolonization" target="_blank" rel="noopener">Open pillar →</a>
+                    </article>
+                    <article class="card">
+                        <p class="pill">02</p>
+                        <h3>Algorithmic Governance</h3>
+                        <p>Behavioral profiling, dark patterns, and compliance under GDPR/EU AI Act with policy translation notes.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/02-algorithmic-governance" target="_blank" rel="noopener">Open pillar →</a>
+                    </article>
+                    <article class="card">
+                        <p class="pill">03</p>
+                        <h3>Peace Innovation</h3>
+                        <p>Conflict-sensitive design loops and curriculum work for peace tech in practice.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/03-peace-innovation-and-technology" target="_blank" rel="noopener">Open pillar →</a>
+                    </article>
+                    <article class="card">
+                        <p class="pill">04</p>
+                        <h3>Global South Perspectives</h3>
+                        <p>Non-aligned data governance and South-South coalitions for AI policy.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/04-global-south-perspectives" target="_blank" rel="noopener">Open pillar →</a>
+                    </article>
+                </div>
             </div>
         </section>
+
+        <section id="data-lab">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Data & Methods Lab</h2>
+                    <p>Executable notebooks and tools from Data-Analysis-Portfolio.</p>
+                </div>
+                <div class="card-grid">
+                    <article class="card">
+                        <p class="pill">01</p>
+                        <h3>Conflict Data Analysis</h3>
+                        <p>Reproducible workflows for conflict datasets with processing, figures, and tables.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Data-Analysis-Portfolio/01-conflict-data-analysis" target="_blank" rel="noopener">Open project →</a>
+                    </article>
+                    <article class="card">
+                        <p class="pill">02</p>
+                        <h3>Policy Research Tools</h3>
+                        <p>Jupyter examples and scripts to speed up legal and policy analysis.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Data-Analysis-Portfolio/02-policy-research-tools" target="_blank" rel="noopener">Open project →</a>
+                    </article>
+                    <article class="card">
+                        <p class="pill">03</p>
+                        <h3>Data Visualization</h3>
+                        <p>Algorithmic impact dashboards and policy landscape maps with reusable templates.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Data-Analysis-Portfolio/03-data-visualization" target="_blank" rel="noopener">Open project →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Resources (on-site PDFs)</h2>
+                    <p>Downloadable briefs, lecture decks, and handouts hosted in the pdfs/ folder.</p>
+                </div>
+                <ul id="resources-list" class="link-list"></ul>
+            </div>
+        </section>
+
+        <section id="blog">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Writing</h2>
+                    <p>Notes and essays at the intersection of AI governance and peace tech.</p>
+                </div>
+                <div class="card-grid two">
+                    <article class="card">
+                        <h3>Policy brief: AI safety vs access</h3>
+                        <p>Takeaways from comparative national AI strategies using TF-IDF narratives.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/05-ai-strategy-nlp" target="_blank" rel="noopener">Read in repository →</a>
+                        <span class="tag small">Latest</span>
+                    </article>
+                    <article class="card">
+                        <h3>Technodiversity & decolonization</h3>
+                        <p>Framework for epistemic sovereignty and indigenous data governance.</p>
+                        <a class="deep-link" href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/01-technodiversity-and-decolonization/research-questions.md" target="_blank" rel="noopener">Read research questions →</a>
+                        <span class="tag small">Working paper</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <section id="teaching">
             <div class="container">
-              <h2>Classes</h2>
-              <ul>
-                <li><a href="pdfs/class1.pdf" target="_blank">Class 1 - Introduction</a></li>
-                <li><a href="pdfs/class2.pdf" target="_blank">Class 2 - Advanced</a></li>
-              </ul>
+                <div class="section-heading">
+                    <h2>Teaching</h2>
+                    <p>Selected classes and materials.</p>
+                </div>
+                <ul class="link-list">
+                    <li><a href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/03-peace-innovation-and-technology/notes" target="_blank" rel="noopener">Peace Innovation: seminar notes</a></li>
+                    <li><a href="https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/02-algorithmic-governance/notes" target="_blank" rel="noopener">AI governance & dark patterns: readings</a></li>
+                </ul>
             </div>
         </section>
 
         <section id="contact">
-            <div class="container">
-                <h2>Contact</h2>
-                <p>You can reach me at <a href="mailto:juapache@protonmail.com">juapache@protonmail.com</a>.</p>
-                <p>GitHub: <a href="https://github.com/juapache" target="_blank">Your GitHub</a></p>
-                <p>LinkedIn: <a href="https://www.linkedin.com/in/juanjosvp/" target="_blank">Your LinkedIn</a></p>
+            <div class="container contact-card">
+                <div>
+                    <h2>Contact</h2>
+                    <p>Let’s collaborate on responsible, context-aware AI deployment.</p>
+                </div>
+                <div class="contact-links">
+                    <a href="mailto:juapache@protonmail.com">Email</a>
+                    <a href="https://github.com/juapache" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://www.linkedin.com/in/juanjosvp/" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Juan José VP</p>
+        <div class="container footer">
+            <p>&copy; 2026 Juan José Vásquez-Pacheco. Crafted for clarity and impact.</p>
+            <a class="deep-link" href="#hero">Back to top ↑</a>
         </div>
     </footer>
+
+        <script>
+            async function loadResources() {
+                const list = document.getElementById('resources-list');
+                if (!list) return;
+                try {
+                    const res = await fetch('pdfs/manifest.json', { cache: 'no-store' });
+                    if (!res.ok) throw new Error('manifest not found');
+                    const items = await res.json();
+                    if (!Array.isArray(items) || items.length === 0) {
+                        list.innerHTML = '<li><span class="tag small">Coming soon</span> Upload PDFs to /pdfs/ and add entries to pdfs/manifest.json.</li>';
+                        return;
+                    }
+                    list.innerHTML = '';
+                    items.forEach(item => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = `pdfs/${item.file}`;
+                        a.textContent = item.title || item.file;
+                        a.target = '_blank';
+                        a.rel = 'noopener';
+                        const desc = item.description ? ` — ${item.description}` : '';
+                        li.appendChild(a);
+                        if (desc) {
+                            const span = document.createElement('span');
+                            span.textContent = desc;
+                            span.style.color = 'var(--muted)';
+                            span.style.marginLeft = '6px';
+                            li.appendChild(span);
+                        }
+                        list.appendChild(li);
+                    });
+                } catch (err) {
+                    list.innerHTML = '<li><span class="tag small">Coming soon</span> Upload PDFs to /pdfs/ and add entries to pdfs/manifest.json.</li>';
+                }
+            }
+            loadResources();
+        </script>
 </body>
 </html>
