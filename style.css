@@ -91,13 +91,14 @@ nav ul li a:hover {
 
 .lang-switch a {
     border: 1px solid var(--accent-2);
-    padding: 8px 14px;
+    padding: 9px 16px;
     border-radius: 999px;
     line-height: 1;
-    background: linear-gradient(120deg, rgba(58,166,185,0.22), rgba(58,166,185,0.1));
-    color: var(--text);
-    font-weight: 700;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    background: linear-gradient(120deg, #3aa6b9, #2a7a8c);
+    color: #0b1423;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.35);
 }
 
 main {
@@ -130,7 +131,7 @@ section {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    margin: 12px 0 18px;
+    margin: 14px 0 20px;
 }
 
 .profile-name {
@@ -141,12 +142,12 @@ section {
 }
 
 .profile-photo {
-    width: 122px;
-    height: 122px;
+    width: 132px;
+    height: 132px;
     border-radius: 50%;
     overflow: hidden;
-    border: 1.5px solid var(--stroke);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.32);
+    border: 2px solid rgba(58,166,185,0.55);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.32);
     background: #0b1423;
 }
 
@@ -154,7 +155,7 @@ section {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 52%;
+    object-position: 50% 48%;
     display: block;
     clip-path: circle(50% at 50% 50%);
 }
