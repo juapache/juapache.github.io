@@ -35,11 +35,59 @@
       <div class="container">
         <div class="section-heading">
           <h1>Docencia</h1>
-          <p>Sube clases y recursos al directorio PDFs; aparecerán aquí automáticamente.</p>
+          <p>Materiales de curso, presentaciones y recursos para mi práctica docente.</p>
         </div>
-        <div class="card">
-          <h3>Recursos de clase</h3>
-          <ul id="teaching-resources" class="link-list"></ul>
+
+        <div class="card-grid two">
+          <!-- Curso 1 -->
+          <article class="card">
+            <h3>Introducción a Estudios de Paz y Conflicto</h3>
+            <p>Conceptos fundamentales de investigación para la paz, análisis de conflictos y enfoques de transformación.</p>
+            <div class="badge-stack">
+              <a href="pdfs/peace-conflict-studies.pptx" class="deep-link" download>📊 Presentación PPT</a>
+              <a href="pdfs/peace-conflict-resources.pdf" class="deep-link" download>📚 Recursos Adicionales</a>
+            </div>
+          </article>
+
+          <!-- Curso 2 -->
+          <article class="card">
+            <h3>Habilidades de Negociación</h3>
+            <p>Marcos prácticos para negociación basada en principios y estrategias de resolución de conflictos.</p>
+            <div class="badge-stack">
+              <a href="pdfs/negotiation-skills.pptx" class="deep-link" download>📊 Presentación PPT</a>
+              <a href="pdfs/negotiation-resources.pdf" class="deep-link" download>📚 Recursos Adicionales</a>
+            </div>
+          </article>
+
+          <!-- Curso 3 -->
+          <article class="card">
+            <h3>Introducción al Derecho Digital y de Privacidad de la UE</h3>
+            <p>Panorama del GDPR, Ley de Servicios Digitales y marcos regulatorios emergentes de la UE.</p>
+            <div class="badge-stack">
+              <a href="pdfs/eu-digital-law.pptx" class="deep-link" download>📊 Presentación PPT</a>
+              <a href="pdfs/eu-digital-resources.pdf" class="deep-link" download>📚 Recursos Adicionales</a>
+            </div>
+          </article>
+
+          <!-- Curso 4 -->
+          <article class="card">
+            <h3>Innovación para la Paz</h3>
+            <p>Diseño tecnológico y vías de innovación que apoyan la construcción de paz y cohesión social.</p>
+            <div class="badge-stack">
+              <a href="pdfs/peace-innovation.pptx" class="deep-link" download>📊 Presentación PPT</a>
+              <a href="pdfs/peace-innovation-resources.pdf" class="deep-link" download>📚 Recursos Adicionales</a>
+            </div>
+          </article>
+
+          <!-- Curso 5 - Próximamente -->
+          <article class="card" style="opacity: 0.5;">
+            <h3>Sistemas de Paz Positiva <span class="tag small">Próximamente</span></h3>
+            <p>Enfoques de pensamiento sistémico para construir infraestructuras sostenibles de paz positiva.</p>
+            <div class="badge-stack">
+              <span style="color: var(--muted); font-size: 13px;">📊 Presentación PPT</span>
+              <span style="color: var(--muted); font-size: 13px;">📚 Recursos Adicionales</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -51,43 +99,5 @@
       <a class="deep-link" href="index-es.html">Volver al inicio →</a>
     </div>
   </footer>
-
-  <script>
-    async function loadTeachingResources() {
-      const list = document.getElementById('teaching-resources');
-      if (!list) return;
-      try {
-        const res = await fetch('pdfs/manifest.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('manifest not found');
-        const items = await res.json();
-        if (!Array.isArray(items) || items.length === 0) {
-          list.innerHTML = '<li><span class="tag small">Próximamente</span> Agrega clases a /pdfs/ y actualiza pdfs/manifest.json.</li>';
-          return;
-        }
-        list.innerHTML = '';
-        items.forEach(item => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = `pdfs/${item.file}`;
-          a.textContent = item.title || item.file;
-          a.target = '_blank';
-          a.rel = 'noopener';
-          const desc = item.description ? ` — ${item.description}` : '';
-          li.appendChild(a);
-          if (desc) {
-            const span = document.createElement('span');
-            span.textContent = desc;
-            span.style.color = 'var(--muted)';
-            span.style.marginLeft = '6px';
-            li.appendChild(span);
-          }
-          list.appendChild(li);
-        });
-      } catch (err) {
-        list.innerHTML = '<li><span class="tag small">Próximamente</span> Agrega clases a /pdfs/ y actualiza pdfs/manifest.json.</li>';
-      }
-    }
-    loadTeachingResources();
-  </script>
 </body>
 </html>
