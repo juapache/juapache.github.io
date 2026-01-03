@@ -35,11 +35,59 @@
       <div class="container">
         <div class="section-heading">
           <h1>Teaching</h1>
-          <p>Upload classes and course resources to the on-site PDFs folder; they auto-list here via manifest.</p>
+          <p>Course materials, presentations, and resources for my teaching practice.</p>
         </div>
-        <div class="card">
-          <h3>Course resources</h3>
-          <ul id="teaching-resources" class="link-list"></ul>
+
+        <div class="card-grid two">
+          <!-- Course 1 -->
+          <article class="card">
+            <h3>Intro to Peace and Conflict Studies</h3>
+            <p>Foundational concepts in peace research, conflict analysis, and transformation approaches.</p>
+            <div class="badge-stack">
+              <a href="pdfs/peace-conflict-studies.pptx" class="deep-link" download>📊 PPT Presentation</a>
+              <a href="pdfs/peace-conflict-resources.pdf" class="deep-link" download>📚 Additional Resources</a>
+            </div>
+          </article>
+
+          <!-- Course 2 -->
+          <article class="card">
+            <h3>Negotiation Skills</h3>
+            <p>Practical frameworks for principled negotiation and conflict resolution strategies.</p>
+            <div class="badge-stack">
+              <a href="pdfs/negotiation-skills.pptx" class="deep-link" download>📊 PPT Presentation</a>
+              <a href="pdfs/negotiation-resources.pdf" class="deep-link" download>📚 Additional Resources</a>
+            </div>
+          </article>
+
+          <!-- Course 3 -->
+          <article class="card">
+            <h3>Intro to EU Digital and Privacy Law</h3>
+            <p>Overview of GDPR, Digital Services Act, and emerging EU regulatory frameworks.</p>
+            <div class="badge-stack">
+              <a href="pdfs/eu-digital-law.pptx" class="deep-link" download>📊 PPT Presentation</a>
+              <a href="pdfs/eu-digital-resources.pdf" class="deep-link" download>📚 Additional Resources</a>
+            </div>
+          </article>
+
+          <!-- Course 4 -->
+          <article class="card">
+            <h3>Peace Innovation</h3>
+            <p>Technology design and innovation pathways that support peacebuilding and social cohesion.</p>
+            <div class="badge-stack">
+              <a href="pdfs/peace-innovation.pptx" class="deep-link" download>📊 PPT Presentation</a>
+              <a href="pdfs/peace-innovation-resources.pdf" class="deep-link" download>📚 Additional Resources</a>
+            </div>
+          </article>
+
+          <!-- Course 5 - Coming Soon -->
+          <article class="card" style="opacity: 0.5;">
+            <h3>Positive Peace Systems <span class="tag small">Coming Soon</span></h3>
+            <p>Systems thinking approaches to building sustainable positive peace infrastructures.</p>
+            <div class="badge-stack">
+              <span style="color: var(--muted); font-size: 13px;">📊 PPT Presentation</span>
+              <span style="color: var(--muted); font-size: 13px;">📚 Additional Resources</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -51,43 +99,5 @@
       <a class="deep-link" href="index.html">Back to home →</a>
     </div>
   </footer>
-
-  <script>
-    async function loadTeachingResources() {
-      const list = document.getElementById('teaching-resources');
-      if (!list) return;
-      try {
-        const res = await fetch('pdfs/manifest.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('manifest not found');
-        const items = await res.json();
-        if (!Array.isArray(items) || items.length === 0) {
-          list.innerHTML = '<li><span class="tag small">Coming soon</span> Add classes to /pdfs/ and update pdfs/manifest.json.</li>';
-          return;
-        }
-        list.innerHTML = '';
-        items.forEach(item => {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = `pdfs/${item.file}`;
-          a.textContent = item.title || item.file;
-          a.target = '_blank';
-          a.rel = 'noopener';
-          const desc = item.description ? ` — ${item.description}` : '';
-          li.appendChild(a);
-          if (desc) {
-            const span = document.createElement('span');
-            span.textContent = desc;
-            span.style.color = 'var(--muted)';
-            span.style.marginLeft = '6px';
-            li.appendChild(span);
-          }
-          list.appendChild(li);
-        });
-      } catch (err) {
-        list.innerHTML = '<li><span class="tag small">Coming soon</span> Add classes to /pdfs/ and update pdfs/manifest.json.</li>';
-      }
-    }
-    loadTeachingResources();
-  </script>
 </body>
 </html>
