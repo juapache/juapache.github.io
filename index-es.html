@@ -250,6 +250,13 @@ Desbloqueemos el bucle, reconstruir raíz.</p>
   </footer>
 
   <script>
+    const swapPortraitWithEasterEgg = () => {
+      const portraitImage = document.querySelector('.profile-photo img');
+      if (portraitImage && Math.random() < 0.1) {
+        portraitImage.src = 'assets/images/jjvp2.jpg';
+      }
+    };
+
     async function loadResources() {
       const list = document.getElementById('resources-list');
       if (!list) return;
@@ -284,6 +291,7 @@ Desbloqueemos el bucle, reconstruir raíz.</p>
         list.innerHTML = '<li><span class="tag small">Próximamente</span> Sube PDFs a /pdfs/ y agrega entradas en pdfs/manifest.json.</li>';
       }
     }
+    swapPortraitWithEasterEgg();
     loadResources();
   </script>
 </body>
