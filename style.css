@@ -251,6 +251,7 @@ section {
     background: rgba(255,255,255,0.04);
     color: var(--text);
     font-size: 13px;
+    white-space: nowrap;
 }
 
 .tag.small {

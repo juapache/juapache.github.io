@@ -47,9 +47,9 @@ All course material links point to non-existent files:
 #### Pillar 02: Algorithmic Governance
 - 📂 Location: `Research-Portfolio/02-algorithmic-governance/`
 - ✅ Has: README, research-questions.md, Spanish working paper, English working paper, populated bibliography, case-study template
-- ⚠️ Missing: Populated notes, case studies, datasets
-- 📂 `notes/` folder: placeholder only
-- 🌐 Website: Labeled "Coming Soon" on [index.html](index.html) and [research.html](research.html)
+- ⚠️ Missing: More case studies (1 added), datasets
+- 📂 `notes/` folder: literature review + research notes now present
+- 🌐 Website: Marked **Updated** on [index.html](index.html) and [research.html](research.html); both link directly to the repo instead of a new page; ES pages also updated
 
 #### Pillar 03: Peace Innovation & Technology
 - 📂 Location: `Research-Portfolio/03-peace-innovation-and-technology/`
@@ -232,6 +232,7 @@ Links point to empty notes folders:
 - ✅ Proper schema.org markup for search engines
 - ✅ Contact page functional with working links
 - ✅ About page complete with CV viewer
+- ✅ "Coming Soon" badges no longer wrap to two lines (nowrap styling added)
 
 ### Repository Structure
 - ✅ Clear separation: Research-Portfolio (conceptual) vs Data-Analysis-Portfolio (technical)
@@ -268,7 +269,7 @@ Links point to empty notes folders:
    - [ ] Add README.md to 01/03/04 explaining scope/status
    - [ ] Populate 01/03/04 with initial working papers or literature reviews
    - [ ] Add research notes to notes/ folders (all pillars)
-   - [ ] Pillar 02: add English paper(s), fill notes and case studies; keep site tag until content ready
+   - [ ] Pillar 02: expand case studies (1 added) and add datasets; site tag set to **Updated** with direct repo link (EN/ES)
 
 5. **Policy Research Tools (02)**
    - [ ] Add example notebooks to {notebooks/examples}/
