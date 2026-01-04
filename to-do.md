@@ -34,8 +34,8 @@ All course material links point to non-existent files:
 
 ## 🟡 CONTENT GAPS: Portfolio ↔ Website Mismatches
 
-### Research Portfolio - Pillars 01-04 Are Empty
-**Status:** All conceptual research pillars lack substantive content
+### Research Portfolio - Pillars 01-04 (mixed progress)
+**Status:** Pillar 02 now has structure, research questions, Spanish working paper, and bibliography; Pillars 01/03/04 remain effectively empty.
 
 #### Pillar 01: Technodiversity & Decolonization
 - 📂 Location: `Research-Portfolio/01-technodiversity-and-decolonization/`
@@ -46,9 +46,10 @@ All course material links point to non-existent files:
 
 #### Pillar 02: Algorithmic Governance
 - 📂 Location: `Research-Portfolio/02-algorithmic-governance/`
-- ❌ Missing: All content (no research-questions.md, no working papers)
-- 📂 `notes/` folder: **EMPTY**
-- 🌐 Website: Links to this pillar from [index.html](index.html) and [research.html](research.html)
+- ✅ Has: README, research-questions.md, Spanish working paper, populated bibliography, case-study template
+- ⚠️ Missing: English papers, populated notes, case studies, datasets
+- 📂 `notes/` folder: placeholder only
+- 🌐 Website: Labeled "Coming Soon" on [index.html](index.html) and [research.html](research.html)
 
 #### Pillar 03: Peace Innovation & Technology
 - 📂 Location: `Research-Portfolio/03-peace-innovation-and-technology/`
@@ -128,7 +129,7 @@ All course material links point to non-existent files:
 - 📄 File: `blog-posts/02-another-blog-post-title.html`
 - 🔴 Title: "Another Blog Post Title" (generic placeholder)
 - 🔴 Date: "[Date]" (placeholder text)
-- 🔴 Content: Template instructions still visible ("This is the main content area for your blog post...")
+- 🔴 Content: Placeholder text; marked "Coming Soon" on blog listing and post header
 - 🌐 Linked from: [index.html](index.html) and [blog.html](blog.html)
 - ⚠️ Navigation issue: Data Lab link uses `<span class="nav-muted">` instead of proper `<a>` tag
 
@@ -143,7 +144,7 @@ All course material links point to non-existent files:
 **Location:** [index.html](index.html) `#resources` section
 
 - Section header exists: "Resources - Downloadable briefs, lecture decks, and other resources"
-- Content area: `<ul id="resources-list" class="link-list"></ul>` - **EMPTY**
+- Content area: `<ul id="resources-list" class="link-list"></ul>` - **EMPTY** (labeled "Coming Soon")
 - Appears to expect JavaScript to populate from `pdfs/manifest.json`
 - Current manifest.json only has placeholder: `sample-brief.pdf` (which doesn't exist)
 
@@ -173,11 +174,11 @@ All course material links point to non-existent files:
 
 ### Website Links to Empty GitHub Directories
 
-All four research pillars linked from website point to repos with minimal/no content:
-1. [01-technodiversity-and-decolonization](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/01-technodiversity-and-decolonization) - only has empty `notes/` and minimal `research-questions.md`
-2. [02-algorithmic-governance](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/02-algorithmic-governance) - only empty `notes/`
-3. [03-peace-innovation-and-technology](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/03-peace-innovation-and-technology) - only empty `notes/`
-4. [04-global-south-perspectives](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/04-global-south-perspectives) - only empty `notes/`
+Website links now labeled "Coming Soon" for all pillars; content status:
+1. [01-technodiversity-and-decolonization](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/01-technodiversity-and-decolonization) - empty notes, minimal research-questions
+2. [02-algorithmic-governance](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/02-algorithmic-governance) - structure + Spanish working paper + bibliography; notes/case studies pending
+3. [03-peace-innovation-and-technology](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/03-peace-innovation-and-technology) - empty notes
+4. [04-global-south-perspectives](https://github.com/juapache/research-workspace/tree/main/Research-Portfolio/04-global-south-perspectives) - empty notes
 
 ### index.html Teaching Section Dead Links
 **Location:** [index.html](index.html) `#teaching` section
@@ -256,10 +257,10 @@ Links point to empty notes folders:
 ### 🟡 **HIGH PRIORITY - Content Development (Weeks 2-4)**
 
 4. **Research Pillars 01-04**
-   - [ ] Add README.md to each pillar explaining scope/status
-   - [ ] Populate with at least initial working papers or literature reviews
-   - [ ] Add research notes to notes/ folders
-   - [ ] Consider adding "Under Development" status badges on website
+   - [ ] Add README.md to 01/03/04 explaining scope/status
+   - [ ] Populate 01/03/04 with initial working papers or literature reviews
+   - [ ] Add research notes to notes/ folders (all pillars)
+   - [ ] Pillar 02: add English paper(s), fill notes and case studies; keep site tag until content ready
 
 5. **Policy Research Tools (02)**
    - [ ] Add example notebooks to {notebooks/examples}/
@@ -270,7 +271,7 @@ Links point to empty notes folders:
    - [ ] Add actual downloadable resources to pdfs/
    - [ ] Update manifest.json
    - [ ] Test JavaScript resource loading
-   - [ ] OR remove section from index.html
+   - [ ] OR remove/keep labeled "Coming Soon" until populated
 
 ---
 
