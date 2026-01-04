@@ -42,12 +42,12 @@ All course material links point to non-existent files:
 - ✅ Has: `research-questions.md` (minimal, 3 lines)
 - ❌ Missing: Working papers, literature reviews, structural taxonomies (promised in main README)
 - 📂 `notes/` folder: **EMPTY**
-- 🌐 Website: Links to this pillar from [index.html](index.html) and [research.html](research.html)
+- 🌐 Website: Links from [index.html](index.html) and [research.html](research.html) labeled "Coming Soon"
 
 #### Pillar 02: Algorithmic Governance
 - 📂 Location: `Research-Portfolio/02-algorithmic-governance/`
-- ✅ Has: README, research-questions.md, Spanish working paper, populated bibliography, case-study template
-- ⚠️ Missing: English papers, populated notes, case studies, datasets
+- ✅ Has: README, research-questions.md, Spanish working paper, English working paper, populated bibliography, case-study template
+- ⚠️ Missing: Populated notes, case studies, datasets
 - 📂 `notes/` folder: placeholder only
 - 🌐 Website: Labeled "Coming Soon" on [index.html](index.html) and [research.html](research.html)
 
@@ -55,14 +55,14 @@ All course material links point to non-existent files:
 - 📂 Location: `Research-Portfolio/03-peace-innovation-and-technology/`
 - ❌ Missing: All content
 - 📂 `notes/` folder: **EMPTY**
-- 🌐 Website: Links to this pillar from [index.html](index.html) and [research.html](research.html)
+- 🌐 Website: Links from [index.html](index.html) and [research.html](research.html) labeled "Coming Soon"
 - 🔗 Dead link on [index.html](index.html) Teaching section: Points to `notes/` folder (empty)
 
 #### Pillar 04: Global South Perspectives
 - 📂 Location: `Research-Portfolio/04-global-south-perspectives/`
 - ❌ Missing: All content
 - 📂 `notes/` folder: **EMPTY**
-- 🌐 Website: Links to this pillar from [index.html](index.html) and [research.html](research.html)
+- 🌐 Website: Links from [index.html](index.html) and [research.html](research.html) labeled "Coming Soon"
 
 **ACTION REQUIRED:**
 1. Populate each pillar with promised content:
@@ -107,6 +107,10 @@ All course material links point to non-existent files:
 - ❌ Content: **EMPTY**
 - 🌐 Website: Marked "Coming Soon" / "In development" on [data-lab.html](data-lab.html)
 
+**⚠️ AI Strategy Explorer (website-only)**
+- 🌐 Location: Card on [data-lab.html](data-lab.html) marked "Coming Soon"
+- ❌ No corresponding project folder/repo yet
+
 **❌ Policy Landscape Maps**
 - 📂 Location: `Data-Analysis-Portfolio/03-data-visualization/policy-landscape-maps/`
 - ❌ Folder: **COMPLETELY EMPTY**
@@ -132,6 +136,10 @@ All course material links point to non-existent files:
 - 🔴 Content: Placeholder text; marked "Coming Soon" on blog listing and post header
 - 🌐 Linked from: [index.html](index.html) and [blog.html](blog.html)
 - ⚠️ Navigation issue: Data Lab link uses `<span class="nav-muted">` instead of proper `<a>` tag
+
+#### Other blog placeholders
+- Additional placeholder cards on [blog.html](blog.html) (no target links or `#` anchors) all marked "Coming Soon"
+- "Hello Law!" is also tagged "Coming Soon" though content exists
 
 **ACTION REQUIRED:**
 1. Either write actual blog post content for post 02
@@ -316,24 +324,27 @@ Links point to empty notes folders:
 ## 📊 SUMMARY STATISTICS
 
 ### Content Status Overview
-- **Research Pillars (01-04):** 0% complete (empty notes, minimal documentation)
-- **Research Pillar (05 - AI Strategy NLP):** 90% complete (active development)
+- **Research Pillar 01:** Minimal (research questions only)
+- **Research Pillar 02:** Partial (structure + Spanish & English working papers + bibliography; notes/case studies missing)
+- **Research Pillars 03-04:** Empty (notes only)
+- **Research Pillar 05 (AI Strategy NLP):** ~90% complete
 - **Data Viz - Trust Paradox:** 100% complete
 - **Data Viz - Polarization Spiral:** 100% complete
 - **Data Viz - Algorithmic Dashboard:** 5% complete (folder only)
 - **Data Viz - Policy Landscape Maps:** 0% complete (empty)
 - **Conflict Data Analysis:** 0% complete (structure only)
 - **Policy Research Tools:** 0% complete (empty)
+- **AI Strategy Explorer:** 0% (website-only placeholder)
 
 ### Broken Links Count
 - **Dead file links:** 9 (8 teaching PDFs + 1 sample brief)
 - **Links to empty directories:** 4 (research pillar notes folders)
-- **Placeholder content items:** 3 (blog post 02, resources section, manifest.json)
+- **Placeholder content items:** Multiple (blog cards, resources section, manifest.json, AI Strategy Explorer card, Policy Research Tools card)
 
 ### Website Completeness
-- ✅ **Fully functional pages:** 6 (about, contact, trust-paradox, polarization-spiral, blog post 01)
-- ⚠️ **Pages with issues:** 4 (teaching, data-lab, research, index)
-- 🔴 **Pages with broken links:** 2 (teaching, index)
+- ✅ **Fully functional pages:** about, contact, trust-paradox, polarization-spiral, AI Strategy NLP linkages
+- ⚠️ **Pages with issues:** teaching, data-lab, research, index, blog (due to placeholders/empty downloads)
+- 🔴 **Pages with broken links:** teaching (8 missing downloads), index (resources empty, links to empty notes folders)
 
 ---
 
