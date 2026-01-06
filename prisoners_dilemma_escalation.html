@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Escalation Spiral | Prisoners Dilemma</title>
+  <style>
+    :root {
+      --bg-start: #f5f5f5;
+      --bg-end: #e8e8e8;
+      --text: #134252;
+      --muted: #626c71;
+      --teal: #218d8d;
+      --teal-light: rgba(33, 128, 141, 0.08);
+      --green: #26de81;
+      --red: #ff4757;
+      --orange: #ffa502;
+      --deep-red: #c01530;
+      --card: #ffffff;
+      --shadow: 0 12px 32px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --spacing-1: 8px;
+      --spacing-2: 12px;
+      --spacing-3: 16px;
+      --spacing-4: 20px;
+      --spacing-5: 24px;
+      --spacing-6: 32px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg-start), var(--bg-end));
+      min-height: 100vh;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    .page-shell { max-width: 1200px; margin: 0 auto; padding: var(--spacing-6); }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: var(--spacing-6);
+      border: 1px solid #e0e0e0;
+    }
+    .title { font-size: 32px; font-weight: 600; margin: 0 0 var(--spacing-2); color: #134252; }
+    .subtitle { font-size: 14px; font-style: italic; color: var(--muted); margin: 0 0 var(--spacing-4); }
+    .scenario { background: var(--teal-light); border-left: 3px solid var(--teal); padding: var(--spacing-4); border-radius: var(--radius); margin-bottom: var(--spacing-4); line-height: 1.7; }
+    .warning { background: rgba(192, 21, 47, 0.08); border-left: 3px solid var(--deep-red); padding: var(--spacing-4); border-radius: var(--radius); margin-bottom: var(--spacing-5); line-height: 1.6; }
+    .btn {
+      width: 100%;
+      padding: var(--spacing-3);
+      border: none;
+      border-radius: 10px;
+      background: var(--teal);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    }
+    .btn:hover { background: #1a6f78; transform: translateY(-1px); box-shadow: 0 10px 20px rgba(26,111,120,0.2); }
+    .grid { display: grid; gap: var(--spacing-4); }
+    .game-grid { grid-template-columns: 1fr 1.3fr 1fr; align-items: start; }
+    .section-label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 2px solid var(--teal); padding-bottom: var(--spacing-2); margin-bottom: var(--spacing-3); }
+    .history-list { display: flex; flex-direction: column; gap: var(--spacing-2); }
+    .history-item { padding: var(--spacing-3); border-radius: var(--radius); border-left: 3px solid #e0e0e0; background: #f5f5f5; line-height: 1.5; font-size: 12px; }
+    .history-item strong { color: var(--text); }
+    .round-indicator { text-align: center; background: #f0f0f0; padding: var(--spacing-3); border-radius: var(--radius); font-size: 28px; font-weight: 600; color: var(--teal); margin-bottom: var(--spacing-3); }
+    .narrative-box { background: white; border: 1px solid #ddd; border-radius: var(--radius); padding: var(--spacing-4); font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: var(--spacing-3); }
+    .choice-btn { width: 100%; padding: var(--spacing-4); text-align: left; border-radius: 10px; border: 2px solid transparent; background: #fff; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, border 0.2s ease; cursor: pointer; }
+    .choice-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+    .choice-btn .icon { font-size: 28px; }
+    .choice-btn .title-line { font-size: 16px; font-weight: 600; margin: var(--spacing-2) 0 4px 0; }
+    .choice-btn .desc { font-size: 13px; color: var(--text); margin: 0 0 6px 0; }
+    .choice-btn .signal { font-size: 12px; font-style: italic; color: var(--muted); margin: 0; }
+    .choice-dialogue { border-color: var(--green); }
+    .choice-dialogue:hover { background: rgba(38,222,129,0.1); border-color: #20c773; }
+    .choice-force { border-color: var(--red); }
+    .choice-force:hover { background: rgba(255,71,87,0.1); border-color: #e84352; }
+    .choice-selected-dialogue { background: var(--green); color: white; }
+    .choice-selected-force { background: var(--red); color: white; }
+    .choice-selected-dialogue .desc, .choice-selected-dialogue .signal, .choice-selected-force .desc, .choice-selected-force .signal { color: white; }
+    .score-card { background: rgba(33,128,141,0.15); border: 2px solid var(--teal); border-radius: var(--radius); padding: var(--spacing-4); text-align: center; }
+    .score-card.red { background: rgba(255,71,87,0.15); border-color: var(--red); }
+    .score-label { font-size: 12px; color: var(--muted); margin-bottom: var(--spacing-2); }
+    .score-value { font-size: 32px; font-weight: 700; margin: 0; }
+    .score-round { font-size: 14px; color: var(--text); margin-top: var(--spacing-2); }
+    .flex { display: flex; gap: var(--spacing-3); }
+    .insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-3); }
+    .insight-box { background: white; border-radius: var(--radius); padding: var(--spacing-4); border-top: 3px solid #ddd; box-shadow: var(--shadow); }
+    .what-if { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-3); margin-top: var(--spacing-4); }
+    .end-card { background: white; border-radius: var(--radius); padding: var(--spacing-4); box-shadow: var(--shadow); border: 2px solid #e0e0e0; }
+    .end-card.green { border-color: var(--green); background: rgba(38,222,129,0.08); }
+    .end-card.red { border-color: var(--red); background: rgba(255,71,87,0.08); }
+    .end-card.orange { border-color: var(--orange); background: rgba(255,165,2,0.08); }
+    .timeline { background: #f2f2f2; padding: var(--spacing-3); border-radius: var(--radius); text-align: center; font-size: 14px; }
+    .outcome-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: none; align-items: center; justify-content: center; z-index: 10; }
+    .outcome-content { background: white; border-radius: var(--radius); padding: var(--spacing-5); max-width: 480px; width: 90%; box-shadow: 0 18px 50px rgba(0,0,0,0.2); text-align: center; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; color: white; }
+    .status { font-size: 20px; font-weight: 700; margin: var(--spacing-2) 0; }
+    .outcome-points { color: var(--muted); margin: var(--spacing-2) 0 var(--spacing-3); }
+    .btn-secondary { background: white; color: var(--teal); border: 2px solid var(--teal); }
+    .btn-secondary:hover { background: rgba(33,141,141,0.08); color: #1a6f78; }
+    .hidden { display: none; }
+    .centered { display: flex; justify-content: center; align-items: center; }
+    @media (max-width: 1024px) { .game-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 768px) { .game-grid { grid-template-columns: 1fr; } .page-shell { padding: var(--spacing-4); } }
+    @media (max-width: 480px) { .title { font-size: 26px; } .round-indicator { font-size: 22px; } }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div id="start-screen" class="card">
+      <h1 class="title">The Escalation Spiral</h1>
+      <p class="subtitle">Understanding the Security Dilemma</p>
+      <div class="scenario">
+        Two groups are in conflict. Tensions are high but haven't erupted into violence yet. Both groups are deciding: Should we try dialogue, or should we use force to protect ourselves?<br><br>
+        You represent Group A. Your choices will influence Group B's responses. Play through 5 rounds and see how the conflict evolves.<br><br>
+        Each round, you'll make a choice. Then you'll see what Group B decided. Then it's your turn again.
+      </div>
+      <div class="warning">
+        Each choice signals something to Group B. Watch how they interpret your intentions.
+      </div>
+      <button class="btn" id="begin-btn">BEGIN GAME</button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <div class="card" style="margin-bottom: var(--spacing-4);">
+        <div class="round-indicator" id="round-indicator">ROUND 1 of 5</div>
+        <div class="narrative-box" id="narrative-box">
+          The situation is tense but stable. Recent talks have broken down, but violence hasn't started yet. Group B is also considering their next move. What does Group A do?
+        </div>
+        <div class="grid game-grid">
+          <div>
+            <div class="section-label">History</div>
+            <div class="history-list" id="history-list"></div>
+          </div>
+
+          <div>
+            <div class="choice-btn choice-dialogue" id="dialogue-btn">
+              <div class="icon">🕊️</div>
+              <div class="title-line" style="color: var(--green);">DIALOGUE</div>
+              <div class="desc">Reach out, try to negotiate</div>
+              <div class="desc">"Group A proposes talks. We show willingness to compromise."</div>
+              <p class="signal">This signals: we want peace</p>
+            </div>
+            <div style="height: var(--spacing-3);"></div>
+            <div class="choice-btn choice-force" id="force-btn">
+              <div class="icon">⚡</div>
+              <div class="title-line" style="color: var(--red);">SHOW FORCE</div>
+              <div class="desc">Demonstrate military strength</div>
+              <div class="desc">"Group A mobilizes security, shows we won't be pushed around."</div>
+              <p class="signal">This signals: we're serious and ready</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-label">Score</div>
+            <div class="score-card">
+              <div class="score-label">GROUP A (You)</div>
+              <p class="score-value" id="score-a">0</p>
+              <p class="score-round" id="score-a-round">Current round: +0</p>
+            </div>
+            <div style="height: var(--spacing-3);"></div>
+            <div class="score-card red">
+              <div class="score-label">GROUP B (Them)</div>
+              <p class="score-value" id="score-b">0</p>
+              <p class="score-round" id="score-b-round">Current round: +0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="end-screen" class="hidden">
+      <div class="card" style="margin-bottom: var(--spacing-4);">
+        <h2 style="margin: 0 0 var(--spacing-3);">Results</h2>
+        <div class="timeline" id="timeline"></div>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-3); margin-top: var(--spacing-3);">
+          <div class="end-card" id="final-a"></div>
+          <div class="end-card" id="final-b"></div>
+        </div>
+        <div class="end-card" style="margin-top: var(--spacing-4);" id="outcome-summary"></div>
+        <div class="end-card" style="margin-top: var(--spacing-3);" id="analysis-box"></div>
+
+        <h3 style="margin-top: var(--spacing-4);">Insights</h3>
+        <div class="insights">
+          <div class="insight-box" style="border-top-color: var(--red);">
+            <strong>My Fear Became Your Threat</strong>
+            <p style="color: var(--muted); line-height: 1.6;">When you mobilized defensively, Group B saw aggression. When they mobilized defensively, you saw threats. Both were trying to be safe; both made each other less safe.</p>
+          </div>
+          <div class="insight-box" style="border-top-color: var(--orange);">
+            <strong>Breaking the Cycle is Hard</strong>
+            <p style="color: var(--muted); line-height: 1.6;">If you'd offered dialogue after they escalated, they'd interpret it as weakness. But if you escalated, you confirmed their worst fears. There's no "right" choice when trust is broken.</p>
+          </div>
+          <div class="insight-box" style="border-top-color: var(--green);">
+            <strong>This is Why Peace Requires Courage</strong>
+            <p style="color: var(--muted); line-height: 1.6;">Someone has to break the spiral first. It requires genuine risk-taking. It requires trusting that de-escalation won't be punished. Peace is harder than conflict.</p>
+          </div>
+        </div>
+
+        <div class="what-if">
+          <div class="end-card" id="what-actual"></div>
+          <div class="end-card green" id="what-best"></div>
+          <div class="end-card red" id="what-worst"></div>
+        </div>
+
+        <div style="margin-top: var(--spacing-4);">
+          <p id="comparison" style="font-weight: 600; color: var(--text);"></p>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--spacing-3); margin-top: var(--spacing-3);">
+          <button class="btn" id="replay-btn">PLAY AGAIN WITH DIFFERENT CHOICES</button>
+          <button class="btn btn-secondary" id="perspective-btn">SEE IT FROM GROUP B'S PERSPECTIVE</button>
+        </div>
+
+        <div id="perspective-box" class="end-card" style="margin-top: var(--spacing-3); display: none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="outcome-modal" id="outcome-modal" aria-modal="true" role="dialog">
+    <div class="outcome-content">
+      <div id="outcome-badge" class="badge" style="background: var(--teal);">Outcome</div>
+      <div id="outcome-title" class="status">Outcome Title</div>
+      <p id="outcome-desc" style="line-height: 1.6; color: var(--text);"></p>
+      <div id="outcome-points" class="outcome-points"></div>
+      <button class="btn" id="next-round-btn">Next</button>
+    </div>
+  </div>
+
+  <script>
+    const beginBtn = document.getElementById('begin-btn');
+    const startScreen = document.getElementById('start-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const endScreen = document.getElementById('end-screen');
+    const dialogueBtn = document.getElementById('dialogue-btn');
+    const forceBtn = document.getElementById('force-btn');
+    const roundIndicator = document.getElementById('round-indicator');
+    const narrativeBox = document.getElementById('narrative-box');
+    const historyList = document.getElementById('history-list');
+    const scoreAEl = document.getElementById('score-a');
+    const scoreBEl = document.getElementById('score-b');
+    const scoreARound = document.getElementById('score-a-round');
+    const scoreBRound = document.getElementById('score-b-round');
+    const outcomeModal = document.getElementById('outcome-modal');
+    const outcomeBadge = document.getElementById('outcome-badge');
+    const outcomeTitle = document.getElementById('outcome-title');
+    const outcomeDesc = document.getElementById('outcome-desc');
+    const outcomePoints = document.getElementById('outcome-points');
+    const nextRoundBtn = document.getElementById('next-round-btn');
+    const timelineEl = document.getElementById('timeline');
+    const finalA = document.getElementById('final-a');
+    const finalB = document.getElementById('final-b');
+    const outcomeSummary = document.getElementById('outcome-summary');
+    const analysisBox = document.getElementById('analysis-box');
+    const whatActual = document.getElementById('what-actual');
+    const whatBest = document.getElementById('what-best');
+    const whatWorst = document.getElementById('what-worst');
+    const comparison = document.getElementById('comparison');
+    const replayBtn = document.getElementById('replay-btn');
+    const perspectiveBtn = document.getElementById('perspective-btn');
+    const perspectiveBox = document.getElementById('perspective-box');
+
+    const TOTAL_ROUNDS = 5;
+    const choicesMap = { dialogue: '🕊️', showForce: '⚡' };
+
+    const state = {
+      round: 1,
+      userScore: 0,
+      oppScore: 0,
+      userChoices: [],
+      oppChoices: [],
+      history: [],
+      lastRoundPoints: { a: 0, b: 0 }
+    };
+
+    beginBtn.addEventListener('click', () => {
+      startScreen.classList.add('hidden');
+      gameScreen.classList.remove('hidden');
+      updateUI();
+    });
+
+    dialogueBtn.addEventListener('click', () => handleChoice('dialogue'));
+    forceBtn.addEventListener('click', () => handleChoice('showForce'));
+
+    nextRoundBtn.addEventListener('click', () => {
+      outcomeModal.style.display = 'none';
+      if (state.round > TOTAL_ROUNDS) {
+        showEndScreen();
+      } else {
+        updateUI();
+      }
+    });
+
+    replayBtn.addEventListener('click', resetGame);
+    perspectiveBtn.addEventListener('click', togglePerspective);
+
+    function handleChoice(userChoice) {
+      const opponentChoice = getOpponentChoice(state.round, state.userChoices);
+      state.userChoices.push(userChoice);
+      state.oppChoices.push(opponentChoice);
+
+      const { userPoints, oppPoints, outcome } = evaluateRound(userChoice, opponentChoice);
+      state.userScore += userPoints;
+      state.oppScore += oppPoints;
+      state.lastRoundPoints = { a: userPoints, b: oppPoints };
+
+      state.history.push({
+        round: state.round,
+        userChoice,
+        opponentChoice,
+        outcome,
+        userPoints,
+        oppPoints
+      });
+
+      showOutcomeModal(outcome, userPoints, oppPoints);
+      state.round += 1;
+      if (state.round > TOTAL_ROUNDS) {
+        // prepare end screen after closing modal
+      }
+    }
+
+    function getOpponentChoice(round, userChoiceHistory) {
+      if (round === 1) {
+        return Math.random() > 0.5 ? 'dialogue' : 'showForce';
+      }
+      const lastUserChoice = userChoiceHistory[userChoiceHistory.length - 1];
+      return lastUserChoice || 'dialogue';
+    }
+
+    function evaluateRound(userChoice, opponentChoice) {
+      const matrix = {
+        dialogue: { dialogue: [3,3], showForce: [0,5] },
+        showForce: { dialogue: [5,0], showForce: [1,1] }
+      };
+      const [userPoints, oppPoints] = matrix[userChoice][opponentChoice];
+
+      let outcome = {};
+      if (userChoice === 'dialogue' && opponentChoice === 'dialogue') {
+        outcome = {
+          title: '✅ MUTUAL COOPERATION',
+          desc: 'Both groups showed willingness to talk. Negotiators are meeting. Tensions beginning to ease.',
+          badge: varColor('green'),
+          path: 'coop'
+        };
+      } else if (userChoice === 'dialogue' && opponentChoice === 'showForce') {
+        outcome = {
+          title: '⚠️ YOU WERE EXPLOITED',
+          desc: 'You reached out for dialogue. Group B responded by mobilizing military. You look weak. They look strong.',
+          badge: varColor('red'),
+          path: 'mixed'
+        };
+      } else if (userChoice === 'showForce' && opponentChoice === 'dialogue') {
+        outcome = {
+          title: '✅ YOU GAINED LEVERAGE',
+          desc: 'You mobilized defensively. Group B, seeing your strength, chose to talk instead of escalate. Negotiations are happening, but from your position of strength.',
+          badge: varColor('orange'),
+          path: 'mixed'
+        };
+      } else {
+        outcome = {
+          title: '❌ MUTUAL ESCALATION BEGINS',
+          desc: 'Both groups mobilized militaries. Checkpoints are going up. Soldiers are gathering. The situation is now volatile.',
+          badge: varColor('deep-red'),
+          path: 'escalate'
+        };
+      }
+      return { userPoints, oppPoints, outcome };
+    }
+
+    function varColor(key) {
+      const map = { green: 'var(--green)', red: 'var(--red)', orange: 'var(--orange)', teal: 'var(--teal)', 'deep-red': 'var(--deep-red)' };
+      return map[key] || 'var(--teal)';
+    }
+
+    function showOutcomeModal(outcome, userPoints, oppPoints) {
+      outcomeBadge.style.background = outcome.badge;
+      outcomeTitle.textContent = outcome.title;
+      outcomeDesc.textContent = outcome.desc;
+      outcomePoints.textContent = `You +${userPoints} | Them +${oppPoints}`;
+      outcomeModal.style.display = 'flex';
+    }
+
+    function updateUI() {
+      roundIndicator.textContent = `ROUND ${state.round} of ${TOTAL_ROUNDS}`;
+      narrativeBox.textContent = getNarrative(state.round);
+      renderHistory();
+      renderScores();
+      resetChoiceStyles();
+    }
+
+    function resetChoiceStyles() {
+      dialogueBtn.classList.remove('choice-selected-dialogue');
+      forceBtn.classList.remove('choice-selected-force');
+    }
+
+    function renderHistory() {
+      historyList.innerHTML = '';
+      state.history.forEach(entry => {
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        const borderColor = entry.userChoice === entry.opponentChoice ?
+          (entry.userChoice === 'dialogue' ? varColor('green') : varColor('red')) : varColor('orange');
+        item.style.borderLeftColor = borderColor;
+        item.innerHTML = `
+          <strong>ROUND ${entry.round}:</strong><br>
+          You e ${choicesMap[entry.userChoice]} ${entry.userChoice === 'dialogue' ? 'DIALOGUE' : 'SHOW FORCE'}<br>
+          Them e ${choicesMap[entry.opponentChoice]} ${entry.opponentChoice === 'dialogue' ? 'DIALOGUE' : 'SHOW FORCE'}<br>
+          Outcome: +${entry.userPoints} for you, +${entry.oppPoints} for them
+        `;
+        historyList.prepend(item);
+      });
+    }
+
+    function renderScores() {
+      scoreAEl.textContent = state.userScore;
+      scoreBEl.textContent = state.oppScore;
+      scoreARound.textContent = `Current round: +${state.lastRoundPoints.a}`;
+      scoreBRound.textContent = `Current round: +${state.lastRoundPoints.b}`;
+    }
+
+    function getNarrative(round) {
+      if (round === 1) {
+        return 'The situation is tense but stable. Recent talks have broken down, but violence hasn\'t started yet. Group B is also considering their next move. What does Group A do?';
+      }
+      const last = state.history[state.history.length - 1];
+      const mutualDialogue = last.userChoice === 'dialogue' && last.opponentChoice === 'dialogue';
+      const mutualEscalation = last.userChoice === 'showForce' && last.opponentChoice === 'showForce';
+
+      const round3A = 'Peace talks are advancing. Trade is resuming. Families are hoping to visit relatives. Progress feels real. But military hardliners on both sides are unhappy. They see you as vulnerable. What does Group A do?';
+      const round4A = 'The peace framework is almost complete. Economic cooperation is flourishing. Joint projects are underway. Old grievances are healing. What does Group A do?';
+      const round5A = 'This is it0the final decision. Signing this agreement would lock in decades of peace. But it requires vulnerability and trust. What does Group A do?';
+
+      const round3B = 'Military checkpoints are now permanent. Soldiers are camped on borders. Economies are suffering due to military spending. Neither side feels safe. Your generals want to strike first, before Group B does. What does Group A do?';
+      const round4B = 'Incidents are happening. An accidental border crossing. A shot fired near the checkpoint. Things are fragmenting. International mediators are trying to prevent accident from turning into war. What does Group A do?';
+      const round5B = 'This is the brink. One wrong move could trigger full conflict. Your people are terrified. Group B is equally scared. Can this be stopped, or is war inevitable? What does Group A do?';
+
+      const round3C = 'Neither side trusts the other. Both are heavily armed. You\'re unsure of Group B\'s intentionsetheir mobilization could be defensive or offensive. Your intelligence is ambiguous. What does Group A do?';
+      const round4C = 'The cost of this standoff is mounting. Military budgets are draining economies. Civilian populations are suffering. No one is winning. What does Group A do?';
+      const round5C = 'This is the final chance. Breaking this cycle requires couragetaking a risk that could be exploited. But the current path leads nowhere good. What does Group A do?';
+
+      if (mutualDialogue) {
+        if (round === 2) return 'Good news: Talks are ongoing. A framework for de-escalation is being discussed. There\'s genuine hope. But some hardliners in Group A are criticizing the leadership for "being soft." What does Group A do?';
+        if (round === 3) return round3A;
+        if (round === 4) return round4A;
+        return round5A;
+      }
+      if (mutualEscalation) {
+        if (round === 2) return 'Military spending has increased. Intelligence suggests Group B might be planning something. Your military is urging you to prepare for the worst. What does Group A do?';
+        if (round === 3) return round3B;
+        if (round === 4) return round4B;
+        return round5B;
+      }
+      // mixed/oscillating
+      if (round === 2) return 'Your peace offering backfired. Group B mobilized. Your own people are angrythey feel you were foolish to show weakness. Now the pressure is on you to respond. What does Group A do?';
+      if (round === 3) return round3C;
+      if (round === 4) return round4C;
+      return round5C;
+    }
+
+    function showEndScreen() {
+      gameScreen.classList.add('hidden');
+      endScreen.classList.remove('hidden');
+      const timelineStr = state.history.map(h => `ROUND ${h.round}: ${choicesMap[h.userChoice]}\u2192${choicesMap[h.opponentChoice]}`).join(' | ');
+      timelineEl.textContent = timelineStr;
+
+      finalA.innerHTML = `<strong>GROUP A (You)</strong><br><span style="color: var(--teal); font-size: 22px; font-weight: 700;">${state.userScore}</span> points`;
+      finalB.innerHTML = `<strong>GROUP B (Them)</strong><br><span style="color: var(--red); font-size: 22px; font-weight: 700;">${state.oppScore}</span> points`;
+
+      const outcomeType = classifyOutcome();
+      outcomeSummary.innerHTML = `<strong>OUTCOME:</strong> ${outcomeType.outcome}<br><strong>STABILITY:</strong> ${outcomeType.stability}<br><strong>NARRATIVE:</strong> ${outcomeType.narrative}`;
+
+      analysisBox.innerHTML = escalationOccurred() ? `
+        <strong>Why Did This Happen?</strong><br><br>
+        Group B's perspective was identical to yours:<br>
+        - "If we show weakness, Group A will exploit us"<br>
+        - "We must demonstrate strength to stay safe"<br>
+        - "Group A's military buildup proves they're aggressive"<br><br>
+        Each rational decision at the time led to an irrational outcome. This is the Security Dilemmaneither side wants war, but mutual fear creates it.
+      ` : `
+        <strong>Why Did This Happen?</strong><br><br>
+        You both recognized that mutual cooperation benefits everyone more than competition. Someone had to take the first risk of trustingand it worked. This shows that peace is possible when both sides commit to dialogue.
+      `;
+
+      const actualSeq = timelineStr;
+      const bestSeq = '🕊️→🕊️ | 🕊️→🕊️ | 🕊️→🕊️ | 🕊️→🕊️ | 🕊️→🕊️';
+      const worstSeq = '⚡→⚡ | ⚡→⚡ | ⚡→⚡ | ⚡→⚡ | ⚡→⚡';
+
+      whatActual.innerHTML = `<strong>What Actually Happened</strong><br>${actualSeq}<br>You ${state.userScore} pts | Them ${state.oppScore} pts`;
+      whatBest.innerHTML = `<strong>Best Case (Mutual Dialogue)</strong><br>${bestSeq}<br>You 15 pts | Them 15 pts<br>Both groups would be much better off`;
+      whatWorst.innerHTML = `<strong>Worst Case (Mutual Escalation)</strong><br>${worstSeq}<br>You 5 pts | Them 5 pts<br>Mutual destruction, war inevitable`;
+
+      const lostValue = 15 - state.userScore;
+      comparison.textContent = `You could have had 15 points. Instead you have ${state.userScore} points. The difference: ${lostValue} points of lost value. Both groups would have been far better off with a different strategy.`;
+    }
+
+    function classifyOutcome() {
+      const allDialogue = state.history.every(h => h.userChoice === 'dialogue' && h.opponentChoice === 'dialogue');
+      const allEscalation = state.history.every(h => h.userChoice === 'showForce' && h.opponentChoice === 'showForce');
+      const dialogueCount = state.history.filter(h => h.userChoice === 'dialogue' && h.opponentChoice === 'dialogue').length;
+      const forceCount = state.history.filter(h => h.userChoice === 'showForce' && h.opponentChoice === 'showForce').length;
+      const last = state.history[state.history.length - 1];
+      const lastMutualDialogue = last.userChoice === 'dialogue' && last.opponentChoice === 'dialogue';
+      const lastMutualForce = last.userChoice === 'showForce' && last.opponentChoice === 'showForce';
+
+      if (allDialogue) return { outcome: 'Peace achieved through dialogue', stability: 'High - diplomatic framework established', narrative: 'Both groups chose to take the risk of trusting each other. It paid off. Peace is real.' };
+      if (allEscalation) return { outcome: 'Escalated into full conflict', stability: 'None - war imminent', narrative: 'Neither side wanted this, but mutual fear created it. Both are worse off than if they had cooperated.' };
+      if (dialogueCount > forceCount && lastMutualForce) return { outcome: 'Peace collapsed into conflict', stability: 'Deteriorating', narrative: 'You tried to build peace, but one wrong moveone perceived betrayalundid everything. This is how fragile peace can be.' };
+      if (forceCount > dialogueCount && lastMutualDialogue) return { outcome: 'De-escalation at the brink', stability: 'Uncertain', narrative: 'You both chose dialogue when it mattered most. But trust is still broken. Rebuilding will be slow.' };
+      return { outcome: 'Oscillating between tension and dialogue', stability: 'Unstable - prone to recurrence', narrative: 'Neither side could commit to a path. You stayed stuck in a cycle of mistrust.' };
+    }
+
+    function escalationOccurred() {
+      return state.history.some(h => h.userChoice === 'showForce' || h.opponentChoice === 'showForce');
+    }
+
+    function resetGame() {
+      Object.assign(state, {
+        round: 1,
+        userScore: 0,
+        oppScore: 0,
+        userChoices: [],
+        oppChoices: [],
+        history: [],
+        lastRoundPoints: { a: 0, b: 0 }
+      });
+      endScreen.classList.add('hidden');
+      gameScreen.classList.remove('hidden');
+      perspectiveBox.style.display = 'none';
+      updateUI();
+    }
+
+    function togglePerspective() {
+      if (perspectiveBox.style.display === 'none' || perspectiveBox.style.display === '') {
+        perspectiveBox.style.display = 'block';
+        const seq = state.history.map(h => `ROUND ${h.round}: ${choicesMap[h.opponentChoice]}→${choicesMap[h.userChoice]}`).join(' | ');
+        perspectiveBox.innerHTML = `<strong>From Group B's perspective</strong><br>${seq}<br>Total: You ${state.oppScore} pts | Them ${state.userScore} pts`;
+      } else {
+        perspectiveBox.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
