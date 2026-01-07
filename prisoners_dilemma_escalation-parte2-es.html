@@ -185,6 +185,7 @@
         <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s3); margin-top: var(--s3);">
           <button class="btn" id="replay-btn">Repetir Parte II</button>
           <button class="btn btn-secondary" id="back-part1-btn-bottom">Volver a la Parte I</button>
+          <button class="btn btn-secondary" id="home-btn">Volver al Inicio</button>
         </div>
       </div>
     </div>
@@ -248,6 +249,7 @@
     });
 
     backBottomBtn.addEventListener('click', () => { window.location.href = 'prisoners_dilemma_escalation-es.html'; });
+    document.getElementById('home-btn').addEventListener('click', () => { window.location.href = 'index-es.html'; });
 
     function handleChoice(userChoice) {
       const opponentChoice = getOpponentChoice(state.round, state.userChoices);
