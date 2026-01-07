@@ -213,6 +213,7 @@
         <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--spacing-3); margin-top: var(--spacing-3);">
           <button class="btn" id="replay-btn">PLAY AGAIN WITH DIFFERENT CHOICES</button>
           <button class="btn btn-secondary" id="perspective-btn">SEE IT FROM GROUP B'S PERSPECTIVE</button>
+          <button class="btn" id="next-part-btn">CONTINUE TO PART II (MORE UNPREDICTABLE)</button>
         </div>
 
         <div id="perspective-box" class="end-card" style="margin-top: var(--spacing-3); display: none;"></div>
@@ -296,6 +297,7 @@
 
     replayBtn.addEventListener('click', resetGame);
     perspectiveBtn.addEventListener('click', togglePerspective);
+    document.getElementById('next-part-btn').addEventListener('click', () => { window.location.href = 'prisoners_dilemma_escalation-parte2.html'; });
 
     function handleChoice(userChoice) {
       const opponentChoice = getOpponentChoice(state.round, state.userChoices);
