@@ -183,9 +183,10 @@
           <div class="end-card red" id="what-worst"></div>
         </div>
 
-        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s3); margin-top: var(--s3);">
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s3); margin-top: var(--s3);">
           <button class="btn" id="replay-btn">Replay Part II</button>
           <button class="btn btn-secondary" id="back-part1-btn-bottom">Back to Part I</button>
+          <button class="btn btn-secondary" id="datalab-btn">Back to DataLab</button>
           <button class="btn btn-secondary" id="home-btn">Return to Home</button>
         </div>
       </div>
@@ -251,6 +252,7 @@
     });
 
     backBottomBtn.addEventListener('click', () => { window.location.href = 'prisoners_dilemma_escalation.html'; });
+    document.getElementById('datalab-btn').addEventListener('click', () => { window.location.href = 'data-lab.html'; });
     document.getElementById('home-btn').addEventListener('click', () => { window.location.href = 'index.html'; });
 
     function handleChoice(userChoice) {
