@@ -64,6 +64,9 @@
     .outcome-points { color: var(--muted); margin: var(--s2) 0 var(--s3); }
     .hidden { display: none; }
     .auto-forward { text-align: center; padding: var(--s4); background: rgba(33,141,141,0.1); border-radius: var(--radius); margin-top: var(--s4); }
+    .top-nav { display: flex; gap: var(--s3); margin-bottom: var(--s4); font-size: 14px; }
+    .top-nav a { color: var(--teal); text-decoration: none; transition: color 0.2s ease; }
+    .top-nav a:hover { color: #1a6f78; }
     @media (max-width: 1024px) { .game-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 768px) { .game-grid { grid-template-columns: 1fr; } .page-shell { padding: var(--s4); } }
     @media (max-width: 480px) { .title { font-size: 26px; } .round-indicator { font-size: 22px; } }
@@ -72,6 +75,11 @@
 <body>
   <div class="page-shell">
     <div id="start-screen" class="card">
+      <div class="top-nav">
+        <a href="index.html">← Home</a>
+        <span style="color: var(--muted);">|</span>
+        <a href="data-lab.html">← DataLab</a>
+      </div>
       <h1 class="title">The Escalation Dilemma — Part II</h1>
       <p class="subtitle">More realistic: noise and unpredictability</p>
       <div class="scenario">
@@ -177,13 +185,7 @@
           Your gesture of dialogue is real, but it competes against these internal pressures. Group B's "irrational" response isn't irrational—it's rational given their internal constraints. Real peace requires understanding and addressing the internal actors fueling suspicion.
         </div>
 
-        <div class="what-if">
-          <div class="end-card" id="what-actual"></div>
-          <div class="end-card green" id="what-best"></div>
-          <div class="end-card red" id="what-worst"></div>
-        </div>
-
-        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s3); margin-top: var(--s3);">
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s3); margin-top: var(--s4);">
           <button class="btn" id="replay-btn">Replay Part II</button>
           <button class="btn btn-secondary" id="back-part1-btn-bottom">Back to Part I</button>
           <button class="btn btn-secondary" id="datalab-btn">Back to DataLab</button>

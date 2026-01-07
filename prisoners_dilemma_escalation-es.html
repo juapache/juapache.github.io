@@ -80,6 +80,9 @@
     .status { font-size: 20px; font-weight: 700; margin: var(--s2) 0; }
     .outcome-points { color: var(--muted); margin: var(--s2) 0 var(--s3); }
     .hidden { display: none; }
+    .top-nav { display: flex; gap: var(--s3); margin-bottom: var(--s4); font-size: 14px; }
+    .top-nav a { color: var(--teal); text-decoration: none; transition: color 0.2s ease; }
+    .top-nav a:hover { color: #1a6f78; }
     @media (max-width: 1024px) { .game-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 768px) { .game-grid { grid-template-columns: 1fr; } .page-shell { padding: var(--s4); } }
     @media (max-width: 480px) { .title { font-size: 26px; } .round-indicator { font-size: 22px; } }
@@ -88,6 +91,11 @@
 <body>
   <div class="page-shell">
     <div id="start-screen" class="card">
+      <div class="top-nav">
+        <a href="index-es.html">← Inicio</a>
+        <span style="color: var(--muted);">|</span>
+        <a href="data-lab-es.html">← DataLab</a>
+      </div>
       <h1 class="title">El Dilema de la Escalada</h1>
       <p class="subtitle">Comprender el dilema de seguridad</p>
       <div class="scenario">
@@ -189,7 +197,7 @@
         <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s3); margin-top: var(--s3);">
           <button class="btn" id="replay-btn">Jugar de nuevo con otras decisiones</button>
           <button class="btn btn-secondary" id="perspective-btn">Ver desde la perspectiva del Grupo B</button>
-          <button class="btn" id="next-part-btn">Continuar a la Parte II (más imprevisible)</button>
+          <button class="btn" id="next-part-btn">Continuar a la Parte II</button>
         </div>
 
         <div id="perspective-box" class="end-card" style="margin-top: var(--s3); display: none;"></div>
