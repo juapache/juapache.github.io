@@ -1,14 +1,39 @@
 # Website & Portfolio To-Do List
 **Status Report: juapache.github.io + Research-Portfolio + Data-Analysis-Portfolio**  
-**Last Audit:** January 4, 2026 (Updated after session edits)
+**Last Audit:** January 7, 2026 (Full audit after Prisoner's Dilemma implementation)
 
 ---
 ## ✅ UPDATES COMPLETED THIS SESSION
 
-### Pillar 02: Algorithmic Governance - Now Live
-- ✅ Website status changed from "Coming Soon" → "Updated" on all 4 pages (index.html, research.html, index-es.html, research-es.html)
-  - Changed to: `github.com/juapache/Research-Portfolio/tree/main/05-ai-strategy-nlp`
-  - Reason: Research-Portfolio is a standalone repo, not nested under research-workspace
+### NEW: Prisoner's Dilemma Escalation Game - Complete Interactive Tool
+- ✅ **Part I (Basic)** - Complete bilingual implementation
+  - English: `prisoners_dilemma_escalation.html`
+  - Spanish: `prisoners_dilemma_escalation-es.html`
+  - Features: 5-round game, Group A vs Group B dynamics, deterministic opponent behavior
+  - Navigation: Top nav (Home/DataLab), end screen buttons (Replay, Perspective, Continue to Part II)
+  
+- ✅ **Part II (Unpredictable)** - Complete bilingual implementation with noise mechanics
+  - English: `prisoners_dilemma_escalation-parte2.html`
+  - Spanish: `prisoners_dilemma_escalation-parte2-es.html`
+  - Features: Probabilistic opponent behavior (35% misperception shock), internal interests explanation
+  - Navigation: Top nav (Home/DataLab), end screen buttons (Replay, Back to Part I, DataLab, Home)
+  - Educational content: "Understanding the Noise" section explains competing interests (hardliners, economic actors, intelligence, opposition)
+  
+- ✅ **Website Integration**
+  - Linked from data-lab.html and data-lab-es.html
+  - Linked from teaching-es.html (Spanish version)
+  - Auto-forward: Part I end screen includes "Continue to Part II" button
+  - Cross-navigation: All pages properly linked with Home/DataLab returns
+
+- ✅ **Game Mechanics Verified**
+  - Part I: Tit-for-tat opponent (mirrors your last choice)
+  - Part II: Probabilistic defection even when cooperating (models internal pressures)
+  - Scoring: Proper prisoner's dilemma payoff matrix (3,3 mutual coop; 0,5 sucker; 5,0 temptation; 1,1 mutual defect)
+  - UI: Clean history tracking, real-time score updates, narrative progression
+
+### Previous Session: Pillar 02 Algorithmic Governance
+- ✅ Website status changed from "Coming Soon" → "Updated" on all 4 pages
+- ✅ Links corrected to point to Research-Portfolio standalone repo
 
 ## 🔴 CRITICAL: Dead Links & Missing Files
 
@@ -124,11 +149,21 @@ Links status:
 
 ## 🟢 WHAT'S WORKING WELL
 
-1. ✅ **AI Strategy NLP (05)** - Full implementation, well documented, properly featured on website
+1. ✅ **NEW: Prisoner's Dilemma Escalation Game** - Complete interactive teaching tool (Jan 2026)
+   - ✅ Part I & II fully functional in EN/ES
+   - ✅ Proper game theory mechanics (payoff matrices, probabilistic behavior)
+   - ✅ Educational content explaining security dilemma and internal group dynamics
+   - ✅ Clean navigation and cross-linking between parts
+   - ✅ Integrated into DataLab and Teaching sections
+
+2. ✅ **AI Strategy NLP (05)** - Full implementation, well documented, properly featured on website
    - ✅ Links fixed: now pointing to correct Research-Portfolio repo (not research-workspace)
-2. ✅ **Trust Paradox** - Complete with methodology docs, academic references, interactive website page
-3. ✅ **Polarization Spiral** - Complete with methodology docs, academic references, interactive website page
-4. ✅ **Algorithmic Governance Pillar 02** - NEW: Now has substantive notes, first case study, and working papers
+
+3. ✅ **Trust Paradox** - Complete with methodology docs, academic references, interactive website page
+
+4. ✅ **Polarization Spiral** - Complete with methodology docs, academic references, interactive website page
+
+5. ✅ **Algorithmic Governance Pillar 02** - Substantive notes, first case study, and working papers
    - Website updated across all 4 pages (EN/ES) to reflect "Updated" status
 
 ### Website Infrastructure
@@ -182,11 +217,14 @@ Links status:
 
 ### � SUMMARY STATISTICS
 
-### Content Status Overview (Updated)
+### Content Status Overview (Updated Jan 7, 2026)
+- **Interactive Games:** ✅ **NEW: Prisoner's Dilemma (Part I & II)** - 100% complete, bilingual
+- **Research Pillar 01:** Minimal (research questions only) — "Coming Soon"
 - **Research Pillar 02:** ✅ **Updated** (structure + working papers + bibliography + notes + 1 case study)
 - **Research Pillars 03-04:** Empty (notes only) — "Coming Soon"
 - **Research Pillar 05 (AI Strategy NLP):** ~90% complete + links fixed
 - **Data Viz - Trust Paradox:** 100% complete
+- **Data Viz - Polarization Spiral:** 100% complete
 - **Data Viz - Algorithmic Dashboard:** 5% complete (folder only)
 - **Data Viz - Policy Landscape Maps:** 0% complete (empty)
 - **Conflict Data Analysis:** 0% complete (structure only)
@@ -217,15 +255,26 @@ Links status:
 
 ---
 
-## ✅ SESSION SUMMARY
+## ✅ SESSION SUMMARY (January 7, 2026)
 
 This session accomplished:
-- ✅ Elevated Pillar 02 from "Coming Soon" → "Updated" with real content (notes + case study)
+- ✅ **Created complete Prisoner's Dilemma teaching game** with Part I (basic) and Part II (unpredictable/noise)
+  - Built bilingual versions (EN/ES) for both parts
+  - Implemented proper game theory mechanics with probabilistic opponent behavior
+  - Added educational content explaining security dilemma and internal group dynamics
+  - Integrated navigation across all four game pages and main website
+  - Added top navigation (Home/DataLab) and comprehensive end-screen buttons
+  - Verified all links and cross-references work correctly
+
+- ✅ **Enhanced DataLab presence** - New interactive game adds to portfolio of teaching tools
+- ✅ **Improved teaching resources** - Prisoner's Dilemma now linked from teaching-es.html
+
+**Previous session (Jan 4):**
+- ✅ Elevated Pillar 02 from "Coming Soon" → "Updated" with real content
 - ✅ Fixed broken AI Strategy NLP links (all 4 pages)
 - ✅ Fixed "Coming Soon" badge CSS wrapping issue
-- ✅ Updated ES website pages to match EN updates
 
-**Result:** Website more accurately reflects portfolio state; Pillar 02 now has sufficient substance to justify "Updated" tag. Two major blockers remain: teaching PDFs and blog post placeholder.
+**Result:** Website now features three complete interactive visualizations (Trust Paradox, Polarization Spiral, Prisoner's Dilemma) demonstrating technical capabilities and pedagogical approach. DataLab section significantly strengthened.
    - [ ] If removing: Delete empty structure
 
 8. **Algorithmic Impact Dashboard** - Empty project
@@ -325,10 +374,11 @@ This session accomplished:
 - **Links to empty directories:** 4 (research pillar notes folders)
 - **Placeholder content items:** Multiple (blog cards, resources section, manifest.json, AI Strategy Explorer card, Policy Research Tools card)
 
-### Website Completeness
-- ✅ **Fully functional pages:** about, contact, trust-paradox, polarization-spiral, AI Strategy NLP linkages
-- ⚠️ **Pages with issues:** teaching, data-lab, research, index, blog (due to placeholders/empty downloads)
-- 🔴 **Pages with broken links:** teaching (8 missing downloads), index (resources empty, links to empty notes folders)
+### Website Completeness (Updated Jan 7, 2026)
+- ✅ **Fully functional pages:** about, contact, trust-paradox, polarization-spiral, prisoners_dilemma_escalation (all parts), AI Strategy NLP linkages
+- ⚠️ **Pages with minor issues:** data-lab (some "Coming Soon" projects), teaching (missing downloadable materials)
+- 🔴 **Pages with broken links:** teaching (8 missing downloads), index (resources empty)
+- ✅ **Interactive tools count:** 3 complete (Trust Paradox, Polarization Spiral, Prisoner's Dilemma with 4 total pages)
 
 ---
 
