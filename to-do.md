@@ -6,7 +6,23 @@
 ---
 ## ✅ UPDATES COMPLETED TODAY (January 11, 2026)
 
-### Home Button Navigation (Latest)
+### Contact Design Redesign (Latest)
+- ✅ Redesigned contact links in contact.html and contact-es.html
+- ✅ Changed from inline text layout to separate card boxes
+- ✅ Grid layout: `repeat(auto-fit, minmax(240px, 1fr))` - responsive 4-column grid
+- ✅ Each card has: 24px padding, background panel color, 1px border, 12px border-radius
+- ✅ Hover effect: shadow lift + translateY(-2px) for interactive feel
+- ✅ Title as `<h3>` with bold styling
+- ✅ Description text in muted color with proper line-height
+- ✅ Much more permanent and noticeable design
+
+### Pixelfed Added to Index Pages
+- ✅ Added Pixelfed link to [index.html](index.html) contact section
+- ✅ Added Pixelfed link to [index-es.html](index-es.html) contact section
+- ✅ Maintained existing layout (no design changes to index pages)
+- ✅ Pixelfed appears in all 4 locations: contact pages (cards) + index pages (links)
+
+### Home Button Navigation
 - ✅ Added "Home" to top navigation bar on all website pages
 - ✅ English pages: "Home" → `index.html`
 - ✅ Spanish pages: "Inicio" → `index-es.html`
