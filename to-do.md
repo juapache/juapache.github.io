@@ -1,9 +1,35 @@
 # Website & Portfolio To-Do List
 **Status Report: juapache.github.io + Research-Portfolio + Data-Analysis-Portfolio**  
-**Last Audit:** January 7, 2026 (Full audit after Prisoner's Dilemma implementation)
+**Last Audit:** January 11, 2026 (Comprehensive audit + website enhancements)  
+**Last Updated:** January 11, 2026 (Contact links, blog labels, Pixelfed profile)
 
 ---
-## ✅ UPDATES COMPLETED THIS SESSION
+## ✅ UPDATES COMPLETED TODAY (January 11, 2026)
+
+### Contact Page Enhancements
+- ✅ Added descriptive text to all contact options (Email, GitHub, LinkedIn, Pixelfed)
+- ✅ English descriptions: nerdy peace talk, repos, professional profile, photo portfolio
+- ✅ Spanish translations: conversaciones nerds, repositorios, perfil profesional, portafolio de fotos
+- ✅ Applied to both [contact.html](contact.html) and [contact-es.html](contact-es.html)
+- ✅ Styled with `.muted` color and proper spacing
+
+### Blog Post Corrections
+- ✅ "Hello Law!" blog post: Changed status from "Coming Soon" → "poetry" label
+- ✅ Accurate reflection: Blog post already exists at `blog-posts/01-blog-post-title-here.html`
+- ✅ Applied to [blog.html](blog.html)
+
+### Social Profile Integration
+- ✅ Pixelfed link added to contact pages (from Jan 11 earlier work)
+- ✅ Pixelfed added to schema.org `sameAs` array in both index pages
+- ✅ Profile: https://pixelfed.social/huan
+
+### Website Audit Documentation
+- ✅ Created comprehensive [WEBSITE_AUDIT_2026.md](WEBSITE_AUDIT_2026.md)
+- ✅ Identified: 9 broken PDF links, 3 complete projects, critical gaps in portfolio alignment
+- ✅ Provided: 90-day roadmap, priority matrix, quick wins checklist
+
+---
+## ✅ UPDATES COMPLETED PREVIOUSLY THIS SESSION
 
 ### NEW: Prisoner's Dilemma Escalation Game - Complete Interactive Tool
 - ✅ **Part I (Basic)** - Complete bilingual implementation
@@ -37,7 +63,12 @@
 
 ## 🔴 CRITICAL: Dead Links & Missing Files
 
-### Teaching Resources (All Missing)
+### ✅ FIXED (Jan 11): Blog Post Status
+- ✅ "Hello Law!" blog post: Corrected from "Coming Soon" → "poetry" label
+- ✅ Blog post already exists with content, so label now reflects reality
+- ✅ Post accessible at [blog-posts/01-blog-post-title-here.html](blog-posts/01-blog-post-title-here.html)
+
+### Teaching Resources (Ongoing - Decide by Jan 15)
 
 All course material links point to non-existent files:
 - ❌ `pdfs/eu-digital-law.pptx` - **MISSING**
@@ -48,6 +79,16 @@ All course material links point to non-existent files:
 - ✅ `CV-26.pdf` (exists)
 - ✅ `manifest.json` (exists, but only references `sample-brief.pdf`)
 - ❌ `sample-brief.pdf` - **MISSING** (referenced in manifest.json)
+
+**Decision needed:** Upload teaching materials to `/pdfs/` OR remove teaching resource links and direct to Class-Portfolio instead
+
+### ✅ FIXED (Jan 11): Contact Pages Enhanced
+- ✅ Added descriptive text to all contact options
+- ✅ Email: "Let's do nerdy peace talk" (EN) / "Hagamos conversaciones nerds sobre paz" (ES)
+- ✅ GitHub: "Check out my working repositories on research, courses and data experiments" (EN) / "Revisa mis repositorios de investigación, cursos y experimentos de datos" (ES)
+- ✅ LinkedIn: "Check my professional profile" (EN) / "Consulta mi perfil profesional" (ES)
+- ✅ Pixelfed: "I like taking pictures. This is my portfolio of my life in pictures" (EN) / "Me encanta tomar fotos. Este es mi portafolio de mi vida en imágenes" (ES)
+- ✅ Applied to [contact.html](contact.html) and [contact-es.html](contact-es.html)
 
 ## 🟡 CONTENT GAPS: Portfolio ↔ Website Mismatches
 
@@ -94,28 +135,26 @@ All course material links point to non-existent files:
 - 🌐 Website: **NOT MENTIONED**
 2. **Policy Research Tools**: Add example notebooks to `{notebooks/examples}/` directory
 3. **Algorithmic Impact Dashboard**: Build out project or remove "Coming Soon" from website
+
+### ✅ PARTIALLY FIXED (Jan 11): Blog Posts
 **Location:** `blog-posts/` directory
 
-- 🔴 Content: Placeholder text; marked "Coming Soon" on blog listing and post header
-- 🌐 Linked from: [index.html](index.html) and [blog.html](blog.html)
-- Additional placeholder cards on [blog.html](blog.html) (no target links or `#` anchors) all marked "Coming Soon"
+- ✅ **Post 01 "Hello Law!"** - NOW PUBLISHED with "poetry" label
+  - Status changed from "Coming Soon" → "poetry"
+  - Content exists at [blog-posts/01-blog-post-title-here.html](blog-posts/01-blog-post-title-here.html)
+  - Accessible from [blog.html](blog.html)
+
+- 🔴 **Post 02** - Still placeholder text; marked "Coming Soon"
+  - Need to either write content or remove
+
+- 🔴 **Posts 03-04** - Placeholder cards with no actual content
+  - All marked "Coming Soon"
 
 **ACTION REQUIRED:**
-1. Either write actual blog post content for post 02
+1. Either write actual blog post content for posts 02, 03, 04
 2. Or remove from website listings until ready
-**Location:** [index.html](index.html) `#resources` section
 
-
-**ACTION REQUIRED:**
-1. Add actual resources to pdfs/ folder
-2. Update manifest.json with real resource metadata
-3. Ensure JavaScript properly loads and displays resources
-4. Or remove empty section from index.html
-
----
-
-**ACTION REQUIRED:**
-- Either develop course materials
+### Resources Section (Decide by Jan 15)
 ## 🔵 WEBSITE ↔ PORTFOLIO CROSS-REFERENCE ISSUES
 ### Website Links & Content Status
 
