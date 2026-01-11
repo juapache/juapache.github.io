@@ -6,6 +6,15 @@
 ---
 ## ✅ UPDATES COMPLETED TODAY (January 11, 2026)
 
+### Home Button Navigation (Latest)
+- ✅ Added "Home" to top navigation bar on all website pages
+- ✅ English pages: "Home" → `index.html`
+- ✅ Spanish pages: "Inicio" → `index-es.html`
+- ✅ Applied to: about, research, teaching, contact, data-lab, blog, all interactive tools
+- ✅ Also applied to: lesson_intropc, trust-paradox, polarization-spiral (both EN/ES)
+- ✅ Also applied to: all blog post pages
+- ✅ Note: Game pages (Prisoner's Dilemma) already had Home links built into their UI
+
 ### Contact Page Enhancements
 - ✅ Added descriptive text to all contact options (Email, GitHub, LinkedIn, Pixelfed)
 - ✅ English descriptions: nerdy peace talk, repos, professional profile, photo portfolio
