@@ -50,6 +50,29 @@ a:hover {
     transform: translateY(-1px);
 }
 
+/* Contact card hover effects (replaces JavaScript) */
+.contact-card-link:hover,
+.contact-card-link:focus-visible {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+}
+
+a:focus, a:focus-visible {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+button:focus, button:focus-visible {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 4px;
+}
+
+[tabindex]:focus, [tabindex]:focus-visible {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 4px;
+}
+
 header {
     position: sticky;
     top: 0;
@@ -81,6 +104,17 @@ nav ul li a {
 
 nav ul li a:hover {
     border-color: var(--accent-2);
+}
+
+nav ul li a.active {
+    border-color: var(--accent-2);
+    color: var(--accent-2);
+    font-weight: 600;
+}
+
+nav ul li a:focus, nav ul li a:focus-visible {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 4px;
 }
 
 .nav-muted {
@@ -188,6 +222,11 @@ section {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+}
+
+.btn:focus, .btn:focus-visible {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 4px;
 }
 
 .btn.primary {

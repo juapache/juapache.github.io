@@ -294,6 +294,28 @@ Desbloqueemos el bucle, reconstruir raíz.</p>
     }
     swapPortraitWithEasterEgg();
     loadResources();
+
+    // Highlight current page in navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index-es.html';
+      const navLinks = document.querySelectorAll('nav ul li a');
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === '' && href === 'index-es.html')) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Console easter egg welcome message
+    console.log("%c🌍 Welcome to Juan José's portfolio!", "font-size: 20px; font-weight: bold; color: #3aa6b9;");
+    console.log("%cPeace, technology, and data for global equity 🌱", "font-size: 14px; color: #aab7ce;");
+    console.log("📍 Currently exploring: AI strategy NLP analysis");
+    console.log("🔬 Research focus: Technodiversity & decolonization");
+    console.log("💬 Let's talk about: Global South AI governance, peace tech, or open data");
+    console.log("📧 Get in touch: huan@juapache.dev");
+    console.log("🐙 GitHub: github.com/juapache");
+    console.log("📸 Pixelfed: pixelfed.social/huan");
   </script>
 </body>
 </html>

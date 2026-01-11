@@ -40,19 +40,19 @@
           <p class="subtitle">Para colaborar en gobernanza de IA, innovación para la paz o iniciativas de tecnodiversidad.</p>
         </div>
         <div class="contact-links" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 24px;">
-          <a href="mailto:juapache@protonmail.com" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+          <a href="mailto:juapache@protonmail.com" class="contact-card-link" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;">
             <h3 style="margin: 0 0 8px 0; color: var(--text);">Email</h3>
             <p style="font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5;">Hagamos conversaciones nerds sobre paz.</p>
           </a>
-          <a href="https://github.com/juapache" target="_blank" rel="noopener" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+          <a href="https://github.com/juapache" target="_blank" rel="noopener" class="contact-card-link" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;">
             <h3 style="margin: 0 0 8px 0; color: var(--text);">GitHub</h3>
             <p style="font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5;">Revisa mis repositorios de investigación, cursos y experimentos de datos.</p>
           </a>
-          <a href="https://www.linkedin.com/in/juanjosvp/" target="_blank" rel="noopener" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+          <a href="https://www.linkedin.com/in/juanjosvp/" target="_blank" rel="noopener" class="contact-card-link" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;">
             <h3 style="margin: 0 0 8px 0; color: var(--text);">LinkedIn</h3>
             <p style="font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5;">Consulta mi perfil profesional.</p>
           </a>
-          <a href="https://pixelfed.social/huan" target="_blank" rel="noopener" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+          <a href="https://pixelfed.social/huan" target="_blank" rel="noopener" class="contact-card-link" style="display: block; padding: 24px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 12px; text-decoration: none; transition: all 0.2s ease;">
             <h3 style="margin: 0 0 8px 0; color: var(--text);">Pixelfed</h3>
             <p style="font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5;">Me encanta tomar fotos. Este es mi portafolio de mi vida en imágenes.</p>
           </a>
@@ -90,5 +90,29 @@
       <a class="deep-link" href="index-es.html">Volver al inicio →</a>
     </div>
   </footer>
+
+  <script>
+    // Highlight current page in navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index-es.html';
+      const navLinks = document.querySelectorAll('nav ul li a');
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === '' && href === 'index-es.html')) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Console easter egg welcome message
+    console.log("%c🌍 Welcome to Juan José's portfolio!", "font-size: 20px; font-weight: bold; color: #3aa6b9;");
+    console.log("%cPeace, technology, and data for global equity 🌱", "font-size: 14px; color: #aab7ce;");
+    console.log("📍 Currently exploring: AI strategy NLP analysis");
+    console.log("🔬 Research focus: Technodiversity & decolonization");
+    console.log("💬 Let's talk about: Global South AI governance, peace tech, or open data");
+    console.log("📧 Get in touch: huan@juapache.dev");
+    console.log("🐙 GitHub: github.com/juapache");
+    console.log("📸 Pixelfed: pixelfed.social/huan");
+  </script>
 </body>
 </html>
