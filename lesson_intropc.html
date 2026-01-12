@@ -125,6 +125,17 @@
               <p>We tend to see what we can describe. Expanding our language—beyond war terms—allows us to perceive peace dynamics and opportunities.</p>
             </details>
 
+            <div class="resources-block">
+              <h3>Additional Resources & Materials</h3>
+              <p>Video lectures and materials coming soon. Placeholder for embedded videos and downloadable materials.</p>
+              <div class="resource-placeholder">
+                <p>Video 1 placeholder</p>
+              </div>
+              <div class="resource-placeholder">
+                <p>Video 2 placeholder</p>
+              </div>
+            </div>
+
             <div class="quiz-block" aria-labelledby="quiz-title">
               <h3 id="quiz-title">Quick Check</h3>
               <form id="quiz" class="quiz" aria-describedby="quiz-desc">
@@ -156,17 +167,6 @@
                   <span id="quiz-result" role="status" aria-live="polite"></span>
                 </div>
               </form>
-            </div>
-
-            <div class="resources-block">
-              <h3>Additional Resources & Materials</h3>
-              <p>Video lectures and materials coming soon. Placeholder for embedded videos and downloadable materials.</p>
-              <div class="resource-placeholder">
-                <p>Video 1 placeholder</p>
-              </div>
-              <div class="resource-placeholder">
-                <p>Video 2 placeholder</p>
-              </div>
             </div>
 
             <div class="notes-block">
@@ -252,7 +252,13 @@
               <p>Prejudices, “that’s just how it is,” religious or nationalist rationales that normalize harm.</p>
             </details>
 
-            <p class="highlight">Key Realization: Peace requires dismantling structural and cultural violence, not only stopping direct violence.</p>
+            <div class="resources-block">
+              <h3>Activity / Simulation: Violence, Types & Behaviors</h3>
+              <p>Placeholder for an interactive activity exploring direct, structural, and cultural violence.</p>
+              <div class="resource-placeholder">
+                <p>Activity / Simulation placeholder</p>
+              </div>
+            </div>
 
             <div class="resources-block">
               <h3>Additional Resources & Materials</h3>
@@ -264,6 +270,41 @@
                 <p>Video 2 placeholder</p>
               </div>
             </div>
+
+            <div class="quiz-block" aria-labelledby="quiz-title-violence">
+              <h3 id="quiz-title-violence">Quick Check</h3>
+              <form id="quiz-violence" class="quiz" aria-describedby="quiz-desc-violence">
+                <p id="quiz-desc-violence" class="muted">3 questions on violence layers.</p>
+
+                <fieldset>
+                  <legend>1) Structural violence is best seen in…</legend>
+                  <label><input type="radio" name="q1v" value="a"> a single harsh insult</label>
+                  <label><input type="radio" name="q1v" value="b"> systemic lack of access to education</label>
+                  <label><input type="radio" name="q1v" value="c"> a one-time accident</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>2) Cultural violence often appears as…</legend>
+                  <label><input type="radio" name="q2v" value="a"> stereotypes that normalize harm</label>
+                  <label><input type="radio" name="q2v" value="b"> random weather events</label>
+                  <label><input type="radio" name="q2v" value="c"> diplomatic protocols</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>3) Direct violence is characterized by…</legend>
+                  <label><input type="radio" name="q3v" value="a"> visible, countable acts</label>
+                  <label><input type="radio" name="q3v" value="b"> hidden norms and stories</label>
+                  <label><input type="radio" name="q3v" value="c"> long-term access gaps</label>
+                </fieldset>
+
+                <div class="quiz-actions">
+                  <button type="button" id="check-quiz-violence" class="button-primary">Check answers</button>
+                  <span id="quiz-result-violence" role="status" aria-live="polite"></span>
+                </div>
+              </form>
+            </div>
+
+            <p class="highlight">Key Realization: Peace requires dismantling structural and cultural violence, not only stopping direct violence.</p>
 
             <div class="notes-block">
               <label for="notes-m4" class="notes-label">Reflection — Where do you see cultural or structural layers?</label>
@@ -470,21 +511,33 @@
           if (nextBtn) showSection(nextBtn.dataset.next);
         }));
 
-      // Quiz (keep quiz logic for later sections)
-      const $checkQuiz = document.getElementById('check-quiz');
-      const $quizResult = document.getElementById('quiz-result');
-      if ($checkQuiz) {
-        $checkQuiz.addEventListener('click', () => {
-          const answers = { q1: 'b', q2: 'b', q3: 'b' };
+      // Quizzes (support multiple quick checks)
+      const quizzes = [
+        {
+          buttonId: 'check-quiz',
+          resultId: 'quiz-result',
+          answers: { q1: 'b', q2: 'b', q3: 'b' }
+        },
+        {
+          buttonId: 'check-quiz-violence',
+          resultId: 'quiz-result-violence',
+          answers: { q1v: 'b', q2v: 'a', q3v: 'a' }
+        }
+      ];
+
+      quizzes.forEach(q => {
+        const btn = document.getElementById(q.buttonId);
+        const result = document.getElementById(q.resultId);
+        if (!btn || !result) return;
+        btn.addEventListener('click', () => {
           let score = 0;
-          Object.entries(answers).forEach(([k,v]) => {
+          Object.entries(q.answers).forEach(([k, v]) => {
             const checked = document.querySelector(`input[name="${k}"]:checked`);
             if (checked && checked.value === v) score++;
           });
-          localStorage.setItem(LS_QUIZ, String(score));
-          $quizResult.textContent = `Score: ${score} / ${Object.keys(answers).length}`;
+          result.textContent = `Score: ${score} / ${Object.keys(q.answers).length}`;
         });
-      }
+      });
 
       // Show initial section
       showSection('#m1');
