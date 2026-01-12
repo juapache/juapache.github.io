@@ -38,7 +38,10 @@
         <header class="course-header">
           <div class="header-title">
             <a href="index.html" class="home-btn" title="Back to home">←</a>
-            <h1 id="session-title">Introduction to Peace and Conflict Studies</h1>
+            <div class="title-group">
+              <h1 id="session-title">Introduction to Peace and Conflict Studies</h1>
+              <p class="subtitle-tagline">On war, violence, love and peace as an opportunity</p>
+            </div>
           </div>
         </header>
 
@@ -296,9 +299,11 @@
     }
 
     .course-wrapper { max-width: 1000px; margin: 40px auto; }
-    .course-header { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; padding: 20px 16px; }
+    .course-header { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; padding: 20px 16px; background: var(--card); border-radius: 16px; margin: 0 16px; }
     .header-title { display: flex; gap: 12px; align-items: center; justify-content: center; }
-    .course-header h1 { font-size: 28px; margin: 0; text-align: center; }
+    .title-group { text-align: center; }
+    .course-header h1 { font-size: 28px; margin: 0 0 4px 0; }
+    .subtitle-tagline { margin: 0; font-size: 14px; color: var(--muted); font-style: italic; }
     .home-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius); border: 1px solid var(--stroke); background: var(--card); color: var(--text); cursor: pointer; font-size: 16px; text-decoration: none; transition: background 0.2s; }
     .home-btn:hover { background: var(--accent-2); }
 
@@ -330,9 +335,10 @@
     .module-section h2 { font-size: 24px; margin-bottom: 8px; }
     .lead { color: var(--muted); margin-bottom: 16px; }
     .concept { border: 1px solid var(--stroke); border-radius: var(--radius); padding: 12px 16px; background: var(--card); margin-bottom: 10px; }
-    .concept-alt-0 { background: #e8f0f9; border-color: #c5dff0; }
-    .concept-alt-1 { background: #d4e6f1; border-color: #a9cde4; }
+    .concept-alt-0 { background: #e8f0f9; border-color: #c5dff0; color: #1a3a52; }
+    .concept-alt-1 { background: #d4e6f1; border-color: #a9cde4; color: #1a3a52; }
     .concept summary { cursor: pointer; font-weight: 600; }
+    .concept-alt-0 summary, .concept-alt-1 summary { color: inherit; }
     .highlight { background: #fff4c2; border: 1px solid #ffe27a; padding: 10px 12px; border-radius: var(--radius); }
 
     .notes-block { margin-top: 12px; }
