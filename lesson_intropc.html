@@ -164,6 +164,7 @@
 
                 <div class="quiz-actions">
                   <button type="button" id="check-quiz" class="button-primary">Check answers</button>
+                  <button type="button" id="try-quiz" class="button-secondary">Try again</button>
                   <span id="quiz-result" role="status" aria-live="polite"></span>
                 </div>
               </form>
@@ -299,6 +300,7 @@
 
                 <div class="quiz-actions">
                   <button type="button" id="check-quiz-violence" class="button-primary">Check answers</button>
+                  <button type="button" id="try-quiz-violence" class="button-secondary">Try again</button>
                   <span id="quiz-result-violence" role="status" aria-live="polite"></span>
                 </div>
               </form>
@@ -354,6 +356,7 @@
             <div class="module-actions module-actions-centered">
               <button class="button-quiet" data-prev="#m4">← Previous</button>
               <button class="button-primary" data-complete="m5">Mark section complete</button>
+              <button class="button-danger" id="reset-lesson">Restart lesson (clear responses)</button>
               <div class="pager pager-right">
                 <a class="button-link" href="teaching.html">Finish & Back to Teaching</a>
               </div>
@@ -444,7 +447,7 @@
     .resources-block h3 { margin: 0 0 12px 0; font-size: 18px; }
     .resource-placeholder { height: 200px; background: #f0f0f0; border: 2px dashed #ccc; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--muted); margin-bottom: 10px; }
 
-    .quiz-block { margin-top: 12px; border: 1px solid var(--stroke); border-radius: var(--radius); padding: 16px; background: var(--card); }
+    .quiz-block { margin-top: 12px; margin-bottom: 16px; border: 1px solid var(--stroke); border-radius: var(--radius); padding: 16px; background: var(--card); }
     .quiz fieldset { border: none; margin-bottom: 12px; }
     .quiz legend { font-weight: 600; margin-bottom: 6px; }
     .quiz label { display: block; margin: 4px 0; }
@@ -511,15 +514,17 @@
           if (nextBtn) showSection(nextBtn.dataset.next);
         }));
 
-      // Quizzes (support multiple quick checks)
+      // Quizzes (support multiple quick checks + try again)
       const quizzes = [
         {
           buttonId: 'check-quiz',
+          tryId: 'try-quiz',
           resultId: 'quiz-result',
           answers: { q1: 'b', q2: 'b', q3: 'b' }
         },
         {
           buttonId: 'check-quiz-violence',
+          tryId: 'try-quiz-violence',
           resultId: 'quiz-result-violence',
           answers: { q1v: 'b', q2v: 'a', q3v: 'a' }
         }
@@ -527,17 +532,48 @@
 
       quizzes.forEach(q => {
         const btn = document.getElementById(q.buttonId);
+        const tryBtn = q.tryId ? document.getElementById(q.tryId) : null;
         const result = document.getElementById(q.resultId);
         if (!btn || !result) return;
+        const names = Object.keys(q.answers);
+
+        const clearQuiz = () => {
+          names.forEach(name => {
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+          });
+          result.textContent = '';
+        };
+
         btn.addEventListener('click', () => {
           let score = 0;
-          Object.entries(q.answers).forEach(([k, v]) => {
-            const checked = document.querySelector(`input[name="${k}"]:checked`);
-            if (checked && checked.value === v) score++;
+          names.forEach(name => {
+            const checked = document.querySelector(`input[name="${name}"]:checked`);
+            if (checked && checked.value === q.answers[name]) score++;
           });
-          result.textContent = `Score: ${score} / ${Object.keys(q.answers).length}`;
+          result.textContent = `Score: ${score} / ${names.length}`;
         });
+
+        if (tryBtn) tryBtn.addEventListener('click', clearQuiz);
       });
+
+      // Restart lesson: clear notes, progress, quiz selections/results
+      const resetLesson = document.getElementById('reset-lesson');
+      if (resetLesson) {
+        resetLesson.addEventListener('click', () => {
+          const ok = confirm('Clear all responses and restart this lesson?');
+          if (!ok) return;
+          localStorage.removeItem(LS_PROGRESS);
+          localStorage.removeItem(LS_QUIZ);
+          for (let i = 1; i <= TOTAL; i++) localStorage.removeItem(LS_NOTES_PREFIX + 'm' + i);
+          progress = new Set();
+          document.querySelectorAll('.notes').forEach(n => n.value = '');
+          document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+          document.querySelectorAll('#quiz-result, #quiz-result-violence').forEach(el => el.textContent = '');
+          updateProgressUI();
+          showSection('#m1');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
 
       // Show initial section
       showSection('#m1');
