@@ -109,7 +109,9 @@
             <div class="resources-block">
               <h3>Additional Resources & Materials</h3>
               <p>Video lectures and materials coming soon. Placeholder for embedded videos and downloadable materials.</p>
-              <iframe width="100%" max-width="600px" height="340" src="https://www.youtube.com/embed/KChXN88tpEs" title="History of Peace Studies" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px; max-width: 600px; margin-bottom: 12px;"></iframe>
+              <div class="resource-placeholder">
+                <p>Video 1 placeholder</p>
+              </div>
               <div class="resource-placeholder">
                 <p>Video 2 placeholder</p>
               </div>
@@ -139,7 +141,7 @@
             </details>
 
             <details class="concept concept-alt-1">
-              <summary><strong>Structural Violence:</strong> The hidden system</summary>
+              <summary><strong>The Shift:</strong> From counting bodies to Positive Peace</summary>
               <p>Positive Peace measures the presence of conditions that prevent violence: fair institutions, rights protections, access to basic needs, and trusted conflict resolution mechanisms.</p>
             </details>
 
@@ -186,17 +188,15 @@
                 </fieldset>
 
                 <div class="quiz-actions">
-                  <button type="button" id="check-quiz-violence" class="button-primary">Check answers</button>
-                  <button type="button" id="try-quiz-violence" class="button-secondary">Try again</button>
-                  <span id="quiz-result-violence" role="status" aria-live="polite"></span>
+                  <button type="button" id="check-quiz" class="button-primary">Check answers</button>
+                  <button type="button" id="try-quiz" class="button-secondary">Try again</button>
+                  <span id="quiz-result" role="status" aria-live="polite"></span>
                 </div>
               </form>
             </div>
 
-            <p class="highlight">Key Realization: Peace requires dismantling structural and cultural violence, not only stopping direct violence.</p>
-
             <div class="notes-block">
-              <label for="notes-m2" class="notes-label">Reflection — Where do you see cultural or structural layers?</label>
+              <label for="notes-m2" class="notes-label">Reflection — What indicators of Positive Peace feel most tangible?</label>
               <textarea id="notes-m2" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
             </div>
 
@@ -261,26 +261,34 @@
           <!-- 4. Epistemology -->
           <section id="m4" class="module-section" aria-labelledby="m4-title" hidden>
             <h2 id="m4-title">4. The Epistemological Challenge: Can we study "Nothing"?</h2>
-            <p class="lead">If peace is defined by what doesn't happen, how do we observe it?</p>
+            <p class="lead">Violence has visible and hidden layers; peace must address all.</p>
 
             <details class="concept concept-alt-0" open>
-              <summary><strong>Measuring the Invisible:</strong> Beyond "absence of war"</summary>
-              <p>Metrics built only on violent events undercount peace. Non-events are hard to observe; we shift toward indicators of resilience, inclusion, and equitable systems.</p>
+              <summary><strong>Direct Violence:</strong> The visible act</summary>
+              <p>Hits, insults, war—events we can point to and count.</p>
             </details>
 
             <details class="concept concept-alt-1">
-              <summary><strong>The Shift:</strong> From counting bodies to Positive Peace</summary>
-              <p>Positive Peace measures the presence of conditions that prevent violence: fair institutions, rights protections, access to basic needs, and trusted conflict resolution mechanisms.</p>
+              <summary><strong>Structural Violence:</strong> The hidden system</summary>
+              <p>Poverty, legal discrimination, lack of access—patterned harm built into institutions and norms.</p>
             </details>
 
             <details class="concept concept-alt-0">
-              <summary><strong>The Descartes Trap:</strong> Vocabulary shapes perception</summary>
+              <summary><strong>Cultural Violence:</strong> The justification</summary>
               <p>Prejudices, “that’s just how it is,” religious or nationalist rationales that normalize harm.</p>
             </details>
 
             <div class="resources-block">
+              <h3>Activity / Simulation: Violence, Types & Behaviors</h3>
+              <p>Placeholder for an interactive activity exploring direct, structural, and cultural violence.</p>
+              <div class="resource-placeholder">
+                <p>Activity / Simulation placeholder</p>
+              </div>
+            </div>
+
+            <div class="resources-block">
               <h3>Additional Resources & Materials</h3>
-              <p>Video lectures and materials coming soon. Placeholder for embedded videos and downloadable materials.</p>
+              <p>Case simulations, scenario walkthroughs, and readings coming soon. Placeholder for embedded videos and downloadable materials.</p>
               <div class="resource-placeholder">
                 <p>Video 1 placeholder</p>
               </div>
@@ -289,42 +297,44 @@
               </div>
             </div>
 
-            <div class="quiz-block" aria-labelledby="quiz-title">
-              <h3 id="quiz-title">Quick Check</h3>
-              <form id="quiz" class="quiz" aria-describedby="quiz-desc">
-                <p id="quiz-desc" class="muted">3 questions to reinforce core distinctions.</p>
+            <div class="quiz-block" aria-labelledby="quiz-title-violence">
+              <h3 id="quiz-title-violence">Quick Check</h3>
+              <form id="quiz-violence" class="quiz" aria-describedby="quiz-desc-violence">
+                <p id="quiz-desc-violence" class="muted">3 questions on violence layers.</p>
 
                 <fieldset>
-                  <legend>1) "Positive Peace" focuses on the…</legend>
-                  <label><input type="radio" name="q1" value="a"> absence of direct violence only</label>
-                  <label><input type="radio" name="q1" value="b"> presence of systems preventing violence</label>
-                  <label><input type="radio" name="q1" value="c"> superiority of one side's victory</label>
+                  <legend>1) Structural violence is best seen in…</legend>
+                  <label><input type="radio" name="q1v" value="a"> a single harsh insult</label>
+                  <label><input type="radio" name="q1v" value="b"> systemic lack of access to education</label>
+                  <label><input type="radio" name="q1v" value="c"> a one-time accident</label>
                 </fieldset>
 
                 <fieldset>
-                  <legend>2) Which best illustrates structural violence?</legend>
-                  <label><input type="radio" name="q2" value="a"> a public insult in a meeting</label>
-                  <label><input type="radio" name="q2" value="b"> discriminatory laws limiting access to education</label>
-                  <label><input type="radio" name="q2" value="c"> a temporary misunderstanding</label>
+                  <legend>2) Cultural violence often appears as…</legend>
+                  <label><input type="radio" name="q2v" value="a"> stereotypes that normalize harm</label>
+                  <label><input type="radio" name="q2v" value="b"> random weather events</label>
+                  <label><input type="radio" name="q2v" value="c"> diplomatic protocols</label>
                 </fieldset>
 
                 <fieldset>
-                  <legend>3) The "Descartes Trap" suggests that…</legend>
-                  <label><input type="radio" name="q3" value="a"> peace is purely subjective</label>
-                  <label><input type="radio" name="q3" value="b"> language shapes what we can perceive</label>
-                  <label><input type="radio" name="q3" value="c"> only wars can be studied</label>
+                  <legend>3) Direct violence is characterized by…</legend>
+                  <label><input type="radio" name="q3v" value="a"> visible, countable acts</label>
+                  <label><input type="radio" name="q3v" value="b"> hidden norms and stories</label>
+                  <label><input type="radio" name="q3v" value="c"> long-term access gaps</label>
                 </fieldset>
 
                 <div class="quiz-actions">
-                  <button type="button" id="check-quiz" class="button-primary">Check answers</button>
-                  <button type="button" id="try-quiz" class="button-secondary">Try again</button>
-                  <span id="quiz-result" role="status" aria-live="polite"></span>
+                  <button type="button" id="check-quiz-violence" class="button-primary">Check answers</button>
+                  <button type="button" id="try-quiz-violence" class="button-secondary">Try again</button>
+                  <span id="quiz-result-violence" role="status" aria-live="polite"></span>
                 </div>
               </form>
             </div>
 
+            <p class="highlight">Key Realization: Peace requires dismantling structural and cultural violence, not only stopping direct violence.</p>
+
             <div class="notes-block">
-              <label for="notes-m4" class="notes-label">Reflection — What indicators of Positive Peace feel most tangible?</label>
+              <label for="notes-m4" class="notes-label">Reflection — Where do you see cultural or structural layers?</label>
               <textarea id="notes-m4" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
             </div>
 

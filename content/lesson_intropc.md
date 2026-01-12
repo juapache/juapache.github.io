@@ -37,7 +37,7 @@ Read more about UPEACE here: https://upeace.org/
 
 ---
 
-## Section 2 — The Epistemological Challenge
+## Section 2 — Anatomy of Violence
 ### Measuring the Invisible: Beyond “absence of war”
 - Paragraph: 
 
@@ -83,33 +83,27 @@ Read more about UPEACE here: https://upeace.org/
 
 ---
 
-## Section 4 — Anatomy of Violence
-### Direct Violence: The visible act
+## Section 4 — The Epistemological Challenge
+### Measuring the Invisible: Beyond "absence of war"
 - Paragraph: 
 
-### Structural Violence: The hidden system
+### The Shift: From counting bodies to Positive Peace
 - Paragraph: 
 
-### Cultural Violence: The justification
+### The Descartes Trap: Vocabulary shapes perception
 - Paragraph: 
-
-### Activity / Simulation: Violence, Types & Behaviors
-- Activity description: 
 
 ### Additional Resources & Materials
 - Video 1 placeholder description: 
 - Video 2 placeholder description: 
 
-### Quick Check (violence layers)
-1. Structural violence is best seen in…
-2. Cultural violence often appears as…
-3. Direct violence is characterized by…
-
-### Key Realization
-- Peace requires dismantling structural and cultural violence, not only stopping direct violence.
+### Quick Check (edit stem/answers if desired)
+1. "Positive Peace" focuses on the…
+2. Which best illustrates structural violence?
+3. The "Descartes Trap" suggests that…
 
 ### Reflection Prompt
-- Where do you see cultural or structural layers?
+- What indicators of Positive Peace feel most tangible?
 
 ---
 
