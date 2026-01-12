@@ -347,7 +347,60 @@
                 <p>Video 2 placeholder</p>
               </div>
             </div>
+            <div class="quiz-block" aria-labelledby="quiz-title-final">
+              <h3 id="quiz-title-final">Final Comprehensive Quiz</h3>
+              <form id="quiz-final" class="quiz" aria-describedby="quiz-desc-final">
+                <p id="quiz-desc-final" class="muted">6 questions evaluating concepts from the entire session.</p>
 
+                <fieldset>
+                  <legend>1) Irenology is best described as…</legend>
+                  <label><input type="radio" name="qf1" value="a"> the study of war tactics</label>
+                  <label><input type="radio" name="qf1" value="b"> the multifactorial study of threats to peace and conditions for harmony</label>
+                  <label><input type="radio" name="qf1" value="c"> a political philosophy of governance</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>2) The Descartes Trap suggests that…</legend>
+                  <label><input type="radio" name="qf2" value="a"> our language limits what we can perceive about peace</label>
+                  <label><input type="radio" name="qf2" value="b"> philosophy is irrelevant to peace studies</label>
+                  <label><input type="radio" name="qf2" value="c"> war is always visible and measurable</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>3) Galtung's key distinction separates…</legend>
+                  <label><input type="radio" name="qf3" value="a"> violent and non-violent actors</label>
+                  <label><input type="radio" name="qf3" value="b"> negative peace (absence of war) and positive peace (systems preventing violence)</label>
+                  <label><input type="radio" name="qf3" value="c"> rich and poor nations</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>4) Structural violence differs from direct violence because it…</legend>
+                  <label><input type="radio" name="qf4" value="a"> is always easier to measure</label>
+                  <label><input type="radio" name="qf4" value="b"> is embedded in systems and institutions rather than visible acts</label>
+                  <label><input type="radio" name="qf4" value="c"> is only studied in the Global South</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>5) Cultural violence operates by…</legend>
+                  <label><input type="radio" name="qf5" value="a"> justifying and normalizing structural and direct violence</label>
+                  <label><input type="radio" name="qf5" value="b"> creating jobs in peacekeeping</label>
+                  <label><input type="radio" name="qf5" value="c"> always being visible and countable</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>6) In conflict transformation, the goal is to…</legend>
+                  <label><input type="radio" name="qf6" value="a"> eliminate all disagreement</label>
+                  <label><input type="radio" name="qf6" value="b"> shift relationships and address root causes through dialogue and institutional change</label>
+                  <label><input type="radio" name="qf6" value="c"> ensure one side wins decisively</label>
+                </fieldset>
+
+                <div class="quiz-actions">
+                  <button type="button" id="check-quiz-final" class="button-primary">Check answers</button>
+                  <button type="button" id="try-quiz-final" class="button-secondary">Try again</button>
+                  <span id="quiz-result-final" role="status" aria-live="polite"></span>
+                </div>
+              </form>
+            </div>
             <div class="notes-block">
               <label for="notes-m5" class="notes-label">Reflection — Where could trust-building change the game?</label>
               <textarea id="notes-m5" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
@@ -527,6 +580,12 @@
           tryId: 'try-quiz-violence',
           resultId: 'quiz-result-violence',
           answers: { q1v: 'b', q2v: 'a', q3v: 'a' }
+        },
+        {
+          buttonId: 'check-quiz-final',
+          tryId: 'try-quiz-final',
+          resultId: 'quiz-result-final',
+          answers: { qf1: 'b', qf2: 'a', qf3: 'b', qf4: 'b', qf5: 'a', qf6: 'b' }
         }
       ];
 
