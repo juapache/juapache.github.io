@@ -31,122 +31,233 @@
     </div>
   </header>
 
-  <main>
-    <section id="lesson-page">
-      <div class="container">
-        <div class="section-heading">
-          <h1>Lesson 1: Foundational Concepts</h1>
-          <p class="subtitle">Intro to Peace and Conflict Studies</p>
-          <p class="muted">Understanding the core frameworks and terminology in peace research</p>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <main id="main-content" tabindex="-1">
+    <section id="lesson-page" aria-labelledby="session-title">
+      <div class="container course-wrapper">
+        <header class="course-header">
+          <h1 id="session-title">Intro to Peace & Conflict Studies — Session 1</h1>
+          <p class="subtitle">A human, interactive, and accessible first session</p>
+          <div class="course-utilities">
+            <button id="export-notes" class="button-secondary" aria-describedby="export-desc">Export all notes</button>
+            <span id="export-desc" class="sr-only">Downloads a text file containing your notes from all sections.</span>
+            <button id="reset-progress" class="button-danger" aria-describedby="reset-desc">Reset progress</button>
+            <span id="reset-desc" class="sr-only">Clears completion and quiz data for this session.</span>
+          </div>
+        </header>
+
+        <div class="progress-block" role="group" aria-label="Session progress">
+          <div class="progress-meta">
+            <span id="progress-text" aria-live="polite">0 / 5 sections completed</span>
+          </div>
+          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span class="progress-fill" style="width:0%"></span></div>
         </div>
 
-        <article class="lesson-content">
-          <section class="lesson-section">
-            <h2>Learning Objectives</h2>
-            <ul class="lesson-list">
-              <li>Define peace in its negative and positive dimensions</li>
-              <li>Distinguish between conflict, violence, and structural inequality</li>
-              <li>Introduce key peace research frameworks and methodologies</li>
-              <li>Explore the relationship between justice and peacebuilding</li>
-            </ul>
+        <nav class="module-nav" aria-label="Session modules">
+          <button class="module-link" data-target="#m1" aria-controls="m1" aria-current="true">1. History & Context</button>
+          <button class="module-link" data-target="#m2" aria-controls="m2">2. Epistemology</button>
+          <button class="module-link" data-target="#m3" aria-controls="m3">3. What is Peace?</button>
+          <button class="module-link" data-target="#m4" aria-controls="m4">4. Anatomy of Violence</button>
+          <button class="module-link" data-target="#m5" aria-controls="m5">5. Conflict as Opportunity</button>
+        </nav>
+
+        <article class="lesson-content" aria-label="Interactive content">
+          <!-- 1. History & Context -->
+          <section id="m1" class="module-section" aria-labelledby="m1-title">
+            <h2 id="m1-title">1. History & Context: The Birth of a Discipline</h2>
+            <p class="lead">A brief origin story to frame why Peace Studies emerged and why it still matters.</p>
+
+            <details class="concept" open>
+              <summary><strong>Origin Story:</strong> Post-WWII and the Cold War</summary>
+              <p>The mid-20th century introduced existential risks—nuclear escalation, global ideological confrontation, and mass civilian vulnerability. Scholars and practitioners responded by building a field dedicated to understanding peace as rigorously as war.</p>
+            </details>
+
+            <details class="concept">
+              <summary><strong>Irenology Defined:</strong> Eirene (Peace) + Logos (Study)</summary>
+              <p>Irenology treats peace as a multifactorial phenomenon: threats to peace, conditions for harmony, and the systemic interactions among individuals, communities, and institutions.</p>
+            </details>
+
+            <details class="concept">
+              <summary><strong>The UPEACE Mandate:</strong> A university for the science of peace</summary>
+              <p>UPEACE was established to cultivate scholarship and practice oriented to preventing violence, fostering justice, and developing the skills to construct sustainable peace.</p>
+            </details>
+
+            <div class="module-actions">
+              <button class="button-primary" data-complete="m1">Mark section complete</button>
+              <div class="notes-block">
+                <label for="notes-m1" class="notes-label">Reflection — What surprised you about the field’s origin?</label>
+                <textarea id="notes-m1" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
+              </div>
+              <div class="pager">
+                <button class="button-quiet" data-next="#m2">Next →</button>
+              </div>
+            </div>
           </section>
 
-          <section class="lesson-section">
-            <h2>Core Concepts</h2>
-            
-            <div class="concept-block">
-              <h3>What is Peace?</h3>
-              <p>Peace is not merely the absence of direct violence. The peace and conflict field distinguishes between:</p>
-              <ul class="lesson-list">
-                <li><strong>Negative Peace:</strong> The cessation of direct violence—wars, armed conflicts, physical harm.</li>
-                <li><strong>Positive Peace:</strong> The presence of social justice, equity, reconciliation, and conditions enabling human flourishing.</li>
+          <!-- 2. Epistemological Challenge -->
+          <section id="m2" class="module-section" aria-labelledby="m2-title" hidden>
+            <h2 id="m2-title">2. The Epistemological Challenge: Can we study “Nothing”?</h2>
+            <p class="lead">If peace is defined by what doesn’t happen, how do we observe it?</p>
+
+            <details class="concept" open>
+              <summary><strong>Measuring the Invisible:</strong> Beyond “absence of war”</summary>
+              <p>Metrics built only on violent events undercount peace. Non-events are hard to observe; we shift toward indicators of resilience, inclusion, and equitable systems.</p>
+            </details>
+
+            <details class="concept">
+              <summary><strong>The Shift:</strong> From counting bodies to Positive Peace</summary>
+              <p>Positive Peace measures the presence of conditions that prevent violence: fair institutions, rights protections, access to basic needs, and trusted conflict resolution mechanisms.</p>
+            </details>
+
+            <details class="concept">
+              <summary><strong>The Descartes Trap:</strong> Vocabulary shapes perception</summary>
+              <p>We tend to see what we can describe. Expanding our language—beyond war terms—allows us to perceive peace dynamics and opportunities.</p>
+            </details>
+
+            <div class="quiz-block" aria-labelledby="quiz-title">
+              <h3 id="quiz-title">Quick Check</h3>
+              <form id="quiz" class="quiz" aria-describedby="quiz-desc">
+                <p id="quiz-desc" class="muted">3 questions to reinforce core distinctions.</p>
+
+                <fieldset>
+                  <legend>1) “Positive Peace” focuses on the…</legend>
+                  <label><input type="radio" name="q1" value="a"> absence of direct violence only</label>
+                  <label><input type="radio" name="q1" value="b"> presence of systems preventing violence</label>
+                  <label><input type="radio" name="q1" value="c"> superiority of one side’s victory</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>2) Which best illustrates structural violence?</legend>
+                  <label><input type="radio" name="q2" value="a"> a public insult in a meeting</label>
+                  <label><input type="radio" name="q2" value="b"> discriminatory laws limiting access to education</label>
+                  <label><input type="radio" name="q2" value="c"> a temporary misunderstanding</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>3) The “Descartes Trap” suggests that…</legend>
+                  <label><input type="radio" name="q3" value="a"> peace is purely subjective</label>
+                  <label><input type="radio" name="q3" value="b"> language shapes what we can perceive</label>
+                  <label><input type="radio" name="q3" value="c"> only wars can be studied</label>
+                </fieldset>
+
+                <div class="quiz-actions">
+                  <button type="button" id="check-quiz" class="button-primary">Check answers</button>
+                  <span id="quiz-result" role="status" aria-live="polite"></span>
+                </div>
+              </form>
+            </div>
+
+            <div class="module-actions">
+              <button class="button-primary" data-complete="m2">Mark section complete</button>
+              <div class="notes-block">
+                <label for="notes-m2" class="notes-label">Reflection — What indicators of Positive Peace feel most tangible?</label>
+                <textarea id="notes-m2" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
+              </div>
+              <div class="pager">
+                <button class="button-quiet" data-prev="#m1">← Previous</button>
+                <button class="button-quiet" data-next="#m3">Next →</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. What is Peace? -->
+          <section id="m3" class="module-section" aria-labelledby="m3-title" hidden>
+            <h2 id="m3-title">3. What is Peace? (The Kaleidoscope)</h2>
+            <p class="lead">Multiple lenses, one thread: interdependence and constructive management of difference.</p>
+
+            <details class="concept" open>
+              <summary><strong>Diverse Perspectives:</strong> Philosophical, Systemic, Communal</summary>
+              <ul>
+                <li>Philosophical/Religious — inner harmony; ideas like Shalom/Salaam.</li>
+                <li>Systemic — balanced systems where parts function sustainably.</li>
+                <li>Communal — the quality of relationships (e.g., Lederach’s “Enredos”).</li>
               </ul>
-              <p>Johan Galtung's foundational distinction (1969) shifts focus from conflict termination alone to building systems that prevent violence from recurring.</p>
-            </div>
+            </details>
 
-            <div class="concept-block">
-              <h3>Structural Violence</h3>
-              <p>Structural violence refers to harm embedded in social systems—poverty, discrimination, lack of access to healthcare or education. These "quiet" forms of violence cause suffering without direct physical assault, yet they constrain human potential.</p>
-              <p>Understanding structural violence is critical to explaining why treaties or ceasefires alone cannot create sustainable peace.</p>
-            </div>
+            <details class="concept">
+              <summary><strong>Patterns:</strong> Finding the common thread</summary>
+              <p>Across perspectives, interdependence and constructive engagement with difference recur as conditions for durable peace.</p>
+            </details>
 
-            <div class="concept-block">
-              <h3>Conflict as Process</h3>
-              <p>Conflict is a natural social phenomenon arising from incompatible interests, needs, or values. It is not inherently destructive—its transformation depends on:</p>
-              <ul class="lesson-list">
-                <li>The parties' willingness to engage constructively</li>
-                <li>The availability of dialogue and mediation mechanisms</li>
-                <li>Institutional frameworks supporting negotiation</li>
-                <li>Economic and social conditions enabling cooperation</li>
-              </ul>
-            </div>
-          </section>
+            <details class="concept">
+              <summary><strong>Negative vs. Positive Peace:</strong> The core distinction</summary>
+              <p>Negative Peace reduces visible harm; Positive Peace builds systems that prevent harm.</p>
+            </details>
 
-          <section class="lesson-section">
-            <h2>Frameworks for Analysis</h2>
-            
-            <div class="concept-block">
-              <h3>The ABC Triangle (Galtung)</h3>
-              <p>A framework for understanding conflict dynamics:</p>
-              <ul class="lesson-list">
-                <li><strong>A (Attitude):</strong> Subjective perceptions, beliefs, stereotypes</li>
-                <li><strong>B (Behavior):</strong> Actions—cooperation, hostility, violence</li>
-                <li><strong>C (Contradiction):</strong> Structural incompatibilities or competing interests</li>
-              </ul>
-              <p>Peacebuilding requires addressing all three: changing perceptions, shifting behavior, and resolving underlying contradictions.</p>
-            </div>
-
-            <div class="concept-block">
-              <h3>Conflict Transformation</h3>
-              <p>Rather than simply "resolving" conflict by choosing a winner, conflict transformation seeks to:</p>
-              <ul class="lesson-list">
-                <li>Shift the nature of the relationship between parties</li>
-                <li>Address root causes of incompatibility</li>
-                <li>Create new institutional or social contexts</li>
-                <li>Foster mutual understanding and respect</li>
-              </ul>
-              <p>This approach is distinct from conflict resolution (finding a settlement) and conflict management (controlling escalation).</p>
+            <div class="module-actions">
+              <button class="button-primary" data-complete="m3">Mark section complete</button>
+              <div class="notes-block">
+                <label for="notes-m3" class="notes-label">Reflection — Which lens is most useful in your context?</label>
+                <textarea id="notes-m3" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
+              </div>
+              <div class="pager">
+                <button class="button-quiet" data-prev="#m2">← Previous</button>
+                <button class="button-quiet" data-next="#m4">Next →</button>
+              </div>
             </div>
           </section>
 
-          <section class="lesson-section">
-            <h2>Discussion Questions</h2>
-            <ol class="lesson-list">
-              <li>How would you distinguish between a peace agreement that is merely a ceasefire and one that achieves "positive peace"?</li>
-              <li>What examples of structural violence exist in your own community or familiar contexts?</li>
-              <li>Can conflict ever be beneficial? What conditions would make conflict transformation successful?</li>
-              <li>How do media narratives shape attitudes toward conflict and the opposing party?</li>
-            </ol>
-          </section>
+          <!-- 4. Anatomy of Violence -->
+          <section id="m4" class="module-section" aria-labelledby="m4-title" hidden>
+            <h2 id="m4-title">4. The Anatomy of Violence (Simulation Focused)</h2>
+            <p class="lead">Violence has visible and hidden layers; peace must address all.</p>
 
-          <section class="lesson-section">
-            <h2>Key Readings</h2>
-            <ul class="lesson-list">
-              <li>Galtung, J. (1969). "Violence, Peace, and Peace Research." <em>Journal of Peace Research</em>, 6(3), 167–191.</li>
-              <li>Lederach, J. P. (1997). <em>Building Peace: Sustainable Reconciliation in Divided Societies.</em> USIP Press.</li>
-              <li>Miall, H., Ramsbotham, O., & Woodhouse, T. (1999). <em>Contemporary Conflict Resolution.</em> Polity Press.</li>
-            </ul>
-          </section>
+            <details class="concept" open>
+              <summary><strong>Direct Violence:</strong> The visible act</summary>
+              <p>Hits, insults, war—events we can point to and count.</p>
+            </details>
 
-          <section class="lesson-section">
-            <h2>Activities</h2>
-            <div class="concept-block">
-              <h3>Activity 1: Mapping Conflict Dimensions</h3>
-              <p>Choose a contemporary or historical conflict. Map it using Galtung's ABC triangle: What are the underlying contradictions (C)? What behaviors are visible (B)? What attitudes persist (A)? Propose an intervention for each dimension.</p>
+            <details class="concept">
+              <summary><strong>Structural Violence:</strong> The hidden system</summary>
+              <p>Poverty, legal discrimination, lack of access—patterned harm built into institutions and norms.</p>
+            </details>
+
+            <details class="concept">
+              <summary><strong>Cultural Violence:</strong> The justification</summary>
+              <p>Prejudices, “that’s just how it is,” religious or nationalist rationales that normalize harm.</p>
+            </details>
+
+            <p class="highlight">Key Realization: Peace requires dismantling structural and cultural violence, not only stopping direct violence.</p>
+
+            <div class="module-actions">
+              <button class="button-primary" data-complete="m4">Mark section complete</button>
+              <div class="notes-block">
+                <label for="notes-m4" class="notes-label">Reflection — Where do you see cultural or structural layers?</label>
+                <textarea id="notes-m4" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
+              </div>
+              <div class="pager">
+                <button class="button-quiet" data-prev="#m3">← Previous</button>
+                <button class="button-quiet" data-next="#m5">Next →</button>
+              </div>
             </div>
-            <div class="concept-block">
-              <h3>Activity 2: Positive Peace in Practice</h3>
-              <p>Identify a peacebuilding organization working in a post-conflict region. How do their programs address both negative and positive peace? What structural barriers do they face?</p>
-            </div>
           </section>
 
-          <section class="lesson-section">
-            <h2>Resources for Further Study</h2>
-            <ul class="lesson-list">
-              <li><a href="https://www.usip.org/" target="_blank">United States Institute of Peace (USIP)</a> – Research, training, and conflict analysis</li>
-              <li><a href="https://www.peaceportal.org/" target="_blank">Peace Portal</a> – Curated peace research and resources</li>
-              <li><a href="https://www.beyondintractability.org/" target="_blank">Beyond Intractability</a> – Knowledge base on intractable conflicts and peacebuilding</li>
-            </ul>
+          <!-- 5. Conflict as Opportunity (no PD demo here) -->
+          <section id="m5" class="module-section" aria-labelledby="m5-title" hidden>
+            <h2 id="m5-title">5. Conflict as Opportunity: The Prisoner’s Dilemma</h2>
+            <p class="lead">We already have a separate demo. Here, we focus on the takeaways.</p>
+
+            <details class="concept" open>
+              <summary><strong>The Logic of Trust:</strong> Communication changes incentives</summary>
+              <p>Game theory illustrates how communication and credible commitments can unlock cooperation, avoiding traps where “rational” choices yield harmful outcomes.</p>
+            </details>
+
+            <details class="concept">
+              <summary><strong>Conflict vs. Violence:</strong> Conflict is natural</summary>
+              <p>Conflict is permanent and can drive growth when managed without violence. The aim is transformation—shifting relationships and systems to handle difference constructively.</p>
+            </details>
+
+            <div class="module-actions">
+              <button class="button-primary" data-complete="m5">Mark section complete</button>
+              <div class="notes-block">
+                <label for="notes-m5" class="notes-label">Reflection — Where could trust-building change the game?</label>
+                <textarea id="notes-m5" class="notes" rows="4" placeholder="Your notes (autosaved)"></textarea>
+              </div>
+              <div class="pager">
+                <button class="button-quiet" data-prev="#m4">← Previous</button>
+                <a class="button-link" href="teaching.html">Finish & Back to Teaching</a>
+              </div>
+            </div>
           </section>
         </article>
 
@@ -165,65 +276,193 @@
   </footer>
 
   <style>
-    .lesson-content {
-      max-width: 900px;
-      margin: 60px auto;
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: -999px;
+    }
+    .skip-link:focus {
+      left: 16px;
+      top: 16px;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 10px 14px;
+      border-radius: var(--radius);
     }
 
-    .lesson-section {
-      margin-bottom: 48px;
-    }
+    .course-wrapper { max-width: 1000px; margin: 40px auto; }
+    .course-header { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .course-header h1 { font-size: 28px; }
+    .course-utilities { display: flex; gap: 10px; align-items: center; }
 
-    .lesson-section h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 20px;
+    .button-primary, .button-secondary, .button-danger, .button-quiet, .button-link {
+      font: inherit;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      cursor: pointer;
+      border: 1px solid var(--stroke);
+      background: var(--card);
       color: var(--text);
     }
+    .button-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .button-danger { background: #b00020; color: #fff; border-color: #b00020; }
+    .button-quiet { background: transparent; }
+    .button-link { background: transparent; text-decoration: underline; }
 
-    .lesson-section h3 {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 24px 0 12px 0;
-      color: var(--accent-2);
+    .progress-block { margin: 12px 0 24px; }
+    .progress-meta { margin-bottom: 8px; font-weight: 500; }
+    .progress-bar { height: 10px; background: var(--stroke); border-radius: 999px; position: relative; }
+    .progress-fill { display: block; height: 100%; background: var(--accent); border-radius: 999px; width: 0%; transition: width .2s ease; }
+
+    .module-nav { display: grid; grid-template-columns: repeat(5, minmax(160px, 1fr)); gap: 8px; margin-bottom: 24px; }
+    .module-link { padding: 10px; border-radius: var(--radius); border: 1px solid var(--stroke); background: var(--card); cursor: pointer; }
+    .module-link[aria-current="true"] { background: var(--accent-2); color: var(--bg); }
+
+    .lesson-content { max-width: 860px; margin: 0 auto; }
+    .module-section { margin: 24px 0 40px; }
+    .module-section h2 { font-size: 24px; margin-bottom: 8px; }
+    .lead { color: var(--muted); margin-bottom: 16px; }
+    .concept { border: 1px solid var(--stroke); border-radius: var(--radius); padding: 12px 16px; background: var(--card); margin-bottom: 10px; }
+    .concept summary { cursor: pointer; font-weight: 600; }
+    .highlight { background: #fff4c2; border: 1px solid #ffe27a; padding: 10px 12px; border-radius: var(--radius); }
+
+    .notes-block { margin-top: 12px; }
+    .notes-label { display: block; margin-bottom: 6px; font-weight: 600; }
+    .notes { width: 100%; border: 1px solid var(--stroke); border-radius: var(--radius); padding: 10px; background: var(--bg); color: var(--text); }
+
+    .pager { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+
+    .quiz-block { margin-top: 12px; border: 1px solid var(--stroke); border-radius: var(--radius); padding: 16px; background: var(--card); }
+    .quiz fieldset { border: none; margin-bottom: 12px; }
+    .quiz legend { font-weight: 600; margin-bottom: 6px; }
+    .quiz label { display: block; margin: 4px 0; }
+    .quiz-actions { display: flex; gap: 12px; align-items: center; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+    @media (max-width: 800px) {
+      .module-nav { grid-template-columns: 1fr 1fr; }
+      .course-header h1 { font-size: 24px; }
     }
 
-    .concept-block {
-      background: var(--card);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .concept-block p {
-      margin-bottom: 12px;
-      line-height: 1.8;
-    }
-
-    .lesson-list {
-      margin-left: 24px;
-      margin-bottom: 16px;
-    }
-
-    .lesson-list li {
-      margin-bottom: 10px;
-      line-height: 1.7;
-    }
-
-    .subtitle {
-      font-size: 16px;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 8px;
-    }
-
-    .lesson-footer {
-      margin-top: 60px;
-      padding-top: 40px;
-      border-top: 1px solid var(--stroke);
-      text-align: center;
+    @media (prefers-reduced-motion: reduce) {
+      .progress-fill { transition: none; }
     }
   </style>
+
+  <script>
+    (function() {
+      const TOTAL = 5;
+      const LS_PROGRESS = 'lesson1_progress';
+      const LS_NOTES_PREFIX = 'lesson1_notes_';
+      const LS_QUIZ = 'lesson1_quiz_score';
+
+      const $progressText = document.getElementById('progress-text');
+      const $progressBar = document.querySelector('.progress-bar');
+      const $progressFill = document.querySelector('.progress-fill');
+      const $moduleLinks = Array.from(document.querySelectorAll('.module-link'));
+      const $sections = Array.from(document.querySelectorAll('.module-section'));
+
+      // Load progress
+      let progress = new Set(JSON.parse(localStorage.getItem(LS_PROGRESS) || '[]'));
+      updateProgressUI();
+
+      // Notes autosave
+      document.querySelectorAll('.notes').forEach(n => {
+        const key = LS_NOTES_PREFIX + n.id.replace('notes-', '');
+        const saved = localStorage.getItem(key);
+        if (saved) n.value = saved;
+        n.addEventListener('input', () => localStorage.setItem(key, n.value));
+      });
+
+      // Module nav
+      $moduleLinks.forEach(btn => btn.addEventListener('click', () => showSection(btn.dataset.target)));
+
+      // Pager
+      document.querySelectorAll('[data-next]')
+        .forEach(b => b.addEventListener('click', () => showSection(b.dataset.next)));
+      document.querySelectorAll('[data-prev]')
+        .forEach(b => b.addEventListener('click', () => showSection(b.dataset.prev)));
+
+      // Completion
+      document.querySelectorAll('[data-complete]')
+        .forEach(b => b.addEventListener('click', () => {
+          const id = b.getAttribute('data-complete');
+          progress.add(id);
+          persistProgress();
+          updateProgressUI();
+          // Move focus to next section if available
+          const nextBtn = b.closest('.module-actions').querySelector('[data-next]');
+          if (nextBtn) showSection(nextBtn.dataset.next);
+        }));
+
+      // Export notes
+      document.getElementById('export-notes').addEventListener('click', () => {
+        const lines = [];
+        for (let i = 1; i <= TOTAL; i++) {
+          const key = LS_NOTES_PREFIX + 'm' + i;
+          const text = localStorage.getItem(key) || '';
+          lines.push(`# Section ${i}\n${text}\n`);
+        }
+        const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Session1_Notes.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Reset progress
+      document.getElementById('reset-progress').addEventListener('click', () => {
+        const ok = confirm('Reset progress and quiz results?');
+        if (!ok) return;
+        localStorage.removeItem(LS_PROGRESS);
+        localStorage.removeItem(LS_QUIZ);
+        for (let i = 1; i <= TOTAL; i++) localStorage.removeItem(LS_NOTES_PREFIX + 'm' + i);
+        progress = new Set();
+        updateProgressUI();
+      });
+
+      // Quiz
+      const $checkQuiz = document.getElementById('check-quiz');
+      const $quizResult = document.getElementById('quiz-result');
+      if ($checkQuiz) {
+        $checkQuiz.addEventListener('click', () => {
+          const answers = { q1: 'b', q2: 'b', q3: 'b' };
+          let score = 0;
+          Object.entries(answers).forEach(([k,v]) => {
+            const checked = document.querySelector(`input[name="${k}"]:checked`);
+            if (checked && checked.value === v) score++;
+          });
+          localStorage.setItem(LS_QUIZ, String(score));
+          $quizResult.textContent = `Score: ${score} / ${Object.keys(answers).length}`;
+        });
+      }
+
+      // Show initial section
+      showSection('#m1');
+
+      function showSection(selector) {
+        const target = selector.startsWith('#') ? selector : '#' + selector;
+        $sections.forEach(sec => sec.hidden = ('#' + sec.id) !== target);
+        $moduleLinks.forEach(b => b.setAttribute('aria-current', (b.dataset.target === target) ? 'true' : 'false'));
+        const el = document.querySelector(target);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function updateProgressUI() {
+        const completed = progress.size;
+        $progressText.textContent = `${completed} / ${TOTAL} sections completed`;
+        $progressBar.setAttribute('aria-valuenow', String(completed));
+        const pct = Math.round((completed / TOTAL) * 100);
+        $progressFill.style.width = pct + '%';
+      }
+
+      function persistProgress() {
+        localStorage.setItem(LS_PROGRESS, JSON.stringify(Array.from(progress)));
+      }
+    })();
+  </script>
 </body>
 </html>
