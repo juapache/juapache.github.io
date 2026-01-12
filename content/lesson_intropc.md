@@ -14,6 +14,7 @@ Read more about PRIO here: https://www.prio.org/about
 
 ### Irenology Defined: Eirene (Peace) + Logos (Study)
 - Intro paragraph: Irenology treats peace as a multifactorial phenomenon: threats to peace, conditions for harmony, and the systemic interactions among individuals, communities, and institutions.
+- Image: eirene.jpg (centered, max-width 180px)
 
 
 "Whereas there have been different approaches to studying peace, contemporary Western peace studies (or irenology, from the Greek “Irene,” the goddess of peace) focuses on the analysis, prevention, de-escalation, and solution of conflicts by peaceful or nonviolent means, thereby seeking satisfactory outcomes for all parties involved, rather than winners and losers. This is in contrast to traditional international and so-called security studies, which focus on factors leading to victory or defeat in conflicts waged principally by violent means and to the increased or decreased “security” of one—but typically not all—of the parties involved. Because peace studies investigates the reasons for and outcomes of large- and small-scale conflicts, as well as the preconditions for peace, the discipline is also known as peace and conflict studies (PCS). Its focus allows one to examine not only war but also the various forms of violence, including structural violence—notably social oppression, discrimination, exploitation, and marginalization—while also addressing the effects of political, cultural, and physical violence. The rigorous analysis of peace and conflict lends itself, as well, to the assessment and promotion of various peacemaking strategies, in response to growing popular alarm about the many perils facing today’s world."
@@ -21,6 +22,7 @@ From David P. Barash and Charles P. Webel in Peace and Conflict Studies (5th Edi
 
 ### The UPEACE Mandate: A university for the science of peace
 - Intro paragraph: UPEACE was established to cultivate scholarship and practice oriented to preventing violence, fostering justice, and developing the skills to construct sustainable peace.
+- Image: upaz.jpeg (centered, max-width 180px)
 
 
 On 5 December, 1980, the General Assembly of the United Nations adopted Resolution 35/55 which sets out in its annex the International Agreement for the Establishment of the University for Peace. The Charter of the University is an integral part of that agreement. Forty-one (41) countries have become Signatory States to the UPEACE Charter.
@@ -29,8 +31,8 @@ The University is established with a clear determination to provide humanity wit
 Read more about UPEACE here: https://upeace.org/ 
 
 ### Additional Resources & Materials
-- Video 1 placeholder description: 
-- Video 2 placeholder description: 
+- Video 1: https://www.youtube.com/watch?v=KChXN88tpEs (History of Peace Studies) - embedded and centered
+- Video 2: https://www.youtube.com/watch?v=bYET6nMUmH8 (Peace Studies Overview) - embedded and centered 
 
 ### Reflection Prompt
 - What surprised you about the field’s origin?
