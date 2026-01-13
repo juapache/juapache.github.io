@@ -1,11 +1,49 @@
 # Website & Portfolio To-Do List
 **Status Report: juapache.github.io + Research-Portfolio + Data-Analysis-Portfolio**  
-**Last Audit:** January 11, 2026 (Comprehensive audit + website enhancements)  
-**Last Updated:** January 11, 2026 (Contact links, blog labels, Pixelfed profile)
+**Last Audit:** January 13, 2026 (Full audit: lesson_intropc.html complete, pillar 02 link fixed)  
+**Last Updated:** January 13, 2026 (Peace Studies lesson fully redesigned, Algorithmic Governance link activated)
 
 ---
 
-## 🎨 ACCESSIBILITY, DESIGN & UX AUDIT (January 11, 2026)
+## � JANUARY 13, 2026 AUDIT UPDATE
+
+### ✅ MAJOR COMPLETIONS SINCE LAST AUDIT
+
+#### 1. Peace & Conflict Studies Interactive Lesson (lesson_intropc.html)
+**Status:** FULLY REDESIGNED & SECTION 1 COMPLETE
+
+**New Features:**
+- ✅ 5-section modular design with localStorage progress tracking
+- ✅ Section 1 (History & Context): Fully populated with:
+  - Academic citations (Gleditsch, Barash & Webel)
+  - 3 centered images: eirene.jpg, upaz.jpeg (300px), old-conflict.jpg (300px)
+  - 2 embedded + centered YouTube videos (History, UPEACE)
+  - PRIO founding, Irenology definition, UPEACE mandate
+- ✅ Section 2 (Anatomy of Violence): Direct/Structural/Cultural Violence framework with violence-specific quiz (q1v, q2v, q3v)
+- ✅ Section 3 (What is Peace?): Diverse Perspectives, Patterns, Negative vs Positive Peace
+- ✅ Section 4 (Epistemology): Measuring the Invisible, The Shift, Descartes Trap with epistemology quiz (q1, q2, q3)
+- ✅ Section 5 (Conflict as Opportunity): Logic of Trust, Conflict vs Violence, comprehensive final quiz (6 questions)
+- ✅ Autosaved reflection notes for all 5 sections via localStorage
+- ✅ All media properly centered with `display: block; margin: 0 auto;`
+- ✅ Multiple quizzes: quiz (epistemology), quiz-violence (anatomy), quiz-final (comprehensive)
+- ✅ Linked from: index.html, teaching.html, trust-paradox.html
+
+**Still Needed:**
+- [ ] lesson_intropc-es.html (Spanish version)
+- [ ] Content expansion for Sections 2-5 (framework ready, awaiting user input)
+
+#### 2. Algorithmic Governance Pillar Link (index.html & index-es.html)
+**Status:** FIXED
+
+- ✅ Changed from disabled `<span>` to active `<a href="...">` link
+- ✅ Removed `opacity: 0.6` styling
+- ✅ Now clickable on homepage (EN and ES)
+- ✅ Consistent with research.html presentation
+- ✅ Links to: https://github.com/juapache/Research-Portfolio/tree/main/02-algorithmic-governance
+
+---
+
+## �🎨 ACCESSIBILITY, DESIGN & UX AUDIT (January 11, 2026)
 
 ### ✅ ACCESSIBILITY STRENGTHS
 - ✅ **Color contrast:** Dark theme with light text (#e7edf7 on #0c1626) meets WCAG AAA standards
@@ -814,59 +852,113 @@ This session accomplished:
 
 ---
 
-## 📊 SUMMARY STATISTICS
+## 📊 SUMMARY STATISTICS (Updated Jan 13, 2026)
+
+### Research Portfolio Status
+- **Pillar 01 (Technodiversity):** Minimal (research-questions.md only) - "Coming Soon" ✅
+- **Pillar 02 (Algorithmic Governance):** ~75% complete (working papers in EN/ES, notes, bibliography) - "Updated" ✅ **LINK NOW ACTIVE**
+- **Pillar 03 (Peace Innovation):** Minimal (empty notes) - "Coming Soon" ✅
+- **Pillar 04 (Global South):** Minimal (empty notes) - "Coming Soon" ✅
+- **Pillar 05 (AI Strategy NLP):** ~90% complete (3 notebooks, full pipeline) - Featured ✅
+
+### Data Visualization Status
+- **Trust Paradox:** 100% complete ✅
+- **Polarization Spiral:** 100% complete ✅
+- **Algorithmic Impact Dashboard:** Empty folder only
+- **Policy Landscape Maps:** Empty folder only
+- **Prisoner's Dilemma (4 pages):** 100% complete ✅
+
+### Teaching Materials
+- **lesson_intropc.html:** NEW - Section 1 complete, Sections 2-5 framework ready ✅
+- **Class-Portfolio repo:** Structure exists, needs README linking to lesson
+- **Teaching PDFs:** 8 broken links 🔴
+
+### Website Pages (24 HTML files)
+- **Fully functional:** 22/24 (91.7%) ✅
+- **With placeholders:** 2/24 (blog post 02, some "Coming Soon" cards) ⚠️
+- **Broken links:** Teaching PDFs only 🔴
 
 ### Content Status Overview
 - **Research Pillar 01:** Minimal (research questions only)
-- **Research Pillar 02:** Partial (structure + Spanish & English working papers + bibliography; notes/case studies missing)
+- **Research Pillar 02:** ~75% complete (bilingual working papers + notes + bibliography) ✅ **LINK FIXED**
 - **Research Pillars 03-04:** Empty (notes only)
 - **Research Pillar 05 (AI Strategy NLP):** ~90% complete
+- **lesson_intropc.html:** NEW - Section 1 complete, interactive design with localStorage ✅
 - **Data Viz - Trust Paradox:** 100% complete
 - **Data Viz - Polarization Spiral:** 100% complete
+- **Data Viz - Prisoner's Dilemma:** 100% complete (4 pages)
 - **Data Viz - Algorithmic Dashboard:** 5% complete (folder only)
 - **Data Viz - Policy Landscape Maps:** 0% complete (empty)
 - **Conflict Data Analysis:** 0% complete (structure only)
 - **Policy Research Tools:** 0% complete (empty)
-- **AI Strategy Explorer:** 0% (website-only placeholder)
 
 ### Broken Links Count
-- **Dead file links:** 9 (8 teaching PDFs + 1 sample brief)
-- **Links to empty directories:** 4 (research pillar notes folders)
-- **Placeholder content items:** Multiple (blog cards, resources section, manifest.json, AI Strategy Explorer card, Policy Research Tools card)
+- **Dead file links:** 8 teaching PDFs 🔴
+- **Links to empty directories:** 2 (algorithmic dashboard, policy maps - intentional placeholders)
+- **Placeholder content items:** Blog post 02, some resource sections
 
-### Website Completeness (Updated Jan 7, 2026)
-- ✅ **Fully functional pages:** about, contact, trust-paradox, polarization-spiral, prisoners_dilemma_escalation (all parts), AI Strategy NLP linkages
-- ⚠️ **Pages with minor issues:** data-lab (some "Coming Soon" projects), teaching (missing downloadable materials)
-- 🔴 **Pages with broken links:** teaching (8 missing downloads), index (resources empty)
-- ✅ **Interactive tools count:** 3 complete (Trust Paradox, Polarization Spiral, Prisoner's Dilemma with 4 total pages)
+### Website Completeness (Updated Jan 13, 2026)
+- ✅ **Fully functional pages:** 22/24 (including NEW lesson_intropc.html)
+- ⚠️ **Pages with minor issues:** data-lab (some "Coming Soon" projects)
+- 🔴 **Pages with broken links:** teaching (8 missing downloads)
+- ✅ **Interactive tools count:** 4 complete (Trust Paradox, Polarization Spiral, Prisoner's Dilemma x2, Peace Studies Lesson)
 
 ---
 
-## 🎯 RECOMMENDED FOCUS
+## 🎯 RECOMMENDED FOCUS (Updated Jan 13, 2026)
 
 **For website finalization, prioritize in this order:**
 
-1. **Fix teaching.html** - Either upload teaching materials OR remove download links
-2. **Complete/remove blog post 02** - Eliminate placeholder content
-3. **Populate Research Pillars 01-04** - Add at least basic README and initial notes
-4. **Add Policy Research Tools examples** - Make the link from website meaningful
-5. **Strategic decision on incomplete projects** - Commit to building OR remove from website
+### CRITICAL (Fix within 1 week) 🔴
+1. **Fix teaching.html PDF links** - Either upload materials OR remove download links
+2. **Complete/remove blog post 02** - Eliminate generic placeholder content
+3. **Create lesson_intropc-es.html** - Spanish version for bilingual consistency
+
+### HIGH PRIORITY (1-2 weeks) 🟡
+4. **Populate lesson_intropc.html Sections 2-5** - Add content to Anatomy of Violence, What is Peace, Epistemology, Conflict as Opportunity
+5. **Add initial notes to Pillar 01** (Technodiversity) - Make "Coming Soon" meaningful
+6. **Create Class-Portfolio README** - Link to lesson_intropc.html and explain teaching structure
+
+### MEDIUM PRIORITY (1 month) 🟢
+7. **Build out Peace Innovation pillar (03)** - Curriculum frameworks and conflict-sensitive design
+8. **Add case studies to Algorithmic Governance** - Populate case-studies/ folder
+9. **Decide on empty data viz projects** - Algorithmic Dashboard and Policy Maps: build or remove
+10. **Add AI Strategy NLP results** - Include at least 1 visualization output in results/ folder
+
+### NICE TO HAVE (2-3 months) 💙
+11. **Accessibility improvements** - Focus states, skip links, ARIA labels
+12. **Timeline/roadmap for "Coming Soon"** - Give users expectations for pillar completion
+13. **Project status badges** - Beyond "Coming Soon" / "Updated" (e.g., "In Development", "Q1 2026")
 
 **Timeline Estimate:**
-- Critical fixes (broken links): 1-2 days
-- Content development (pillars): 2-4 weeks
-- Strategic decisions: 1 week for planning
-- Full portfolio completion: 6-8 weeks
+- Critical fixes (broken links + blog): 2-3 days
+- High priority (lesson content + pillar notes): 2-3 weeks
+- Medium priority (pillars + decisions): 4-6 weeks
+- Full portfolio completion: 8-10 weeks
 
 ---
 
-## 📝 NOTES
+## 📝 NOTES (Updated Jan 13, 2026)
 
-- Main README claims "working papers" exist but none are present in repositories
-- Website promises "reproducible tools" but most tool directories are empty
-- The gap between promised content and actual content is significant
-- AI Strategy NLP (05) is the model for what other projects should look like
-- Consider being transparent on website about which projects are "In Development" vs "Complete"
+### Positive Progress
+- ✅ lesson_intropc.html is a showcase piece - modern pedagogical design with localStorage persistence
+- ✅ Algorithmic Governance pillar now properly linked and visible on homepage
+- ✅ Working papers exist in BOTH English and Spanish (bilingual commitment delivered)
+- ✅ Interactive visualizations are professional and reproducible
+- ✅ Website navigation and links generally work well
+
+### Remaining Gaps
+- ⚠️ Teaching PDFs: 8 broken links need resolution
+- ⚠️ Blog post 02: Generic placeholder undermines credibility
+- ⚠️ Spanish translation: lesson_intropc-es.html missing
+- ⚠️ Pillars 01, 03, 04: "Coming Soon" accurate but need initial content to show momentum
+- ⚠️ Empty data viz folders: Decision needed on whether to build or remove
+
+### Strategic Considerations
+- Consider being transparent about project timelines (not just "Coming Soon")
+- AI Strategy NLP (05) is the model for other research pillars
+- Interactive lesson structure could be template for more teaching materials
+- Bilingual working papers set precedent for all future research
 
 ---
 

@@ -1,0 +1,165 @@
+# FULL WEBSITE & REPOSITORY AUDIT - January 13, 2026
+
+## MAJOR UPDATES SINCE LAST AUDIT (Jan 11, 2026)
+
+### ✅ NEW COMPLETIONS
+
+1. **Peace & Conflict Studies Lesson (lesson_intropc.html)**
+   - ✅ FULLY REDESIGNED: 5-section modular interactive course
+   - ✅ Section 1 (History & Context): Fully populated with academic citations, 3 images (eirene.jpg, upaz.jpeg, old-conflict.jpg), 2 YouTube videos embedded and centered
+   - ✅ Section 2 (Anatomy of Violence): Direct/Structural/Cultural Violence with violence-specific quiz, Activity/Simulation resources
+   - ✅ Section 3 (What is Peace?): Diverse Perspectives, Patterns, Negative vs Positive Peace
+   - ✅ Section 4 (Epistemology): Measuring the Invisible, The Shift, Descartes Trap with epistemology quiz
+   - ✅ Section 5 (Conflict as Opportunity): Logic of Trust, Conflict vs Violence, comprehensive final quiz (6 questions)
+   - ✅ Progress tracking with localStorage persistence
+   - ✅ Autosaved reflection notes for all 5 sections
+   - ✅ All media (images, videos) properly centered with display:block and margin:auto
+   - 📍 Status: Section 1 complete; Sections 2-5 have framework ready for content expansion
+   - 🔗 Linked from: index.html, teaching.html, trust-paradox.html
+
+2. **Algorithmic Governance Pillar Link Fixed (index.html & index-es.html)**
+   - ✅ Added missing GitHub link to pillar 02 on homepage (was "Coming Soon" span, now active link)
+   - ✅ Removed opacity:0.6 styling to show it's clickable
+   - ✅ Now consistent with research.html presentation
+   - 📍 Links to: https://github.com/juapache/Research-Portfolio/tree/main/02-algorithmic-governance
+
+### 📊 REPOSITORY STATUS UPDATES
+
+#### Research-Portfolio
+
+**Pillar 01: Technodiversity & Decolonization**
+- 📂 Structure: research-questions.md, notes/ (empty)
+- 📍 Status: MINIMAL (Coming Soon - accurate)
+- 🌐 Website label: "Coming Soon" ✅ correct
+
+**Pillar 02: Algorithmic Governance**
+- 📂 Structure: Complete (README, case-studies/, notes/, references/, research-questions.md, working-papers/)
+- ✅ notes/: literature-review.md + research-notes.md (substantive content)
+- ✅ working-papers/english/: algorithmic-profiling-manipulation.md (complete draft)
+- ✅ working-papers/spanish/: perfilado-algoritmico-manipulacion-conductual.md (complete draft)
+- ✅ references/: bibliography.md with annotated sources
+- ✅ case-studies/: README.md framework
+- 📍 Status: ~75% COMPLETE (Updated - accurate)
+- 🌐 Website label: "Updated" ✅ correct
+- 🔗 Website link: NOW ACTIVE on index.html and index-es.html
+
+**Pillar 03: Peace Innovation & Technology**
+- 📂 Structure: notes/ (empty)
+- 📍 Status: MINIMAL (Coming Soon - accurate)
+- 🌐 Website label: "Coming Soon" ✅ correct
+
+**Pillar 04: Global South Perspectives**
+- 📂 Structure: notes/ (empty)
+- 📍 Status: MINIMAL (Coming Soon - accurate)
+- 🌐 Website label: "Coming Soon" ✅ correct
+
+**Pillar 05: AI Strategy NLP**
+- 📂 Structure: Complete (README, data/, notebooks/, requirements.txt, results/, src/)
+- ✅ notebooks/: 3 Jupyter notebooks (01_data_extraction, 02_nlp_analysis, 03_visualization)
+- ✅ Full Python pipeline with spaCy + TF-IDF + matplotlib
+- ✅ requirements.txt present
+- 📍 Status: ~90% COMPLETE (in active development)
+- 🌐 Website: Featured on index.html and research.html
+- 🔗 All links work correctly
+
+#### Data-Analysis-Portfolio
+
+**01-conflict-data-analysis/**
+- 📂 Structure: data/, notebooks/, results/, src/ (all empty except .gitkeep)
+- 📍 Status: STRUCTURE ONLY (0%)
+- 🌐 Website: Not mentioned
+
+**02-policy-research-tools/**
+- 📂 Structure: notebooks/ (empty)
+- 📍 Status: EMPTY (0%)
+- 🌐 Website: Not mentioned
+
+**03-data-visualization/**
+- ✅ trust-paradox/: COMPLETE (100%) - interactive HTML with localStorage
+- ✅ polarization-spiral/: COMPLETE (100%) - interactive canvas visualization
+- 📂 algorithmic-impact-dashboard/: Empty folder only
+- 📂 policy-landscape-maps/: Empty folder only
+- 📍 Status: 2/4 complete
+- 🌐 Website: Both complete projects featured on data-lab.html
+
+### 🌐 WEBSITE PAGE INVENTORY (24 HTML files)
+
+#### FULLY FUNCTIONAL ✅
+1. index.html / index-es.html
+2. about.html / about-es.html
+3. research.html / research-es.html
+4. teaching.html / teaching-es.html
+5. contact.html / contact-es.html
+6. data-lab.html / data-lab-es.html
+7. blog.html
+8. trust-paradox.html / trust-paradox-es.html
+9. polarization-spiral.html / polarization-spiral-es.html
+10. prisoners_dilemma_escalation.html / -es.html
+11. prisoners_dilemma_escalation-parte2.html / -es.html
+12. lesson_intropc.html (NEW - fully functional, content expanding)
+
+#### WITH PLACEHOLDERS ⚠️
+1. blog-posts/01-blog-post-title-here.html (marked "poetry" - acceptable)
+2. blog-posts/02-another-blog-post-title.html (still generic "Coming Soon")
+
+### 🔗 LINK AUDIT
+
+#### WORKING LINKS ✅
+- All navigation links functional
+- All GitHub repository links work
+- Interactive visualizations (Trust Paradox, Polarization Spiral, Prisoner's Dilemma) fully functional
+- Pixelfed, GitHub, LinkedIn social links working
+- Email (huan@juapache.dev) working
+- lesson_intropc.html now linked from teaching.html, index.html, trust-paradox.html
+
+#### BROKEN/MISSING CONTENT 🔴
+- teaching.html: 8 PDF download links point to non-existent files
+  - intro-peace-conflict-syllabus.pdf
+  - peace-lesson-1.pdf through peace-lesson-7.pdf
+- pdfs/manifest.json: Empty file
+
+#### "COMING SOON" CARDS (Intentional placeholders) 🟡
+- Research Pillars 01, 03, 04 on index.html (accurate - no content yet)
+- Data Lab: Algorithmic Impact Dashboard, Policy Landscape Maps (empty repos)
+- Blog post 02 (generic placeholder)
+
+### 📝 CONTENT QUALITY ASSESSMENT
+
+**EXCELLENT ✅**
+- Interactive visualizations: Professional, documented, reproducible
+- Lesson structure (lesson_intropc.html): Modern pedagogical design with localStorage persistence
+- Algorithmic Governance pillar: Bilingual working papers, substantive notes
+- AI Strategy NLP: Complete data pipeline with notebooks
+
+**NEEDS WORK 🟡**
+- Teaching PDFs: Either upload or remove links
+- Blog post 02: Write actual content or remove
+- Pillars 01, 03, 04: Add initial research notes or case studies
+
+**MISSING 🔴**
+- Spanish translation of lesson_intropc.html (lesson_intropc-es.html doesn't exist yet)
+- Policy Research Tools content
+- Conflict Data Analysis notebooks
+
+### 🎯 PRIORITY RECOMMENDATIONS
+
+**CRITICAL (Fix within 1 week)**
+1. Teaching PDFs: Remove broken download links OR create placeholder PDFs
+2. Blog post 02: Complete or remove
+3. Add lesson_intropc-es.html for Spanish consistency
+
+**HIGH PRIORITY (1-2 weeks)**
+4. Populate Research Pillar 01 with initial notes (technodiversity)
+5. Add at least 1 notebook to AI Strategy NLP results/
+6. Create README for Class-Portfolio linking to lesson_intropc.html
+
+**MEDIUM PRIORITY (1 month)**
+7. Build out Peace Innovation pillar (03) with curriculum frameworks
+8. Add case studies to Algorithmic Governance pillar
+9. Decide on Algorithmic Impact Dashboard and Policy Landscape Maps (build or remove)
+
+**NICE TO HAVE (2-3 months)**
+10. Add accessibility improvements (focus states, skip links, ARIA labels)
+11. Consider timeline/roadmap for "Coming Soon" pillars
+12. Add project status badges beyond "Coming Soon" / "Updated"
+

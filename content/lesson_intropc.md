@@ -40,26 +40,26 @@ Read more about UPEACE here: https://upeace.org/
 ---
 
 ## Section 2 — Anatomy of Violence
-### Measuring the Invisible: Beyond “absence of war”
-- Paragraph: 
+### Direct Violence: The visible act
+- Paragraph: Hits, insults, war—events we can point to and count.
 
-### The Shift: From counting bodies to Positive Peace
-- Paragraph: 
+### Structural Violence: The hidden system
+- Paragraph: Poverty, legal discrimination, lack of access—patterned harm built into institutions and norms.
 
-### The Descartes Trap: Vocabulary shapes perception
-- Paragraph: 
+### Cultural Violence: The justification
+- Paragraph: Prejudices, "that's just how it is," religious or nationalist rationales that normalize harm.
 
 ### Additional Resources & Materials
 - Video 1 placeholder description: 
 - Video 2 placeholder description: 
 
 ### Quick Check (edit stem/answers if desired)
-1. “Positive Peace” focuses on the…
-2. Which best illustrates structural violence?
-3. The “Descartes Trap” suggests that…
+1. Structural violence is best seen in…
+2. Cultural violence often appears as…
+3. Direct violence is characterized by…
 
 ### Reflection Prompt
-- What indicators of Positive Peace feel most tangible?
+- Where do you see cultural or structural layers?
 
 ---
 
@@ -91,13 +91,6 @@ Read more about UPEACE here: https://upeace.org/
 
 ### The Shift: From counting bodies to Positive Peace
 - Paragraph: 
-
-### The Descartes Trap: Vocabulary shapes perception
-- Paragraph: 
-
-### Additional Resources & Materials
-- Video 1 placeholder description: 
-- Video 2 placeholder description: 
 
 ### Quick Check (edit stem/answers if desired)
 1. "Positive Peace" focuses on the…
