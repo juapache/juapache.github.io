@@ -40,6 +40,10 @@ Read more about UPEACE here: https://upeace.org/
 ---
 
 ## Section 2 — Anatomy of Violence
+Violence can be visible and invisible, but it's our duty to understand it and to address it. Violence always brings more violence. 
+
+"Violence is any avoidable insult to basic human needs, and, more generally, to sentient life of any kind, defined as that which is capable of suffering pain an enjoy well-being. Violence lowers the real level of needs satisfaction below what is potentially possible" 
+
 ### Direct Violence: The visible act
 - Paragraph: Hits, insults, war—events we can point to and count.
 
