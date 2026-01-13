@@ -28,22 +28,37 @@
     </div>
   </header>
 
-  <main>
-    <div class="container">
-      <div class="lesson-header">
-        <h1>Peace Innovation — Lesson 2: Peace by Design</h1>
-        <p class="lesson-subtitle">Prerequisite: <a href="lesson_peaceinnovation-l1.html" style="color: inherit; text-decoration: underline;">Lesson 1: Intro to Peace Innovation</a></p>
-        <p class="lesson-intro">In this lesson, we explore design thinking, participatory approaches, and practical frameworks for creating innovative solutions to peace challenges. We move from understanding the landscape (Lesson 1) to designing and prototyping solutions that are conflict-sensitive, sustainable, and community-led.</p>
-      </div>
-
-      <div class="lesson-progress">
-        <div class="progress-tracker">
-          <div class="progress-bar" id="progress-bar"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <main id="main-content" tabindex="-1">
+    <section id="lesson-page" aria-labelledby="session-title">
+      <div class="container course-wrapper">
+      <header class="course-header">
+        <div class="header-title">
+          <a href="index.html" class="home-btn" title="Back to home">←</a>
+          <div class="title-group">
+            <h1 id="session-title">Peace Innovation — Lesson 2: Peace by Design</h1>
+            <p class="subtitle-tagline">Prerequisite: <a href="lesson_peaceinnovation-l1.html" style="color: inherit; text-decoration: underline;">Lesson 1: Intro to Peace Innovation</a></p>
+          </div>
         </div>
-        <span id="progress-text" class="progress-text">0% Complete</span>
+      </header>
+      <p class="lesson-intro">In this lesson, we explore design thinking, participatory approaches, and practical frameworks for creating innovative solutions to peace challenges. We move from understanding the landscape (Lesson 1) to designing and prototyping solutions that are conflict-sensitive, sustainable, and community-led.</p>
+
+      <div class="progress-block" role="group" aria-label="Session progress">
+        <div class="progress-meta">
+          <span id="progress-text" aria-live="polite">0 / 5 sections completed</span>
+        </div>
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span class="progress-fill" style="width:0%"></span></div>
       </div>
 
-      <div class="lesson-modules">
+      <nav class="module-nav" aria-label="Session modules">
+        <button class="module-link" data-target="#m1" aria-controls="m1" aria-current="true">1. Design Thinking</button>
+        <button class="module-link" data-target="#m2" aria-controls="m2">2. Participatory Design</button>
+        <button class="module-link" data-target="#m3" aria-controls="m3">3. Impact & Sustainability</button>
+        <button class="module-link" data-target="#m4" aria-controls="m4">4. Conflict Transformation</button>
+        <button class="module-link" data-target="#m5" aria-controls="m5">5. Communication & Ethics</button>
+      </nav>
+
+      <article class="lesson-content" aria-label="Interactive content">
 
         <!-- 1. Design Thinking for Peace Innovation -->
         <section id="m1" class="module-section" aria-labelledby="m1-title">
@@ -392,10 +407,14 @@
             <button class="button-secondary" id="restart-lesson">↻ Restart Lesson</button>
           </div>
         </section>
+      </article>
 
+      <div class="lesson-footer">
+        <a href="teaching.html" class="deep-link">← Back to Teaching</a>
       </div>
 
     </div>
+  </section>
   </main>
 
   <footer>
@@ -405,160 +424,224 @@
     </div>
   </footer>
 
+  <style>
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: -999px;
+    }
+    .skip-link:focus {
+      left: 16px;
+      top: 16px;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 10px 14px;
+      border-radius: var(--radius);
+    }
+
+    .course-wrapper { max-width: 1000px; margin: 40px auto; }
+    .course-header { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; padding: 20px 16px; background: var(--card); border-radius: 16px; margin: 0 16px; }
+    .header-title { display: flex; gap: 12px; align-items: center; justify-content: center; }
+    .title-group { text-align: center; }
+    .course-header h1 { font-size: 28px; margin: 0 0 4px 0; }
+    .subtitle-tagline { margin: 0; font-size: 14px; color: var(--muted); font-style: italic; }
+    .home-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius); border: 1px solid var(--stroke); background: var(--card); color: var(--text); cursor: pointer; font-size: 16px; text-decoration: none; transition: background 0.2s; }
+    .home-btn:hover { background: var(--accent-2); }
+
+    .button-primary, .button-secondary, .button-danger, .button-quiet, .button-link {
+      font: inherit;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      cursor: pointer;
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      color: var(--text);
+    }
+    .button-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .button-danger { background: #b00020; color: #fff; border-color: #b00020; }
+    .button-quiet { background: transparent; }
+    .button-link { background: transparent; text-decoration: underline; }
+
+    .progress-block { margin: 12px 0 24px; }
+    .progress-meta { margin-bottom: 8px; font-weight: 500; }
+    .progress-bar { height: 10px; background: var(--stroke); border-radius: 999px; position: relative; }
+    .progress-fill { display: block; height: 100%; background: var(--accent); border-radius: 999px; width: 0%; transition: width .2s ease; }
+
+    .module-nav { display: grid; grid-template-columns: repeat(5, minmax(160px, 1fr)); gap: 8px; margin-bottom: 24px; }
+    .module-link { padding: 10px; border-radius: var(--radius); border: 1px solid var(--stroke); background: var(--card); cursor: pointer; }
+    .module-link[aria-current="true"] { background: var(--accent-2); color: var(--bg); }
+
+    .lesson-content { max-width: 860px; margin: 0 auto; }
+    .module-section { margin: 24px 0 40px; }
+    .module-section h2 { font-size: 24px; margin-bottom: 8px; }
+    .lead { color: var(--muted); margin-bottom: 16px; }
+    .concept { border: 1px solid var(--stroke); border-radius: var(--radius); padding: 12px 16px; background: var(--card); margin-bottom: 10px; }
+    .concept-alt-0 { background: #e8f0f9; border-color: #c5dff0; color: #1a3a52; }
+    .concept-alt-1 { background: #d4e6f1; border-color: #a9cde4; color: #1a3a52; }
+    .concept summary { cursor: pointer; font-weight: 600; }
+    .concept-alt-0 summary, .concept-alt-1 summary { color: inherit; }
+
+    .resources-block { margin: 20px 0; padding: 16px; background: var(--card); border: 1px solid var(--stroke); border-radius: var(--radius); }
+    .resources-block h3 { margin: 0 0 12px 0; font-size: 18px; }
+    .resource-placeholder { height: 200px; background: #f0f0f0; border: 2px dashed #ccc; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--muted); margin-bottom: 10px; }
+
+    .quiz-block { margin-top: 12px; margin-bottom: 16px; border: 1px solid var(--stroke); border-radius: var(--radius); padding: 16px; background: var(--card); }
+    .quiz fieldset { border: none; margin-bottom: 12px; }
+    .quiz legend { font-weight: 600; margin-bottom: 6px; }
+    .quiz label { display: block; margin: 4px 0; }
+    .quiz-actions { display: flex; gap: 12px; align-items: center; }
+
+    .notes-block { margin-top: 12px; }
+    .notes-label { display: block; margin-bottom: 6px; font-weight: 600; }
+    .notes { width: 100%; border: 1px solid var(--stroke); border-radius: var(--radius); padding: 10px; background: var(--bg); color: var(--text); }
+
+    .pager { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+    .pager-right { margin-left: auto; }
+    .module-actions-centered { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin-top: 24px; }
+
+    @media (max-width: 800px) {
+      .module-nav { grid-template-columns: 1fr 1fr; }
+      .course-header h1 { font-size: 20px; }
+      .header-title { flex-direction: column; }
+      .module-actions-centered { flex-direction: column; align-items: stretch; }
+      .pager-right { margin-left: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .progress-fill { transition: none; }
+    }
+  </style>
+
   <script>
-    // Progress tracking
-    const module_keys = ['m1', 'm2', 'm3', 'm4', 'm5'];
-    const storage_key = 'lesson2_progress';
-    const storage_notes_key = 'lesson2_notes';
+    (function() {
+      const TOTAL = 5;
+      const LS_PROGRESS = 'lesson2_progress';
+      const LS_NOTES_PREFIX = 'lesson2_notes_';
 
-    // Load progress
-    function load_progress() {
-      const stored = localStorage.getItem(storage_key);
-      return stored ? JSON.parse(stored) : {};
-    }
+      const $progressText = document.getElementById('progress-text');
+      const $progressBar = document.querySelector('.progress-bar');
+      const $progressFill = document.querySelector('.progress-fill');
+      const $moduleLinks = Array.from(document.querySelectorAll('.module-link'));
+      const $sections = Array.from(document.querySelectorAll('.module-section'));
 
-    function save_progress(progress) {
-      localStorage.setItem(storage_key, JSON.stringify(progress));
-      update_progress_display();
-    }
+      let progress = new Set(JSON.parse(localStorage.getItem(LS_PROGRESS) || '[]'));
+      updateProgressUI();
 
-    function update_progress_display() {
-      const progress = load_progress();
-      const completed = Object.values(progress).filter(v => v).length;
-      const total = module_keys.length;
-      const percent = Math.round((completed / total) * 100);
-      
-      document.getElementById('progress-bar').style.width = percent + '%';
-      document.getElementById('progress-text').textContent = percent + '% Complete';
-    }
-
-    // Module navigation
-    document.querySelectorAll('[data-complete]').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const module = this.getAttribute('data-complete');
-        const progress = load_progress();
-        progress[module] = true;
-        save_progress(progress);
-        alert('Section marked complete! Great work.');
-      });
-    });
-
-    document.querySelectorAll('[data-next]').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const target = this.getAttribute('data-next');
-        document.querySelectorAll('.module-section').forEach(s => s.hidden = true);
-        document.querySelector(target).hidden = false;
-        window.scrollTo(0, 0);
-      });
-    });
-
-    document.querySelectorAll('[data-prev]').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const target = this.getAttribute('data-prev');
-        document.querySelectorAll('.module-section').forEach(s => s.hidden = true);
-        document.querySelector(target).hidden = false;
-        window.scrollTo(0, 0);
-      });
-    });
-
-    // Quiz checking
-    function check_quiz(form_id, quiz_name) {
-      const form = document.getElementById(form_id);
-      const answers = {};
-      
-      form.querySelectorAll('fieldset').forEach(fs => {
-        const checked = fs.querySelector('input:checked');
-        if (checked) {
-          const legend = fs.querySelector('legend').textContent;
-          answers[legend] = checked.value;
-        }
+      // Notes autosave
+      document.querySelectorAll('.notes').forEach(n => {
+        const key = LS_NOTES_PREFIX + n.id.replace('notes-', '');
+        const saved = localStorage.getItem(key);
+        if (saved) n.value = saved;
+        n.addEventListener('input', () => localStorage.setItem(key, n.value));
       });
 
-      const answer_key = {
-        '1) Design thinking for peace emphasizes…': 'b',
-        '2) Participatory design benefits peacebuilding by…': 'b',
-        '3) Sustainable peace design must address…': 'b',
-        '4) Reconciliation through design focuses on…': 'b',
-        '5) Communication design for peace should…': 'b',
-        '6) Measuring design impact requires…': 'b'
+      // Module nav
+      $moduleLinks.forEach(btn => btn.addEventListener('click', () => showSection(btn.dataset.target)));
+
+      // Pager
+      document.querySelectorAll('[data-next]')
+        .forEach(b => b.addEventListener('click', () => showSection(b.dataset.next)));
+      document.querySelectorAll('[data-prev]')
+        .forEach(b => b.addEventListener('click', () => showSection(b.dataset.prev)));
+
+      // Completion
+      document.querySelectorAll('[data-complete]')
+        .forEach(b => b.addEventListener('click', () => {
+          const id = b.getAttribute('data-complete');
+          progress.add(id);
+          persistProgress();
+          updateProgressUI();
+          const nextBtn = b.closest('.module-actions').querySelector('[data-next]');
+          if (nextBtn) showSection(nextBtn.dataset.next);
+        }));
+
+      // Quizzes
+      const answerKeys = {
+        m2: { q1m2: 'b', q2m2: 'b', q3m2: 'c' },
+        m4: { q1m4: 'b', q2m4: 'b', q3m4: 'b' },
+        final: { qf1: 'b', qf2: 'b', qf3: 'b', qf4: 'b', qf5: 'b', qf6: 'b' }
       };
 
-      const m2_key = {
-        '1) Participatory design differs from traditional design by…': 'b',
-        '2) Co-creation with affected communities ensures…': 'b',
-        '3) Empowering local ownership leads to…': 'c'
-      };
+      const bindQuiz = (checkId, formId, resultId, key) => {
+        const checkBtn = document.getElementById(checkId);
+        const form = document.getElementById(formId);
+        const result = document.getElementById(resultId);
+        if (!checkBtn || !form || !result) return;
+        const names = Object.keys(key);
 
-      const m4_key = {
-        '1) Design for reconciliation focuses on…': 'b',
-        '2) Memorialization projects can support peace by…': 'b',
-        '3) Bridging divides requires design that…': 'b'
-      };
-
-      let key = answer_key;
-      if (quiz_name === 'm2') key = m2_key;
-      if (quiz_name === 'm4') key = m4_key;
-
-      let correct = 0;
-      Object.entries(answers).forEach(([q, a]) => {
-        if (key[q] === a) correct++;
-      });
-
-      const total = Object.keys(key).length;
-      const percent = Math.round((correct / total) * 100);
-      const msg = percent >= 70 ? '✓ Great work!' : 'Review and try again.';
-      
-      document.getElementById(`quiz-result-${quiz_name}`).textContent = `${correct}/${total} correct (${percent}%) ${msg}`;
-    }
-
-    document.getElementById('check-quiz-m2').addEventListener('click', () => check_quiz('quiz-m2', 'm2'));
-    document.getElementById('check-quiz-m4').addEventListener('click', () => check_quiz('quiz-m4', 'm4'));
-    document.getElementById('check-quiz-final').addEventListener('click', () => check_quiz('quiz-final', 'final'));
-
-    document.getElementById('try-quiz-m2').addEventListener('click', () => {
-      document.getElementById('quiz-m2').reset();
-      document.getElementById('quiz-result-m2').textContent = '';
-    });
-
-    document.getElementById('try-quiz-m4').addEventListener('click', () => {
-      document.getElementById('quiz-m4').reset();
-      document.getElementById('quiz-result-m4').textContent = '';
-    });
-
-    document.getElementById('try-quiz-final').addEventListener('click', () => {
-      document.getElementById('quiz-final').reset();
-      document.getElementById('quiz-result-final').textContent = '';
-    });
-
-    // Autosave notes
-    const textarea_elements = document.querySelectorAll('textarea.notes');
-    textarea_elements.forEach(ta => {
-      const id = ta.id;
-      const saved = localStorage.getItem(storage_notes_key + '_' + id);
-      if (saved) ta.value = saved;
-
-      ta.addEventListener('change', () => {
-        localStorage.setItem(storage_notes_key + '_' + id, ta.value);
-      });
-    });
-
-    // Restart lesson
-    document.getElementById('restart-lesson').addEventListener('click', () => {
-      if (confirm('Are you sure? This will reset all progress and notes.')) {
-        localStorage.removeItem(storage_key);
-        textarea_elements.forEach(ta => {
-          localStorage.removeItem(storage_notes_key + '_' + ta.id);
-          ta.value = '';
+        checkBtn.addEventListener('click', () => {
+          let correct = 0;
+          names.forEach(name => {
+            const checked = form.querySelector(`input[name="${name}"]:checked`);
+            if (checked && checked.value === key[name]) correct++;
+          });
+          const total = names.length;
+          const pct = Math.round((correct / total) * 100);
+          const msg = pct >= 70 ? '✓ Great work!' : 'Review and try again.';
+          result.textContent = `${correct}/${total} correct (${pct}%) ${msg}`;
         });
-        document.querySelectorAll('.module-section').forEach(s => s.hidden = true);
-        document.getElementById('m1').hidden = false;
-        update_progress_display();
-        window.scrollTo(0, 0);
-      }
-    });
+      };
 
-    // Initialize
-    update_progress_display();
+      bindQuiz('check-quiz-m2', 'quiz-m2', 'quiz-result-m2', answerKeys.m2);
+      bindQuiz('check-quiz-m4', 'quiz-m4', 'quiz-result-m4', answerKeys.m4);
+      bindQuiz('check-quiz-final', 'quiz-final', 'quiz-result-final', answerKeys.final);
+
+      const bindReset = (resetId, formId, resultId) => {
+        const resetBtn = document.getElementById(resetId);
+        const form = document.getElementById(formId);
+        const result = document.getElementById(resultId);
+        if (!resetBtn || !form || !result) return;
+        resetBtn.addEventListener('click', () => {
+          form.reset();
+          result.textContent = '';
+        });
+      };
+
+      bindReset('try-quiz-m2', 'quiz-m2', 'quiz-result-m2');
+      bindReset('try-quiz-m4', 'quiz-m4', 'quiz-result-m4');
+      bindReset('try-quiz-final', 'quiz-final', 'quiz-result-final');
+
+      // Restart lesson
+      const reset = document.getElementById('restart-lesson');
+      if (reset) {
+        reset.addEventListener('click', () => {
+          const ok = confirm('Are you sure? This will reset all progress and notes.');
+          if (!ok) return;
+          localStorage.removeItem(LS_PROGRESS);
+          for (let i = 1; i <= TOTAL; i++) localStorage.removeItem(LS_NOTES_PREFIX + 'm' + i);
+          progress = new Set();
+          document.querySelectorAll('.notes').forEach(n => n.value = '');
+          document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+          document.querySelectorAll('#quiz-result-m2, #quiz-result-m4, #quiz-result-final').forEach(el => el.textContent = '');
+          updateProgressUI();
+          showSection('#m1');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Show initial section
+      showSection('#m1');
+
+      function showSection(selector) {
+        const target = selector.startsWith('#') ? selector : '#' + selector;
+        $sections.forEach(sec => sec.hidden = ('#' + sec.id) !== target);
+        $moduleLinks.forEach(b => b.setAttribute('aria-current', (b.dataset.target === target) ? 'true' : 'false'));
+        const el = document.querySelector(target);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function updateProgressUI() {
+        const completed = progress.size;
+        $progressText.textContent = `${completed} / ${TOTAL} sections completed`;
+        $progressBar.setAttribute('aria-valuenow', String(completed));
+        const pct = Math.round((completed / TOTAL) * 100);
+        $progressFill.style.width = pct + '%';
+      }
+
+      function persistProgress() {
+        localStorage.setItem(LS_PROGRESS, JSON.stringify(Array.from(progress)));
+      }
+    })();
   </script>
 </body>
 </html>
