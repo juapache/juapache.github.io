@@ -1,5 +1,3 @@
-#escritos #poesía
-
 ¿Será que tenemos la valentía intrínseca de aceptar y de esperar pacientemente el mal sentimiento presente?
 
 Y pasajero…
@@ -30,7 +28,7 @@ Entregado solamente a la aleatoria paciencia
 del tiempo inmortal.
 
 ¿Será que nos atrevemos a sumergirnos en los campos perpetuos de la fatua realidad?
-Que imprime con tristeza en los versos vacíos de la complejidad.
+...Que imprime con tristeza en los versos vacíos de la complejidad...
 
 ¿Será que conocemos la amabilidad que decae 
 de aquel caparazón vacío 
