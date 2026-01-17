@@ -1,0 +1,43 @@
+## Secure Programming, Cyberattacks, and Public Policies on Security by Design: The Case of Costa Rica
+
+On April 17, 2022, Costa Rica woke up to what seemed like an ordinary day. The day unfolded with a relative normality: people went to work, public institutions operated as usual, and with the country slowly emerging from the grips of the COVID-19 pandemic, there was an air of calm throughout San José and its surroundings. Little did the nation imagine that, within a matter of hours, it would become the victim of the most devastating cyberattack in its history, one that would not only cripple the government’s digital infrastructure but also effectively bring the entire state apparatus to a halt, including hospitals, ministries, and even private companies dependent on the national digital network.
+
+### Conti's attack and Costa Rica's defense
+
+The Conti cyberattacks against Costa Rica in 2022 were a series of unprecedented incidents that paralyzed the nation’s critical infrastructure and led the government, for the first time in its history, to declare a national state of emergency due to a digital offensive.
+
+The attack began on the night of April 17, 2022, when the Conti ransomware group infiltrated the systems of Costa Rica’s Misterio de Hacienda (Ministry of Finance). The attackers exploited compromised VPN credentials to install malware on the network, achieving lateral movement and encrypting critical servers. Although the initial target was the Ministry of Finance, the offensive quickly spread, affecting around 30 public institutions, including the Ministry of Science, Innovation, Technology, and Telecommunications (MICITT, which was ironically the entity responsible for implementing the government’s cybersecurity policies), as well as the Ministry of Labor and Social Security (MTSS), the Social Development and Family Allowances Fund (FODESAF), and the Administrative Board of the Cartago Electric Service (JASEC), among many others.
+
+The attack operated under a “Ransomware-as-a-Service” (RaaS) model, and an affiliate identified as “UNC1756” claimed responsibility, alleging the involvement of internal collaborators within the government. Conti initially demanded 10 million USD to avoid releasing stolen data, but when the government refused to pay, the demand was doubled to 20 million USD.
+
+The consequences were devastating for Costa Rica’s economy and public administration. The “Virtual Tax Administration” (ATV) system and the customs system (TICA) were taken offline, forcing import and export procedures to be handled manually. This caused losses to the productive sector estimated between 30 and 38 million USD per day.
+
+However, the crisis did not end there. Weeks later, on May 31, 2022, the Costa Rican Social Security Fund (Caja Costarricense de Seguro Social, CCSS) became the target of a new cyberattack, this time perpetrated by the Hive ransomware group. Though operating under a different name, strong indications suggest that Hive either collaborated with Conti or emerged as a rebranding strategy to evade international sanctions, given the ties of both groups to Russia. This second digital blow forced the shutdown of the Unified Digital Health Record (EDUS), resulting in canceled medical appointments and a temporary return to paper-based processes throughout public hospitals.
+
+Given the magnitude of the damage, the international community reacted swiftly. The United States offered a reward of up to 15 million USD for information leading to the identification or capture of Conti leaders. At the same time, Costa Rica received technical assistance from several countries including the United States, Israel, and Spain, as well as from private companies like Microsoft, which supported recovery and infrastructure reinforcement efforts. Even so, it took nearly two months for the tax and customs systems to be fully restored, and nearly six months for EDUS to return to normal operation.
+
+In this sense, the attack was not merely a matter of stealing and locking digital files; it was the digital equivalent of blowing up the main bridges and highways of the already congested and overburdened city of San José, cutting off the flow of goods (data and taxes) and forcing Costa Ricans to survive economically by trudging along dirt paths (manual paper processes) for months.
+
+### Security by design and Global South's priorities
+
+From my perspective as a lawyer, and through the lens of Security by Design, this cyberattack exposed a painful reality that has been normalized within Costa Rican society and likely shared by many countries in the Global South: a general disregard for cybersecurity and Security by Design. I would venture to argue that this stems from the perception that there are “more important” or “more urgent” national priorities, such as crime, poverty, conflict, or inequality. Yet, the consequences of the Conti cyberattack offered Costa Rican authorities a harsh and undeniable lesson.
+
+The SD3+C model (Secure by Design, by Default, by Deployment + Communications) emphasizes and requires the integration of security across all phases of digital systems, from design to configuration and deployment. In Costa Rica’s case, a critical flaw in the Ministry of Finance’s network architecture quickly paralyzed the country. Experts pointed out that the fact an attack could enter through a single end user and move laterally to critical servers demonstrates a lack of Security by Design, which allowed the infection to spread uncontrollably.
+
+### Four principles of secure programming 
+
+Regarding secure programming and the four principles of information security, the Conti cyberattack in Costa Rica demonstrated a complete violation of three out of four principles, from immediate disruptions to essential services (finance, health, telecommunications, and others) to the exposure of sensitive user data.}
+
+Regarding the Principle of Availability, understood as guaranteeing access to information and systems for authorized users, the cyberattack crippled most government IT systems, effectively halting the provision of essential public services. The absence of adequate contingency plans and reliable backups hindered rapid recovery, forcing the country back to paper-based procedures and causing enormous economic losses.
+
+The Principle of Confidentiality states that secure programming must prevent unauthorized disclosure of information. Conti managed to leak approximately 672 GB of sensitive government and citizen data. The lack of effective encryption tools and access controls allowed the attackers to steal and publish citizens’ and taxpayers’ information as a form of extortion.
+
+The cyberattack also revealed another grave issue: it was unclear who had ignored prior warnings and who was responsible in the chain of command during the incident. This constituted a violation of the Principle of Accountability, which requires that all system actions be traceable to attribute responsibility. The lack of logs and monitoring made digital forensics and internal accountability extremely difficult, a particularly troubling issue given Conti’s claims of inside help from government personnel.
+
+Finally, the principles of Secure Programming affirms that fixing security vulnerabilities during the design phase costs only a fraction of what it does after deployment, and Costa Rica’s experience painfully validates this theory. The widespread neglect and underinvestment in cybersecurity and secure design led to losses equivalent to 2.4% of the national GDP and triggered a national crisis, costs far exceeding what preventive action and secure design would have required.
+
+### Final thoughts 
+
+From my perspective, the costly and dangerous consequences of neglecting secure programming and Security by Design in policy and practice are painfully clear, especially when the security of an entire nation’s infrastructure is at stake. The days following the attack were pure chaos: overwhelmed public services, widespread confusion, and growing public anxiety. Although I believe the government responded quickly (though “quickly” is debatable, since it took six months for operations to normalize), the lack of effective communication and the secrecy that has surrounded the event since then did little to calm a population increasingly at the mercy of cyberattacks, in a country that still lacks robust cybersecurity policies and a dedicated institution to oversee national digital security.
+
+Note: This opinion article was written originally in Costa Rican Spanish for a course on Good Practices for the Management of Data, thereby, some local words or phrases are used. 

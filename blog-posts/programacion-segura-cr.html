@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programación segura, ciberataques y políticas públicas | Juan José Vásquez-Pacheco</title>
+  <meta name="description" content="Análisis del ciberataque de Conti a Costa Rica en 2022 y la importancia de la Seguridad por Diseño en la infraestructura crítica." />
+  <link rel="canonical" href="https://juapache.github.io/blog-posts/programacion-segura-cr.html" />
+  <link rel="alternate" href="https://juapache.github.io/blog-posts/programacion-segura-cr.html" hreflang="es" />
+  <link rel="alternate" href="https://juapache.github.io/blog-posts/secure-programming-cr.html" hreflang="en" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../teaching.html">Teaching</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="../data-lab.html">Data Lab</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+          <li class="lang-switch"><a href="secure-programming-cr.html">🇬🇧</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="blog-post">
+      <div class="container">
+        <p class="eyebrow">Policy & Analysis</p>
+        <h1>Programación segura, ciberataques y políticas públicas de Seguridad por Diseño: El caso de Costa Rica</h1>
+        <p class="muted">Publicado el 17 de enero de 2026</p>
+        
+        <div style="max-width: 700px; margin: 40px auto;">
+          <img src="../assets/images/sec_prog_cr.jpeg" alt="Seguridad en programación" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; margin-bottom: 40px; object-fit: cover;">
+          
+          <div style="line-height: 1.8; font-family: 'Source Serif 4', serif; font-size: 16px; color: var(--text);">
+            <h2>Programación segura, ciberataques y políticas públicas de Seguridad por Diseño: El caso de Costa Rica</h2>
+
+            <p>El 17 de abril del 2022 amaneció como un día cualquiera en Costa Rica. El día transcurrió relativamente normal: las personas se aprestaban a asistir a sus trabajos, las instituciones públicas atendían con normalidad y ya casi finalizando los estragos de la pandemia COVID-19, existía un aire de tranquilidad en San José y sus alrededores. Poco se imaginaba el país que en cuestión de horas iba a ser víctima del ciberataque más devastador de su historia, uno que pondría en jaque no solamente la infraestructura digital gubernamental, sino que también efectivamente eliminaría la posibilidad de prestar servicios en todo el aparato Estatal, incluyendo hospitales, Ministerios e inclusive empresas privadas que dependían de la infraestructura digital nacional.</p>
+
+            <h3>El ataque de Conti y la defensa de Costa Rica</h3>
+
+            <p>Los ciberataques de Conti contra Costa Rica en 2022 fueron una serie de incidentes sin precedentes que paralizaron la infraestructura crítica del país y llevaron al gobierno a declarar, por primera vez en la historia, un estado de emergencia nacional debido a una ofensiva digital.</p>
+
+            <p>El ataque comenzó la noche del 17 de abril de 2022, cuando el grupo de ransomware Conti infiltró los sistemas del Ministerio de Hacienda de Costa Rica. Los atacantes explotaron credenciales VPN comprometidas para instalar malware en la red, logrando moverse lateralmente y cifrar servidores críticos. Si bien el objetivo inicial fue el Ministerio de Hacienda, la ofensiva se expandió rápidamente, afectando a aproximadamente 30 instituciones públicas, incluyendo el Ministerio de Ciencia, Innovación, Tecnología y Telecomunicaciones (MICITT) (el cual, irónicamente, era la entidad encargada de velar e implementar los planes de ciberseguridad del Gobierno), así como tambien al Ministerio de Trabajo y Seguridad Social (MTSS), el Fondo de Desarrollo Social y Asignaciones Familiares (FODESAF) y la Junta Administrativa del Servicio Eléctrico de Cartago (JASEC), entre muchas otras.</p>
+
+            <p>El ataque fue perpetuado bajo un modelo de "Ransomware como Servicio" (RaaS), y una persona afiliada identificada como "UNC1756" reivindicó la responsabilidad sobre el hecho, alegando que actuaba con ayuda de colaboradores internos dentro del gobierno. Conti exigió inicialmente 10 millones de dólares para no filtrar la información robada, más, ante la negativa del gobierno de pagar, duplicaron la demanda a 20 millones de dólares.</p>
+
+            <p>Las consecuencias del ciberataque fueron devastadoras para la economía y la administración pública costarricense. El sistema tributario "Administración Tributaria Virtual" (ATV) y el sistema aduanero TICA fueron inhabilitados, lo que obligó a realizar los trámites de importación y exportación manualmente, provocando pérdidas al sector productivo estimadas entre 30 y 38 millones de dólares diarios.</p>
+
+            <p>Sin embargo, la crisis no terminó allí. Semanas después, el 31 de mayo de 2022, la Caja Costarricense de Seguro Social (CCSS) fue blanco de un nuevo ataque cibernético, esta vez perpetrado por el grupo de ransomware Hive. Aunque operaban bajo un nombre distinto, existen fuertes indicios de que Hive colaboraba con Conti o que se trataba de una estrategia de rebranding para evadir sanciones internacionales, debido a la vinculación de ambos grupos cibercriminales con Rusia. Este segundo golpe digital obligó a apagar el Expediente Digital Único en Salud (EDUS), provocando la cancelación de citas médicas y el retorno temporal al uso de papel en los hospitales públicos del país.</p>
+
+            <p>Frente a la magnitud de los daños, la comunidad internacional reaccionó con rapidez. Estados Unidos ofreció una recompensa de hasta quince millones de dólares por información que condujera a la identificación o captura de los líderes de Conti. Paralelamente, Costa Rica recibió asistencia técnica de varios países, entre ellos Estados Unidos, Israel y España, así como de empresas privadas como Microsoft, que colaboraron en los esfuerzos de recuperación y fortalecimiento de la infraestructura digital. Aun así, los sistemas tributario y aduanero tardaron casi dos meses en restablecer su funcionamiento por completo, y el sistema de salud EDUS tardó casi seis meses en volver a la normalidad.</p>
+
+            <p>En este sentido, el ataque no fue simplemente un robo y bloqueo de archivos digitales, sino el equivalente a dinamitar los puentes y carreteras principales de la ya abarrotada y colapsada ciudad de San José, impidiendo que mercancías (datos e impuestos) entraran o salieran, y obligando a las ticas y ticos a caminar por trochas de tierra (procesos manuales en papel) para sobrevivir económicamente durante meses.</p>
+
+            <h3>Seguridad por diseño y prioridades en el Sur Global</h3>
+
+            <p>Desde mi punto de vista como jurista, y partiendo de una perspectiva de Seguridad por Diseño, este ciberataque evidenció una dolorosa realidad normalizada a nivel de la sociedad costarricense y prevaleciente probablemente en la mayoría de países del Sur Global: la poca importancia que se le otorga a la ciberseguridad y la Seguridad por Diseño. Esto, me atrevo a conjeturar, se debe a la existencia de situaciones que se perciben como "más importantes" y/o "más urgentes" a nivel nacional, como la criminalidad, pobreza, conflictos, desigualdad, entre otros. Empero, las consecuencias de los sucesos relacionados con el ciberataque de Conti dieron una dura lección a las autoridades ticas.</p>
+
+            <p>El Modelo SD3+C (Secure by Design, Default, Deployment + Communications) enfatiza la importancia y exige la necesidad de integrar la seguridad desde el diseño, por defecto y en el despliegue de sistemas informáticos. Al respecto, en Costa Rica se evidenció una falla crítica en el diseño de la red del Ministerio de Hacienda, que rápidamente paralizó al país. Expertos argumentaron que el hecho que un ataque pudiese entrar por un usuario final y moverse lateralmente hasta alcanzar los servidores críticos demuestra que no hubo una Seguridad por Diseño, permitiendo que la infección se propagara sin contención.</p>
+
+            <h3>Cuatro principios de la programación segura</h3>
+
+            <p>En relación con el desarrollo seguro y los 4 principios de la programación segura, el ciberataque de Conti en Costa Rica evidenció una vulneración completa de 3 de los 4 principios, desde la afectación inmediata a la prestación de servicios (de hacienda, de salud, de telecomunicaciones, etc), hasta la vulneración de información sensible de los usuarios.</p>
+
+            <p>Con respecto al Principio de Disponibilidad, entendido como la garantía de que la información y los sistemas estén accesibles para quienes los necesitan, el ciberataque afectó a la mayoría de los sistemas informáticos, y como tal efectivamente paralizó la prestación de servicios esenciales ofrecidos por el Gobierno de Costa Rica. La falta de planes de contingencia adecuados y copias de seguridad impidió la recuperación rápida, obligando al país a volver al uso de papel y procesos manuales y provocando pérdidas millonarias.</p>
+
+            <p>El Principio de Confidencialidad afirma que la programación segura debe impedir la divulgación de información a entidades no autorizadas. En este sentido, Conti logró la filtración de aproximadamente 672 GB de información sensible de instituciones gubernamentales y de sus usuarios. La falta de mecanismos de encriptación efectiva o controles de acceso permitió que los atacantes robaran y publicaran datos de ciudadanos y contribuyentes como medida de extorsión.</p>
+
+            <p>El ciberataque de Conti en Costa Rica evidenció otro grave problema: no se sabía con certeza quién ignoró las alertas previas ni quién era la persona responsable en la cadena de mando durante el incidente. Como tal, se evidenció una vulneración del Principio de Contabilidad (Accountability), que requiere rastrear y registrar todas las acciones en el sistema para atribuir responsabilidades. En este sentido, la falta de registros y logs adecuados y de monitoreo activo dificultó el análisis forense y la atribución de responsabilidades internas para con las autoridades costarricenses involucradas, situación controvertida por cuanto Conti confirmó que contó con ayuda interna del Gobierno para la perpetuación del ciberataque.</p>
+
+            <p>Finalmente, los principios y elementos de Programación Segura afirman que corregir errores de seguridad en la fase de diseño cuesta una fracción de lo que cuesta arreglarlos después del lanzamiento y el caso de Costa Rica valida dolorosamente esta teoría. El desconocimiento y la falta importancia frente a las medidas de ciberseguridad, y aledañamente, la falta de inversión preventiva y diseño seguro resultó en pérdidas estimadas en el 2.4% del PIB y una crisis nacional, costos inmensamente superiores a los de haber implementado estas prácticas de programación y arquitectura segura desde el inicio.</p>
+
+            <h3>Una reflexión final</h3>
+
+            <p>Desde mi punto de vista, resulta más que evidente las costosas y peligrosas consecuencias de la falta de implementación de políticas en pro de la programación segura, especialmente cuando hablamos de la infraestructura de un país entero. Los días siguientes al ciberataque fueron un verdadero caos en el país: desde el desborde de los servicios públicos primarios, hasta la prevalencia de un sentimiento de desconcierto y pánico generalizados. Si bien considero que el Gobierno de turno actuó con inmediatez (y ni tanta, pues se tomó 6 meses para que todo volviese a la normalidad), a mi parecer la falta de comunicación efectiva sobre la situación, y el secretismo que ha rodeado al ciberataque desde entonces, no contribuyó a acalmar los ánimos de una población que crecientemente se ve avasallada por ciberataques, y en donde aún siguen sin existir políticas públicas efectivas ni una institución encargada de velar por la ciberseguridad del país.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer">
+      <p>&copy; 2026 Juan José Vásquez-Pacheco.</p>
+      <a class="deep-link" href="../blog.html">Volver al blog →</a>
+    </div>
+  </footer>
+
+  <script>
+    // Highlight current page in navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = document.querySelectorAll('nav ul li a');
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Console easter egg welcome message
+    console.log("%c🌍 Welcome to Juan José's portfolio!", "font-size: 20px; font-weight: bold; color: #3aa6b9;");
+    console.log("%cPeace, technology, and data for global equity 🌱", "font-size: 14px; color: #aab7ce;");
+    console.log("📍 Currently exploring: AI strategy NLP analysis");
+    console.log("🔬 Research focus: Technodiversity & decolonization");
+    console.log("💬 Let's talk about: Global South AI governance, peace tech, or open data");
+    console.log("📧 Get in touch: huan@juapache.dev");
+    console.log("🐙 GitHub: github.com/juapache");
+    console.log("📸 Pixelfed: pixelfed.social/huan");
+  </script>
+</body>
+</html>
