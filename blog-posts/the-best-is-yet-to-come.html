@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The best is yet to come | Lo mejor está por venir</title>
+  <meta name="description" content="More content is coming. For now, enjoy a rotating carusel of pictures of Pancha, Places and others | Más contenido está por venir, por ahora, dejo una colección de fotos de Pancha, lugares bonitos y otras cosillas" />
+  <link rel="canonical" href="https://juapache.github.io/blog-posts/the-best-is-yet-to-come.html" />
+  <link rel="alternate" href="https://juapache.github.io/blog-posts/the-best-is-yet-to-come.html" hreflang="en" />
+  <link rel="alternate" href="https://juapache.github.io/blog-posts/the-best-is-yet-to-come.html" hreflang="es" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../teaching.html">Teaching</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="../data-lab.html">Data Lab</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="blog-post">
+      <div class="container">
+        <p class="eyebrow">Placeholder</p>
+        <h1>The best is yet to come | Lo mejor está por venir</h1>
+        <p class="muted">Posted on January 17, 2026</p>
+
+        <div style="max-width: 900px; margin: 40px auto; text-align: center;">
+          <p style="margin-bottom: 24px;">More content is coming. For now, enjoy a rotating carusel of pictures of Pancha, Places and others<br><br>Más contenido está por venir, por ahora, dejo una colección de fotos de Pancha, lugares bonitos y otras cosillas</p>
+          <img id="carousel-image" src="../assets/images/carusel1.jpeg" alt="Rotating carousel placeholder" style="width: 100%; max-width: 700px; border-radius: 8px; object-fit: cover;">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer">
+      <p>&copy; 2026 Juan José Vásquez-Pacheco.</p>
+      <a class="deep-link" href="../blog.html">Back to blog →</a>
+    </div>
+  </footer>
+
+  <script>
+    // Randomly select an image from 1 to 11
+    (function() {
+      const img = document.getElementById('carousel-image');
+      const index = Math.floor(Math.random() * 11) + 1; // 1..11
+      img.src = `../assets/images/carusel${index}.jpeg`;
+    })();
+
+    // Highlight current page in navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = document.querySelectorAll('nav ul li a');
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Console easter egg welcome message
+    console.log("%c🌍 Welcome to Juan José's portfolio!", "font-size: 20px; font-weight: bold; color: #3aa6b9;");
+    console.log("%cPeace, technology, and data for global equity 🌱", "font-size: 14px; color: #aab7ce;");
+    console.log("📍 Currently exploring: AI strategy NLP analysis");
+    console.log("🔬 Research focus: Technodiversity & decolonization");
+    console.log("💬 Let's talk about: Global South AI governance, peace tech, or open data");
+    console.log("📧 Get in touch: huan@juapache.dev");
+    console.log("🐙 GitHub: github.com/juapache");
+    console.log("📸 Pixelfed: pixelfed.social/huan");
+  </script>
+</body>
+</html>

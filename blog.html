@@ -113,6 +113,14 @@ Can we just dare to feel?</p>
           <h2 style="margin-bottom: 24px;">Everything Else | Todo lo demás</h2>
           <div class="card-grid">
             <article class="card">
+              <img src="assets/images/carusel1.jpeg" alt="Placeholder carousel preview" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; margin-bottom: 12px; object-fit: cover;">
+              <p class="tag small">placeholder</p>
+              <h3>The best is yet to come | Lo mejor está por venir</h3>
+              <p class="muted">Posted on January 17, 2026</p>
+              <p>More content is coming. For now, enjoy a rotating carusel of pictures of Pancha, Places and others | Más contenido está por venir, por ahora, dejo una colección de fotos de Pancha, lugares bonitos y otras cosillas</p>
+              <a class="deep-link" href="blog-posts/the-best-is-yet-to-come.html">Read more →</a>
+            </article>
+            <article class="card">
               <img src="assets/images/books26.jpeg" alt="2026 book reading list" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; margin-bottom: 12px; object-fit: cover;">
               <p class="tag small">reading</p>
               <h3>My 2026 Book Reading List</h3>
@@ -158,6 +166,19 @@ Can we just dare to feel?</p>
         const href = link.getAttribute('href');
         if (href === currentPage || (currentPage === '' && href === 'index.html')) {
           link.classList.add('active');
+        }
+      });
+
+      // Rotate preview image for placeholder post cards
+      const placeholderCards = Array.from(document.querySelectorAll('article.card')).filter(card => {
+        const link = card.querySelector('a.deep-link[href="blog-posts/the-best-is-yet-to-come.html"]');
+        return !!link;
+      });
+      placeholderCards.forEach(card => {
+        const img = card.querySelector('img');
+        if (img) {
+          const idx = Math.floor(Math.random() * 11) + 1; // 1..11
+          img.src = `assets/images/carusel${idx}.jpeg`;
         }
       });
     });
