@@ -59,6 +59,15 @@
     <header>
         <div class="container nav-bar">
             <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="teaching.html">Teaching</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="data-lab.html">Data Lab</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li class="lang-switch"><a href="index-es.html">🇨🇷</a></li>
+                </ul>
             </nav>
         </div>
     </header>
@@ -88,39 +97,7 @@
                     <a class="deep-link" href="https://github.com/juapache/Research-Portfolio/tree/main/05-ai-strategy-nlp" target="_blank" rel="noopener">See project →</a>
                 </div>
             </div>
-        <section id="blog">
-            <h2>Blog</h2>
-            <div class="blog-posts">
-                <div class="blog-post">
-                    <a href="blog-posts/being-notbeing.html">
-                        <img src="blog-posts/being-notbeing.jpg" alt="Being and Not-Being">
-                        <h3>Being and Not-Being</h3>
-                        <p>Posted on 2025-01-14</p>
-                    </a>
-                </div>
-                <div class="blog-post">
-                    <a href="blog-posts/02-another-blog-post-title.html">
-                        <img src="blog-posts/02-another-blog-post-title.jpg" alt="Another Blog Post Title">
-                        <h3>Another Blog Post Title</h3>
-                        <p>Posted on [Date]</p>
-                    </a>
-                </div>
-                <div class="blog-post">
-                    <a href="blog-posts/programacion-segura-cr.html">
-                        <img src="blog-posts/programacion-segura-cr.jpg" alt="Programación segura, ciberataques y políticas públicas">
-                        <h3>Programación segura, ciberataques y políticas públicas</h3>
-                        <p>Posted on 2026-01-17</p>
-                    </a>
-                </div>
-                <div class="blog-post">
-                    <a href="blog-posts/secure-programming-cr.html">
-                        <img src="blog-posts/secure-programming-cr.jpg" alt="Secure Programming, Cyberattacks, and Public Policies">
-                        <h3>Secure Programming, Cyberattacks, and Public Policies</h3>
-                        <p>Posted on 2026-01-17</p>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <!-- Removed stray blog list; main blog section remains below -->
                         <p>Working papers on behavioral profiling, dark patterns, and GDPR/EU Law.</p>
                         <a class="deep-link" href="https://github.com/juapache/Research-Portfolio/tree/main/02-algorithmic-governance" target="_blank" rel="noopener">Open pillar →</a>
                     </article>
@@ -169,15 +146,7 @@
             </div>
         </section>
 
-        <section id="resources">
-            <div class="container">
-                <div class="section-heading">
-                    <h2>Resources <span class="tag small">Coming Soon</span></h2>
-                    <p>Downloadable resources, lecture details, and other materials.</p>
-                </div>
-                <ul id="resources-list" class="link-list"></ul>
-            </div>
-        </section>
+        <!-- Resources section removed as requested -->
 
         <section id="blog">
             <div class="container">
@@ -186,27 +155,36 @@
                     <p>Notes, thoughts and essays at the intersection of AI governance, Peacetech, Life, the Universe and Everything.</p>
                     <a class="deep-link" href="blog.html">Read more →</a>
                 </div>
-                <div class="card-grid two">
-                    <article class="card">
-                        <h3>Being and Not-Being</h3>
-                        <p>A veces nos cuesta dominar el arte de ser...<br>
-A veces es difícil comprender,<br>
-que cada vida es un mundo...<br>
-Ser o no ser, ese no es el dilema.</p>
-                        <a class="deep-link" href="blog-posts/being-notbeing.html">Read more →</a>
-                        <span class="tag small">poetry</span>
-                    </article>
-                    <article class="card">
-                        <h3>Hello Law!</h3>
-                        <p>Can Law be code for if-else beings?<br>
-Will slow reforms blue-screen our dreams?<br>
-The Civil Code: not civil nor code.<br>
-The chambers echo, a justice node.<br>
-Unlock the bugs, recode the road.</p>
-                        <a class="deep-link" href="blog-posts/01-blog-post-title-here.html">Read more →</a>
-                        <span class="tag small">poetry</span>
-                    </article>
-                </div>
+                                <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                                        <article class="card">
+                                            <img src="assets/images/dare.jpeg" alt="Should We Dare poem" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; margin-bottom: 12px; object-fit: cover;">
+                                            <p class="tag small">poetry</p>
+                                            <h3>Should We Dare?</h3>
+                                            <p class="muted">Posted on January 15, 2026</p>
+                                            <a class="deep-link" href="blog-posts/should-we-dare.html">Read more →</a>
+                                        </article>
+                                        <article class="card">
+                                            <img src="assets/images/sec_prog_cr.jpeg" alt="Secure Programming in Costa Rica" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; margin-bottom: 12px; object-fit: cover;">
+                                            <p class="tag small">policy</p>
+                                            <h3>Secure Programming (CR)</h3>
+                                            <p class="muted">Posted on January 17, 2026</p>
+                                            <a class="deep-link" href="blog-posts/secure-programming-cr.html">Read more →</a>
+                                        </article>
+                                        <article class="card">
+                                            <img src="assets/images/serynoser.jpeg" alt="Being and Not-Being poem" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; margin-bottom: 12px; object-fit: cover;">
+                                            <p class="tag small">poetry</p>
+                                            <h3>Being and Not-Being</h3>
+                                            <p class="muted">Posted on 2025-01-14</p>
+                                            <a class="deep-link" href="blog-posts/being-notbeing.html">Read more →</a>
+                                        </article>
+                                        <article class="card">
+                                            <img src="assets/images/hellolaw.jpeg" alt="Hello Law poem" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; margin-bottom: 12px; object-fit: cover;">
+                                            <p class="tag small">poetry</p>
+                                            <h3>Hello Law!</h3>
+                                            <p class="muted">Posted on 2025-01-02</p>
+                                            <a class="deep-link" href="blog-posts/01-blog-post-title-here.html">Read more →</a>
+                                        </article>
+                                </div>
             </div>
         </section>
 
@@ -264,41 +242,7 @@ Unlock the bugs, recode the road.</p>
     </footer>
 
         <script>
-            async function loadResources() {
-                const list = document.getElementById('resources-list');
-                if (!list) return;
-                try {
-                    const res = await fetch('pdfs/manifest.json', { cache: 'no-store' });
-                    if (!res.ok) throw new Error('manifest not found');
-                    const items = await res.json();
-                    if (!Array.isArray(items) || items.length === 0) {
-                        list.innerHTML = '<li><span class="tag small">Coming soon</span> Upload PDFs to /pdfs/ and add entries to pdfs/manifest.json.</li>';
-                        return;
-                    }
-                    list.innerHTML = '';
-                    items.forEach(item => {
-                        const li = document.createElement('li');
-                        const a = document.createElement('a');
-                        a.href = `pdfs/${item.file}`;
-                        a.textContent = item.title || item.file;
-                        a.target = '_blank';
-                        a.rel = 'noopener';
-                        const desc = item.description ? ` — ${item.description}` : '';
-                        li.appendChild(a);
-                        if (desc) {
-                            const span = document.createElement('span');
-                            span.textContent = desc;
-                            span.style.color = 'var(--muted)';
-                            span.style.marginLeft = '6px';
-                            li.appendChild(span);
-                        }
-                        list.appendChild(li);
-                    });
-                } catch (err) {
-                    list.innerHTML = '<li><span class="tag small">Coming soon</span> Upload PDFs to /pdfs/ and add entries to pdfs/manifest.json.</li>';
-                }
-            }
-            loadResources();
+            // Resources module removed
 
             // Highlight current page in navigation
             document.addEventListener('DOMContentLoaded', function() {
