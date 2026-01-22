@@ -229,21 +229,31 @@
 
         .timeline-content {
             background: rgba(255, 255, 255, 0.05);
-            padding: 20px 24px;
+            padding: 30px;
             border-radius: 12px;
             border-left: 4px solid var(--primary);
             backdrop-filter: blur(10px);
         }
 
         .timeline-content h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
+            font-size: 28px;
+            margin-bottom: 15px;
             color: #fff;
         }
 
         .timeline-content p {
             opacity: 0.9;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-content h3 {
+                font-size: 22px;
+            }
+            .timeline-content p {
+                font-size: 14px;
+            }
         }
 
         .timeline-content .stat {
