@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Democracia en Crisis: Costa Rica 2022-2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #d32f2f;
+            --secondary: #1565c0;
+            --accent: #f57c00;
+            --dark: #0d1b2a;
+            --light: #eceff1;
+            --success: #2e7d32;
+            --warning: #f9a825;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a237e 100%);
+            color: #f5f5f5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(211, 47, 47, 0.3) 0%, transparent 70%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 8vw, 64px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            animation: fade-in-down 0.8s ease;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(16px, 3vw, 24px);
+            opacity: 0.9;
+            margin-bottom: 30px;
+            animation: fade-in-up 1s ease;
+        }
+
+        .hero .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fade-in-up 1.2s ease;
+        }
+
+        .hero .cta-button:hover {
+            background: #b71c1c;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(211, 47, 47, 0.5);
+        }
+
+        @keyframes fade-in-down {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TIMELINE */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            margin: 20px auto 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            order: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-date {
+            order: 1;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                order: 1;
+            }
+
+            .timeline-item:nth-child(even) .timeline-date {
+                order: 2;
+            }
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border: 4px solid var(--dark);
+            border-radius: 50%;
+            top: 30px;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-marker {
+                left: 30px;
+            }
+        }
+
+        .timeline-date {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-content h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .timeline-content p {
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content .stat {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 5px 5px 5px 0;
+        }
+
+        /* FOUR PILLARS */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .pillar-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            background: rgba(211, 47, 47, 0.15);
+            transform: translateY(-5px);
+            border-color: rgba(211, 47, 47, 0.3);
+        }
+
+        .pillar-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pillar-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .pillar-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .pillar-card p {
+            opacity: 0.85;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .pillar-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* DATA VISUALIZATION SECTION */
+        .impact-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 20px;
+            margin: 80px 0;
+        }
+
+        .impact-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .impact-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            background: rgba(211, 47, 47, 0.1);
+            border-color: rgba(211, 47, 47, 0.3);
+        }
+
+        .impact-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .impact-label {
+            font-size: 16px;
+            opacity: 0.85;
+        }
+
+        /* ACCORDION - DEEP DIVES */
+        .accordion-section {
+            max-width: 1000px;
+            margin: 60px auto;
+        }
+
+        .accordion-item {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-header {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .accordion-header:hover {
+            background: rgba(211, 47, 47, 0.15);
+        }
+
+        .accordion-header.active {
+            background: rgba(211, 47, 47, 0.2);
+            color: var(--primary);
+        }
+
+        .accordion-toggle {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-size: 24px;
+        }
+
+        .accordion-header.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 25px;
+        }
+
+        .accordion-content.active {
+            max-height: 1500px;
+            padding: 25px;
+        }
+
+        .accordion-content p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .accordion-content .quote {
+            background: rgba(211, 47, 47, 0.2);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .accordion-content .source {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        /* STATS BARS */
+        .stat-bar {
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            height: 30px;
+            position: relative;
+        }
+
+        .stat-bar-fill {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: 600;
+            font-size: 12px;
+            animation: fill-bar 1.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fill-bar {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* CALL TO ACTION */
+        .cta-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: rgba(211, 47, 47, 0.1);
+            border-radius: 12px;
+            margin: 80px auto;
+            max-width: 900px;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(211, 47, 47, 0.2);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            opacity: 0.7;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+        }
+
+        .source-link {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .source-link:hover {
+            opacity: 0.7;
+            text-decoration: underline;
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .section {
+                padding: 50px 20px;
+            }
+
+            .timeline::before {
+                display: none;
+            }
+
+            .timeline-marker {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .impact-number {
+                font-size: 36px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>⚠️ La Democracia en Crisis</h1>
+            <p class="subtitle">Costa Rica 2022-2026: Cómo se erosiona la democracia desde adentro</p>
+            <button class="cta-button" onclick="scrollTo('timeline')">Descubre lo que pasó</button>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section" id="timeline">
+        <h2 class="section-title">La Cronología de la Crisis</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2022-2023</div>
+                <div class="timeline-content">
+                    <h3>⚖️ Primeros Ataques al Poder Judicial</h3>
+                    <p>El Presidente Chaves comienza a atacar públicamente a magistrados y jueces, llamándolos "élite" que capturó el sistema.</p>
+                    <span class="stat">Marcha contra la Fiscalía Documentada</span>
+                    <span class="stat">Declaraciones Públicas Violentas</span>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2024-2025</div>
+                <div class="timeline-content">
+                    <h3>💰 Asfixia Presupuestaria</h3>
+                    <p>El Ministerio de Hacienda bloquea ₡8.687,88 millones aprobados por la Asamblea Legislativa para el OIJ y Ministerio Público.</p>
+                    <span class="stat">₡8.687 millones bloqueados</span>
+                    <span class="stat">Impacto "demoledor" documentado</span>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2023-2024</div>
+                <div class="timeline-content">
+                    <h3>📰 Ataque a la Libertad de Prensa</h3>
+                    <p>Retiro sistemático de publicidad estatal a medios críticos. Costa Rica cae 15 puestos en libertad de prensa.</p>
+                    <span class="stat">-15 posiciones en libertad de prensa</span>
+                    <span class="stat">4 medios sin pauta oficial</span>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2024-2026</div>
+                <div class="timeline-content">
+                    <h3>📱 Monopolio Digital de Narrativa</h3>
+                    <p>Campañas masivas de troles coordinadas atacan a críticos. El 17.4% de conversación online es actividad de bots identificados.</p>
+                    <span class="stat">793K menciones monitoreadas</span>
+                    <span class="stat">17.4% de troles identificados</span>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUR PILLARS UNDER ATTACK -->
+    <section class="section">
+        <h2 class="section-title">Los 4 Pilares Bajo Ataque</h2>
+        <div class="pillars-grid">
+            <div class="pillar-card fade-in" onclick="toggleAccordion(0)">
+                <div class="pillar-icon">⚖️</div>
+                <h3>El Poder Judicial</h3>
+                <p>Atacado públicamente, presupuesto bloqueado, independencia cuestionada.</p>
+                <div class="pillar-status">
+                    <span style="color: var(--primary);">●</span> CRÍTICO
+                </div>
+            </div>
+
+            <div class="pillar-card fade-in" onclick="toggleAccordion(1)">
+                <div class="pillar-icon">🚔</div>
+                <h3>La Fiscalía</h3>
+                <p>Presionada para investigar selectivamente. Persecución política disfrazada de justicia.</p>
+                <div class="pillar-status">
+                    <span style="color: var(--primary);">●</span> COMPROMETIDA
+                </div>
+            </div>
+
+            <div class="pillar-card fade-in" onclick="toggleAccordion(2)">
+                <div class="pillar-icon">📰</div>
+                <h3>La Libertad de Prensa</h3>
+                <p>Periodistas llamados "sicarios". Medios atacados, boicoteados económicamente.</p>
+                <div class="pillar-status">
+                    <span style="color: var(--primary);">●</span> EROSIONADA
+                </div>
+            </div>
+
+            <div class="pillar-card fade-in" onclick="toggleAccordion(3)">
+                <div class="pillar-icon">📱</div>
+                <h3>El Espacio Público Digital</h3>
+                <p>Controlado por bots y troles. Burbujas informativas. Narrativa oficial única.</p>
+                <div class="pillar-status">
+                    <span style="color: var(--primary);">●</span> CAPTURADO
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACT DATA -->
+    <section class="impact-section">
+        <div class="section-title" style="color: white;">El Costo Humano y Institucional</div>
+        <div class="impact-grid">
+            <div class="impact-card fade-in">
+                <div class="impact-number">-15</div>
+                <div class="impact-label">Posiciones perdidas en libertad de prensa (2022-2025)</div>
+            </div>
+
+            <div class="impact-card fade-in">
+                <div class="impact-number">₡8.7B</div>
+                <div class="impact-label">Millones bloqueados a justicia penal</div>
+            </div>
+
+            <div class="impact-card fade-in">
+                <div class="impact-number">66%</div>
+                <div class="impact-label">De periodistas reportan acoso digital diario</div>
+            </div>
+
+            <div class="impact-card fade-in">
+                <div class="impact-number">793K</div>
+                <div class="impact-label">Menciones en redes monitoreadas (con 17.4% de bots)</div>
+            </div>
+
+            <div class="impact-card fade-in">
+                <div class="impact-number">∞</div>
+                <div class="impact-label">Miedo que sienten algunos funcionarios de hablar</div>
+            </div>
+
+            <div class="impact-card fade-in">
+                <div class="impact-number">1</div>
+                <div class="impact-label">Organismo internacional de paz que tuvo miedo de criticar</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEEP DIVES - ACCORDIONS -->
+    <section class="section">
+        <h2 class="section-title">Los Patrones Detrás de la Crisis</h2>
+        
+        <div class="accordion-section">
+            <!-- ACCORDION 1 -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(0)">
+                    <span>⚖️ Patrón 1: "Reforma de los Tribunales"</span>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content" id="accordion-0">
+                    <p><strong>Lo que se afirma:</strong> "El sistema judicial no les sirve a ustedes, lo capturaron para servirle a intereses mezquinos de una élite."</p>
+                    
+                    <div class="quote">
+                        "El sistema judicial no les sirve a ustedes, el sistema judicial lo capturaron para servirle a intereses mezquinos de una élite que quiere seguir ordeñando al pueblo."
+                        <div class="source">— Presidente Rodrigo Chaves Robles, Marcha contra la Fiscalía, 2023</div>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">¿Qué está pasando realmente?</h4>
+                    <p>El Ministerio de Hacienda bloqueó ₡8.687,88 millones aprobados por la Asamblea Legislativa para el OIJ y Ministerio Público. Esto genera un "impacto directo y demoledor" en su capacidad de investigar y acusar.</p>
+
+                    <p>Es como quitarle el dinero al árbitro para que no pueda pitar faltas. Los jueces renuncian. La institución se debilita. Pero técnicamente, nunca hubo un "golpe judicial" explícito.</p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">El Resultado</h4>
+                    <p>Según el Informe Estado de la Justicia 2025, "El Poder Judicial está sometido a fuertes ataques políticos, un hecho sin precedente en la historia republicana del país."</p>
+
+                    <p>Los tribunales pierden independencia. Los jueces no pueden fiscalizar al ejecutivo. Nadie puede hablar de "golpe judicial" porque técnicamente el sistema sigue existiendo.</p>
+
+                    <div class="source" style="margin-top: 20px;">📚 Fuente: Informe Estado de la Justicia 2025 | https://estadonacion.or.cr/</div>
+                </div>
+            </div>
+
+            <!-- ACCORDION 2 -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(1)">
+                    <span>🚔 Patrón 2: "Combate a la Corrupción Selectivo"</span>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content" id="accordion-1">
+                    <p><strong>Lo que se afirma:</strong> "La corrupción es el enemigo. La estoy combatiendo implacablemente."</p>
+                    
+                    <div class="quote">
+                        "Usted contralora general... frena una y otra vez obras que harían más grande a Costa Rica... la vergüenza es de usted."
+                        <div class="source">— Presidente Chaves contra Contralora Marta Costa</div>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">¿Qué está pasando realmente?</h4>
+                    <p>Los ataques "procuran otra cosa: descalificar la legitimidad del Judicial para así someterlo a fines partidarios." Se presiona para remover autoridades, influir en procesos judiciales, evadir investigaciones.</p>
+
+                    <p>Es el "lawfare" (guerra jurídica): usar el sistema legal como arma política. Los opositores son investigados. Los aliados, impunes.</p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">La "Defensa"</h4>
+                    <div class="quote">
+                        "¿Ustedes de verdad creen que este caso tenga algún sentido más allá del servilismo de un fiscal incompetente torpe sirviendo a la red de cuido que le manipula?"
+                        <div class="source">— Presidente Chaves defendiéndose de investigaciones</div>
+                    </div>
+
+                    <p>Cuando lo acusan, responde: "¿Quieres que tolere la corrupción? ¿Me pides que libere criminales solo porque son figuras políticas?"</p>
+
+                    <p>Es negación plausible perfecta: es imposible criticar sin parecer que defiendes la corrupción.</p>
+
+                    <div class="source" style="margin-top: 20px;">📚 Fuente: Estado de la Justicia 2025 | IV Informe Libertad de Expresión CR</div>
+                </div>
+            </div>
+
+            <!-- ACCORDION 3 -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(2)">
+                    <span>📰 Patrón 3: Silenciar a los "Sicarios Políticos"</span>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content" id="accordion-2">
+                    <p><strong>Lo que se afirma:</strong> "Los medios mienten. Yo digo la verdad. Merecen ser cuestionados."</p>
+                    
+                    <div class="quote">
+                        "Son sicarios políticos los periodistas de ciertos medios... Sicario es una persona que, a sueldo, se dedica a asesinar."
+                        <div class="source">— Presidente Chaves sobre periodistas críticos</div>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">¿Qué está pasando realmente?</h4>
+                    <p>Altos funcionarios planearon suspender "toda la publicidad estatal" a La Nación, Canal 7, CRHoy.com y Amelia Rueda mediante una "ruta legal" para no admitir la directriz.</p>
+
+                    <p>La ministra ordenaba: "dele duro a Jason Ureña de CRHoy, dele con todo, porque es un maldito".</p>
+
+                    <p>Es chantaje económico: Si hablas bien, recibes pauta (dinero). Si critícas, te quedas sin nada. Los medios mueren por inanición.</p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">Casos Documentados</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Naciones Unidas tuvo miedo de publicar un reporte sobre libertad de expresión</li>
+                        <li>Universidad para la Paz (institución de investigación por la paz) asustada de criticar</li>
+                        <li>66% de comunicadores reporta acoso digital diario</li>
+                    </ul>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">El Resultado</h4>
+                    <p>Costa Rica cayó 15 puestos en libertad de prensa (2022-2025). Los medios críticos quiebran. Los periodistas se van o se alinean. Toda la información proviene de fuentes amigas.</p>
+
+                    <div class="source" style="margin-top: 20px;">📚 Fuente: IV Informe Estado Libertad de Expresión CR | https://proledi.ucr.ac.cr/</div>
+                </div>
+            </div>
+
+            <!-- ACCORDION 4 -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(3)">
+                    <span>📱 Patrón 4: "Comunicación Directa" (Con Bots y Troles)</span>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content" id="accordion-3">
+                    <p><strong>Lo que se afirma:</strong> "Hablo directamente al pueblo. Comunicación clara y transparente sin intermediarios."</p>
+                    
+                    <div class="quote">
+                        "La Administración Chaves se ha enfocado en establecer una comunicación clara y transparente con la ciudadanía mediante sus canales oficiales."
+                        <div class="source">— Casa Presidencial, Comunicado Oficial</div>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">¿Qué está pasando realmente?</h4>
+                    <p>Un trol operador explica: "Te contratan, te dicen 'Ataca a equis persona'. Es dirigido. Te pasan órdenes de trabajo."</p>
+
+                    <p>De 793.104 menciones monitoreadas en redes sociales, 17.4% fue descartado por provenir de "troles digitales" identificados en campañas sistematizadas de ataque.</p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">Cómo Funciona la Defensa</h4>
+                    <div class="quote">
+                        "No tenemos idea de cuál es la intención de estos mensajes que son, evidentemente, troles apoyándome. El Gobierno de la República no valida esta práctica, ni conoce su origen."
+                        <div class="source">— Casa Presidencial, Negación Plausible</div>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">El Resultado Final</h4>
+                    <p>Los seguidores viven en burbujas informativas. Solo ven lo que el algoritmo amplifica. Los críticos son atacados coordinadamente. La población creyendo que hay consenso absoluto cuando en realidad:</p>
+
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Los bots crean la ilusión de popularidad</li>
+                        <li>Críticos reales son acosados hasta callar</li>
+                        <li>Narrativa oficial es la única que circula</li>
+                        <li>Cualquier información diferente parece "ajena" y "peligrosa"</li>
+                    </ul>
+
+                    <div class="source" style="margin-top: 20px;">📚 Fuente: Reporte 31 Observatorio | Universidad Latina de Costa Rica</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON ACROSS COUNTRIES -->
+    <section class="section">
+        <h2 class="section-title">No es Único de Costa Rica</h2>
+        <p style="text-align: center; margin-bottom: 40px; opacity: 0.9; font-size: 18px;">Este "manual" ya ha sido usado exitosamente en otros países:</p>
+
+        <div class="pillars-grid">
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇻🇪</div>
+                <h3>Venezuela (Chávez, 1999-2013)</h3>
+                <p><strong>Estrategia Judicial:</strong> Aumentó jueces de 20 a 32. Los nuevos, todos leales. Los tribunales dejaron de ser obstáculo.</p>
+            </div>
+
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇭🇺</div>
+                <h3>Hungría (Orbán, 2010-2022)</h3>
+                <p><strong>Estrategia Judicial:</strong> Cambió reglamento, aumentó corte de 11 a 15 miembros con aliados. Nunca contradijo al poder.</p>
+            </div>
+
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇹🇷</div>
+                <h3>Turquía (Erdoğan, 2013-2023)</h3>
+                <p><strong>Estrategia Judicial:</strong> Expulsó 2,745 jueces en una sola noche. Solo quedaron los obedientes.</p>
+            </div>
+
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇪🇨</div>
+                <h3>Ecuador (Correa, 2007-2017)</h3>
+                <p><strong>Estrategia Media:</strong> Demandaba periodistas por millones. Los llamaba "sicarios de tinta", "payasos".</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION SECTION -->
+    <section class="section">
+        <div class="cta-section">
+            <h2>¿Qué hacer ahora?</h2>
+            <p>La democracia no es automática. Requiere vigilancia constante, instituciones fuertes y ciudadanos informados.</p>
+            
+            <div style="margin: 40px 0; text-align: left; opacity: 0.9;">
+                <h3 style="margin-bottom: 20px;">Acciones concretas:</h3>
+                <ul style="margin-left: 30px; line-height: 2;">
+                    <li>✓ Consume información de múltiples fuentes. Desconfía de narrativas únicas.</li>
+                    <li>✓ Apoya a medios independientes. La libertad de prensa cuesta dinero.</li>
+                    <li>✓ Visibiliza la represión. El silencio es permiso.</li>
+                    <li>✓ Organízate. Las instituciones solo se defienden cuando hay presión ciudadana.</li>
+                    <li>✓ Exige rendición de cuentas. Los funcionarios públicos trabajan para ti.</li>
+                </ul>
+            </div>
+
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="window.open('https://proledi.ucr.ac.cr/informes-libertad-de-expresion', '_blank')">Leer Informe Completo</button>
+                <button class="btn btn-secondary" onclick="window.open('https://estadonacion.or.cr/', '_blank')">Datos Académicos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOURCES -->
+    <section class="section">
+        <h2 class="section-title">Fuentes Verificadas</h2>
+        <div style="max-width: 900px; margin: 40px auto; background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <p style="margin-bottom: 20px; font-weight: 600;">Esta herramienta está construida con fuentes académicas y reportes verificados:</p>
+            <ul style="margin-left: 20px; line-height: 2; opacity: 0.9;">
+                <li>📊 <a href="https://estadonacion.or.cr/informe-estado-de-la-justicia-2025/" class="source-link">Informe Estado de la Justicia 2025</a> - Programa Estado de la Nación</li>
+                <li>📰 <a href="https://proledi.ucr.ac.cr/informes-libertad-de-expresion" class="source-link">IV Informe del Estado de la Libertad de Expresión en Costa Rica</a> - UCR/PROLEDI</li>
+                <li>📱 <a href="https://www.ulatina.ac.cr/observatorio" class="source-link">Reporte 31 - Observatorio de Escucha Social</a> - Universidad Latina</li>
+                <li>📚 Estudios académicos de V-Dem (Varieties of Democracy) sobre captura judicial y autoritarismo sigiloso</li>
+                <li>🔍 Reportes de Freedom House sobre libertad de prensa en Latinoamérica</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Análisis de Violencia Política en Costa Rica</p>
+        <p style="margin-top: 10px; opacity: 0.6;">Para la Paz, la Democracia y la Justicia Social</p>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        function scrollTo(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Accordion functionality
+        const accordions = document.querySelectorAll('.accordion-content');
+        function toggleAccordion(index) {
+            const content = document.getElementById(`accordion-${index}`);
+            if (content) {
+                content.classList.toggle('active');
+                content.previousElementSibling.classList.toggle('active');
+            }
+        }
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animate stat bars on scroll
+        const statBars = document.querySelectorAll('.stat-bar-fill');
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const percentage = entry.target.getAttribute('data-percentage');
+                    entry.target.style.width = percentage + '%';
+                    entry.target.style.opacity = '1';
+                    barObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        statBars.forEach(bar => barObserver.observe(bar));
+
+        // Console message
+        console.log("%c⚠️ LA DEMOCRACIA EN CRISIS", "font-size: 20px; font-weight: bold; color: #d32f2f;");
+        console.log("%cCosta Rica 2022-2026", "font-size: 14px; color: #d32f2f;");
+        console.log("Comparte este análisis. La democracia necesita ciudadanos informados.");
+    </script>
+</body>
+</html>
