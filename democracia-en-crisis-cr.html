@@ -254,9 +254,21 @@
         /* PROCESS CARDS */
         .process-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
             margin-top: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .process-card {
@@ -278,8 +290,8 @@
         }
 
         .process-thumb {
-            width: 52px;
-            height: 52px;
+            width: 70px;
+            height: 70px;
             border-radius: 8px;
             border: 2px dashed rgba(255, 255, 255, 0.35);
             background: rgba(255, 255, 255, 0.03);
@@ -661,7 +673,8 @@
                 <div class="process-thumb"></div>
                 <div class="process-body">
                     <h3>1. ⚖️ Uso de la ley como camuflaje</h3>
-                    <p>Legalismo autocrático: se invocan leyes y mayorías para concentrar poder y reprimir bajo apariencia de legalidad (Varol, Levitsky & Ziblatt).</p>
+                    <p>Usar las leyes y el sistema legal para concentrar poder, haciéndolo parecer legítimo y democrático.</p>
+                    <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Dicen que soy corrupto, pero yo protejo a la Ley y a la Constitución con mi alma y corazón"</div>
                     <div class="process-meta">Varol (2015) · Levitsky & Ziblatt (2018)</div>
                 </div>
             </div>
@@ -670,7 +683,8 @@
                 <div class="process-thumb"></div>
                 <div class="process-body">
                     <h3>2. 🧪 Captura de los árbitros</h3>
-                    <p>Empaquetar o purgar cortes y entes de control, infiltrando leales para blindar al ejecutivo y castigar opositores (van Lit & van Ham).</p>
+                    <p>Llenar tribunales y organismos de control con personas leales para proteger al gobierno e investigar a los opositores.</p>
+                    <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Esos jueces están al servicio de la élite, no del pueblo. Hay que renovar la justicia"</div>
                     <div class="process-meta">Esen (2025) · van Lit & van Ham (2025)</div>
                 </div>
             </div>
@@ -678,8 +692,9 @@
             <div class="process-card fade-in" style="--tone: #ef6c00;">
                 <div class="process-thumb"></div>
                 <div class="process-body">
-                    <h3>3. 🚫 Neutralización de la oposición y críticos</h3>
-                    <p>Lawfare: perseguir con delitos comunes, acusaciones cronometradas y campañas de delegitimación para silenciar disenso (Feierherd, Varol).</p>
+                    <h3>3. 🚫 Neutralización de la oposición</h3>
+                    <p>Usar investigaciones legales y acusaciones públicas para debilitar y desacreditar a los críticos y rivales políticos.</p>
+                    <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Mis opositores son corruptos y criminales. ¿Quieren que los deje libres?"</div>
                     <div class="process-meta">Feierherd (2024) · Varol (2015)</div>
                 </div>
             </div>
@@ -688,7 +703,8 @@
                 <div class="process-thumb"></div>
                 <div class="process-body">
                     <h3>4. 📰 Captura y asfixia de los medios</h3>
-                    <p>Asfixia económica y demandas por difamación para forzar autocensura y premiar a medios leales (Dragomir, Varol).</p>
+                    <p>Ahogar económicamente a medios críticos y premiar a los leales mediante publicidad estatal y demandas legales.</p>
+                    <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Los medios son sicarios. Mienten para destruirme. Yo digo la verdad al pueblo"</div>
                     <div class="process-meta">Dragomir (2019) · Varol (2015)</div>
                 </div>
             </div>
@@ -697,7 +713,8 @@
                 <div class="process-thumb"></div>
                 <div class="process-body">
                     <h3>5. 🗳️ Reescritura de las reglas de juego</h3>
-                    <p>Cambios legales y endógenos para inclinar el campo electoral, duplicar instituciones leales y vaciar contrapesos.</p>
+                    <p>Cambiar leyes electorales y crear instituciones paralelas para inclinar el sistema a favor del gobierno actual.</p>
+                    <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Estas reformas garantizan la estabilidad y evitan que los corruptos vuelvan"</div>
                     <div class="process-meta">Varol (2015) · Garcia-Holgado (2025)</div>
                 </div>
             </div>
@@ -706,7 +723,8 @@
                 <div class="process-thumb"></div>
                 <div class="process-body">
                     <h3>6. 🔥 Deslegitimación de la verdad y polarización</h3>
-                    <p>Retórica anti-élite, ataque a evidencia y siembra de posverdad para dividir al país y justificar medidas autoritarias.</p>
+                    <p>Atacar a expertos, dividir al país entre "pueblo puro" y "élite corrupta", y promover desinformación.</p>
+                    <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Los expertos y científicos trabajan para la élite. Yo tengo el sentido común del pueblo"</div>
                     <div class="process-meta">Esen (2025) · Hameleers (2022)</div>
                 </div>
             </div>
@@ -715,7 +733,8 @@
 
     <!-- TIMELINE -->
     <section class="section" id="timeline">
-        <h2 class="section-title">La Cronología de la Crisis</h2>
+        <h2 class="section-title">Cronología de la Crisis en Costa Rica</h2>
+        <p style="max-width: 800px; margin: 0 auto 30px; opacity: 0.9; text-align: center;">¿Qué ha pasado, qué está pasando, qué puede pasar? Haga clic en las noticias para leer más sobre cada caso.</p>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-date">2022-2023</div>
@@ -778,8 +797,8 @@
 
             <div class="pillar-card fade-in" onclick="toggleAccordion(1)">
                 <div class="pillar-icon">🚔</div>
-                <h3>La Fiscalía</h3>
-                <p>Presionada para investigar selectivamente. Persecución política disfrazada de justicia.</p>
+                <h3>Las instituciones que fiscalizan</h3>
+                <p>Fiscalía y Contraloría presionadas para investigar selectivamente. Persecución política disfrazada de justicia.</p>
                 <div class="pillar-status">
                     <span style="color: var(--primary);">●</span> COMPROMETIDA
                 </div>
@@ -985,10 +1004,17 @@
 
     <!-- COMPARISON ACROSS COUNTRIES -->
     <section class="section">
-        <h2 class="section-title">No es Único de Costa Rica</h2>
+        <h2 class="section-title">Costa Rica no es el único</h2>
         <p style="text-align: center; margin-bottom: 40px; opacity: 0.9; font-size: 18px;">Este "manual" ya ha sido usado exitosamente en otros países:</p>
 
         <div class="pillars-grid">
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇺🇸</div>
+                <h3>Estados Unidos (Trump, 2016-2024)</h3>
+                <p><strong>Estrategia similar:</strong> Presión sobre fiscales y el FBI, narrativa de "enemigos del pueblo" contra medios, intentos de anular elecciones, polarización extrema y ataque al Capitolio.</p>
+                <a href="democracy-under-siege.html" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: bold;">→ Ver análisis completo</a>
+            </div>
+
             <div class="pillar-card fade-in">
                 <div class="pillar-icon">🇻🇪</div>
                 <h3>Venezuela (Chávez, 1999-2013)</h3>
@@ -1033,8 +1059,21 @@
             </div>
 
             <div class="cta-buttons">
-                <button class="btn btn-primary" onclick="window.open('https://proledi.ucr.ac.cr/informes-libertad-de-expresion', '_blank')">Leer Informe Completo</button>
-                <button class="btn btn-secondary" onclick="window.open('https://estadonacion.or.cr/', '_blank')">Datos Académicos</button>
+                <button class="btn btn-primary" onclick="window.open('https://d1qqtien6gys07.cloudfront.net/wp-content/uploads/2024/07/Cuarto-Informe-del-Estado-de-la-Libertad-de-Expresion-en-Costa-Rica.pdf', '_blank')">Leer informe completo de PROLEDI</button>
+                <button class="btn btn-secondary" onclick="window.open('https://repositorio.conare.ac.cr/items/fb8f5a64-193d-4316-8d60-a9e0c598faf7', '_blank')">Leer informe completo del Estado de la Nación 2025</button>
+                <button class="btn btn-secondary" onclick="window.open('https://estadonacion.or.cr/', '_blank')">Leer informe completo del Reporte Libertad de Expresión en Costa Rica 2024 de la Universidad para la Paz</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- VOTING CTA SECTION -->
+    <section class="section" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 60px 20px; margin-top: 60px;">
+        <div class="cta-section" style="max-width: 800px; margin: 0 auto;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: white;">Y lo más importante: INFÓRMATE Y SALÍ A VOTAR ESTE 2 DE FEBRERO</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 40px; color: rgba(255, 255, 255, 0.9);">La democracia funciona cuando participás. Tu voto es tu voz.</p>
+            
+            <div class="cta-buttons">
+                <button class="btn btn-primary" style="background: white; color: #1e3a8a; font-weight: bold; font-size: 1.1rem; padding: 15px 40px;" onclick="window.open('https://apolitico.cr/', '_blank')">Quiero saber más</button>
             </div>
         </div>
     </section>
