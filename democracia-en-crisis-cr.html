@@ -108,6 +108,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
         /* TIMELINE */
         .section {
             max-width: 1200px;
@@ -657,7 +663,8 @@
         <div class="hero-content">
             <h1>⚠️ La Democracia en Crisis</h1>
             <p class="subtitle">Costa Rica 2022-2026: Cómo se erosiona la democracia desde adentro</p>
-            <button class="cta-button" onclick="scrollTo('procesos')">Descubre lo que pasó</button>
+            <button class="cta-button" id="hero-cta" onclick="changeButtonText()">Descubre lo que pasó</button>
+            <div id="scroll-arrow" style="display: none; margin-top: 20px; font-size: 48px; animation: bounce 1.5s infinite;">⬇️</div>
         </div>
     </section>
 
@@ -1099,6 +1106,17 @@
     </footer>
 
     <script>
+        // Change button text on click
+        function changeButtonText() {
+            const button = document.getElementById('hero-cta');
+            const arrow = document.getElementById('scroll-arrow');
+            if (button && arrow) {
+                button.textContent = 'Baja para ver la información';
+                button.style.background = 'var(--accent)';
+                arrow.style.display = 'block';
+            }
+        }
+
         // Smooth scroll
         function scrollTo(id) {
             const element = document.getElementById(id);
