@@ -640,6 +640,37 @@
             background: rgba(211, 47, 47, 0.2);
         }
 
+        /* HOME SHORTCUT BUTTON (SUBTLE) */
+        .home-button {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
+            background: rgba(13, 27, 42, 0.65);
+            color: #f5f5f5;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 120;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            transition: opacity 0.2s ease;
+        }
+
+        .home-button:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .home-button {
+                top: 12px;
+                left: 12px;
+                padding: 9px 12px;
+                font-size: 16px;
+            }
+        }
+
         /* FOOTER */
         footer {
             padding: 40px 20px;
@@ -701,7 +732,7 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='https://juapache.github.io/'" aria-label="Volver al inicio">🔙🏠</button>
+    <button class="home-button" onclick="window.location.href='https://juapache.github.io/index-es.html'" aria-label="Volver al inicio">🔙🏠</button>
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
