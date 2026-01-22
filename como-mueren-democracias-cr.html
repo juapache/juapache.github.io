@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo Mueren las Democracias - Interactivo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Scenarios grid */
+        .scenarios-section {
+            margin-bottom: 50px;
+        }
+        
+        .scenarios-title {
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .scenario-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .scenario-card.active {
+            border: 3px solid #3498db;
+        }
+        
+        .scenario-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 20px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .scenario-card.s2 .scenario-header {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        }
+        
+        .scenario-card.s3 .scenario-header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+        
+        .scenario-card.s4 .scenario-header {
+            background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
+        }
+        
+        .scenario-card p {
+            padding: 15px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            min-height: 80px;
+        }
+        
+        .scenario-card button {
+            width: 100%;
+            padding: 12px;
+            background: #f8f9fa;
+            border: none;
+            border-top: 1px solid #ecf0f1;
+            cursor: pointer;
+            font-weight: 600;
+            color: #3498db;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+        
+        .scenario-card button:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        /* Main interactive area */
+        .playbook-arena {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: start;
+        }
+        
+        /* Left side: Quote/Speech selector */
+        .quote-selector {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+        
+        .quote-selector h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .quote-option {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            border-left: 5px solid #3498db;
+        }
+        
+        .quote-option:hover {
+            background: #e8f4f8;
+            border-color: #3498db;
+        }
+        
+        .quote-option.active {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+        
+        .quote-option .label {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .quote-option .text {
+            font-size: 13px;
+            line-height: 1.5;
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        /* Right side: Reality decoder */
+        .reality-decoder {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .decoder-header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 20px 30px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .decoder-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        
+        .decode-layer {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+            margin-bottom: 20px;
+        }
+        
+        .decode-layer:nth-child(1) { animation-delay: 0s; }
+        .decode-layer:nth-child(2) { animation-delay: 0.2s; }
+        .decode-layer:nth-child(3) { animation-delay: 0.4s; }
+        .decode-layer:nth-child(4) { animation-delay: 0.6s; }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .decode-item {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .decode-item.level-0 {
+            background: #3498db;
+            color: white;
+            border-left: 5px solid #2980b9;
+        }
+        
+        .decode-item.level-1 {
+            background: #9b59b6;
+            color: white;
+            border-left: 5px solid #8e44ad;
+        }
+        
+        .decode-item.level-2 {
+            background: #e74c3c;
+            color: white;
+            border-left: 5px solid #c0392b;
+        }
+        
+        .decode-item.level-3 {
+            background: #27ae60;
+            color: white;
+            border-left: 5px solid #229954;
+        }
+        
+        .decode-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.85;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .decode-text {
+            font-size: 14px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        .source-link {
+            font-size: 12px;
+            margin-top: 10px;
+            opacity: 0.9;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .source-link a {
+            color: inherit;
+            text-decoration: underline;
+        }
+        
+        /* Bottom: Outcome flow */
+        .outcome-flow {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .outcome-flow h2 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            flex: 1;
+            min-width: 140px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        .flow-step.active {
+            background: #27ae60;
+            color: white;
+            border-color: #229954;
+        }
+        
+        .flow-step .number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .flow-step .text {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        
+        .flow-arrow {
+            color: #bdc3c7;
+            font-size: 24px;
+            flex: 0 0 auto;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #95a5a6;
+        }
+        
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        /* Mobile */
+        @media (max-width: 1024px) {
+            .playbook-arena {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .flow-container {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+            
+            .scenarios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ Cómo Mueren las Democracias: El Caso de Costa Rica</h1>
+            <p>Entender el patrón de erosión institucional. Explora cómo los líderes debilitan la democracia mientras afirman defenderla. Ejemplos verificados de Costa Rica, 2022-2026.</p>
+        </div>
+        
+        <!-- Four Scenarios (AT THE TOP) -->
+        <div class="scenarios-section">
+            <div class="scenarios-title">Los 4 Pilares Bajo Ataque</div>
+            <div class="scenarios-grid">
+                <div class="scenario-card s1 active" onclick="selectScenario(0)">
+                    <div class="scenario-header">⚖️ El Poder Judicial</div>
+                    <p>Cómo los tribunales se vuelven débiles mientras el líder afirma solo "modernizarlos".</p>
+                    <button onclick="expandScenario(event, 0)">Explorar</button>
+                </div>
+                
+                <div class="scenario-card s2" onclick="selectScenario(1)">
+                    <div class="scenario-header">🔍 Teatro Anticorrupción</div>
+                    <p>Cómo la persecución política se disfraza como "combate a la corrupción".</p>
+                    <button onclick="expandScenario(event, 1)">Explorar</button>
+                </div>
+                
+                <div class="scenario-card s3" onclick="selectScenario(2)">
+                    <div class="scenario-header">📰 La Prensa "Canalla"</div>
+                    <p>Cómo periodistas críticos se convierten en "sicarios" que merecen castigo.</p>
+                    <button onclick="expandScenario(event, 2)">Explorar</button>
+                </div>
+                
+                <div class="scenario-card s4" onclick="selectScenario(3)">
+                    <div class="scenario-header">📱 Populismo Digital</div>
+                    <p>Cómo la "comunicación directa" oculta troles, bots y ataques coordinados.</p>
+                    <button onclick="expandScenario(event, 3)">Explorar</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="playbook-arena">
+            <!-- Left: Quote Selector -->
+            <div class="quote-selector">
+                <h2>¿Qué se dice?</h2>
+                
+                <div class="quote-option active" onclick="showDecoding(0)">
+                    <div class="label">Sobre los Tribunales</div>
+                    <div class="text">“El sistema judicial no les sirve a ustedes, lo capturaron para servirle a intereses mezquinos de una élite que quiere seguir ordeñando al pueblo.”</div>
+                </div>
+                
+                <div class="quote-option" onclick="showDecoding(1)">
+                    <div class="label">Sobre Combatir la Corrupción</div>
+                    <div class="text">“Usted contralora general... frena una y otra vez obras que harían más grande a Costa Rica... Esa no es la institucionalidad que quiere el pueblo.”</div>
+                </div>
+                
+                <div class="quote-option" onclick="showDecoding(2)">
+                    <div class="label">Sobre los Medios</div>
+                    <div class="text">“Son sicarios políticos los periodistas de ciertos medios... Sicario es una persona que, a sueldo, se dedica a asesinar.”</div>
+                </div>
+                
+                <div class="quote-option" onclick="showDecoding(3)">
+                    <div class="label">Sobre la Comunicación Directa</div>
+                    <div class="text">“La Administración Chaves se ha enfocado en establecer una comunicación clara y transparente con la ciudadanía mediante sus canales oficiales.”</div>
+                </div>
+            </div>
+            
+            <!-- Right: Reality Decoder -->
+            <div class="reality-decoder">
+                <div class="decoder-header">QUÉ ESTÁ SUCEDIENDO EN LA PRÁCTICA</div>
+                <div class="decoder-content" id="decoderContent">
+                    <div class="empty-state">
+                        <p>👈 Selecciona un enunciado para ver el patrón</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Outcome Flow -->
+        <div class="outcome-flow">
+            <h2>El Ciclo de Captura Institucional</h2>
+            <div class="flow-container" id="flowContainer">
+                <div class="flow-step">
+                    <div class="number">1</div>
+                    <div class="text">Líder reclama reforma</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="number">2</div>
+                    <div class="text">Ataca la institución</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="number">3</div>
+                    <div class="text">Críticos bloqueados</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="number">4</div>
+                    <div class="text">Institución capturada</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const decodings = [
+            {
+                claim: "El sistema judicial no les sirve a ustedes, lo capturaron para servirle a intereses mezquinos de una élite que quiere seguir ordeñando al pueblo.",
+                reality: "El Ministerio de Hacienda bloqueó ₡8.687,88 millones aprobados por la Asamblea Legislativa para el OIJ y Ministerio Público, generando un 'impacto directo y demoledor'. El Poder Judicial está sometido a ataques políticos sin precedente en la historia republicana del país.",
+                deniability: "Lo que estamos buscando es que el poder judicial sienta que la gente no está conforme... y que el fiscal general no merece estar ahí por mentiroso porque no le rinde cuentas a la gente.",
+                outcome: "Jueces presionados renuncian. Recortes presupuestarios debilitan capacidad de fiscalización. El Informe Estado de la Justicia 2025 documenta arremetidas constantes a legitimidad e independencia judicial.",
+                source: "Informe Estado de la Justicia 2025 | https://estadonacion.or.cr/informe-estado-de-la-justicia-2025/"
+            },
+            {
+                claim: "Usted contralora general... frena una y otra vez obras que harían más grande a Costa Rica... Esa no es la institucionalidad que quiere el pueblo.",
+                reality: "Los ataques procuran descalificar la legitimidad del Judicial para someterlo a fines partidarios. Se manipulan presupuestos, se presiona para remover o nombrar autoridades, influir o evadir procesos judiciales.",
+                deniability: "¿Ustedes de verdad creen que este caso tenga algún sentido más allá del servilismo de un fiscal incompetente torpe sirviendo a la red de cuido que le manipula?",
+                outcome: "El Poder Judicial enfrenta ataques políticos convergiendo con agresiones por actores criminales. Un hecho sin precedente en la historia republicana. Fiscales e instituciones de control presionadas para no investigar al gobierno.",
+                source: "Estado de la Justicia 2025 - Sinopsis | https://estadonacion.or.cr/wp-content/uploads/2025/06/PEN_Informe_estado_justicia_sinopsis.pdf"
+            },
+            {
+                claim: "Son sicarios políticos los periodistas de ciertos medios... Sicario es una persona que, a sueldo, se dedica a asesinar.",
+                reality: "Funcionarios de Casa Presidencial idearon un plan para suspender 'toda la publicidad' estatal a La Nación, Canal 7, CrHoy.com y Amelia Rueda mediante una 'ruta legal' que les permitiera no admitir la directriz. Ministra ordenó: 'dele duro a Jason Ureña de CRHoy, dele con todo, porque es un maldito'.",
+                deniability: "¿Tienen la libertad para mentir? Absolutamente, sigan mintiendo. ¿Tengo yo la responsabilidad de apuntar esas mentiras? Creo que sí.",
+                outcome: "Costa Rica cayó 15 puestos en ranking de libertad de prensa entre 2022-2025. El 66% de comunicadores reporta acoso digital. Retiro sistemático de publicidad oficial a medios críticos documentado.",
+                source: "IV Informe Estado Libertad de Expresión CR | https://proledi.ucr.ac.cr/informes-libertad-de-expresion"
+            },
+            {
+                claim: "La Administración Chaves se ha enfocado en establecer una comunicación clara y transparente con la ciudadanía mediante sus canales oficiales.",
+                reality: "Un trol opera así: te contratan, te dicen 'Ataque a equis persona'. Es dirigido. La ministra me pasaba órdenes: 'dele duro a Jason Ureña'. De 793.104 menciones monitoreadas, un 17,4% fueron descartadas por provenir de troles digitales identificados en campañas sistematizadas.",
+                deniability: "No tenemos idea de cuál es la intención de estos mensajes que son, evidentemente, troles apoyándome. El Gobierno no valida esta práctica, ni conoce su origen.",
+                outcome: "460K+ menciones monitoreadas en 2022-2024. El 66% de comunicadores reporta acoso digital diario. Campañas de difamación coordinadas contra periodistas documentadas. Burbujas informativas donde solo circula narrativa oficial.",
+                source: "Reporte 31 Observatorio U. Latina | https://www.ulatina.ac.cr/observatorio"
+            }
+        ];
+        
+        function showDecoding(index) {
+            // Update active quote
+            document.querySelectorAll('.quote-option').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+            
+            // Update decoder
+            const decoding = decodings[index];
+            const html = `
+                <div class="decode-layer">
+                    <div class="decode-item level-0">
+                        <div class="decode-label">Lo Que Se Dice (Discurso Oficial)</div>
+                        <div class="decode-text">"${decoding.claim}"</div>
+                    </div>
+                </div>
+                <div class="decode-layer">
+                    <div class="decode-item level-1">
+                        <div class="decode-label">Qué Está Pasando Realmente</div>
+                        <div class="decode-text">${decoding.reality}</div>
+                    </div>
+                </div>
+                <div class="decode-layer">
+                    <div class="decode-item level-2">
+                        <div class="decode-label">Cómo Se Justifica</div>
+                        <div class="decode-text">${decoding.deniability}</div>
+                    </div>
+                </div>
+                <div class="decode-layer">
+                    <div class="decode-item level-3">
+                        <div class="decode-label">El Resultado Final</div>
+                        <div class="decode-text">✓ ${decoding.outcome}</div>
+                        <div class="source-link">📎 <a href="${decoding.source.split(', ')[1]}" target="_blank">Ver fuente verificable</a></div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('decoderContent').innerHTML = html;
+            
+            // Animate flow
+            const steps = document.querySelectorAll('.flow-step');
+            steps.forEach((step, i) => {
+                step.classList.toggle('active', i < 2);
+            });
+        }
+        
+        function selectScenario(index) {
+            document.querySelectorAll('.scenario-card').forEach((card, i) => {
+                card.classList.toggle('active', i === index);
+            });
+        }
+        
+        function expandScenario(e, index) {
+            e.preventDefault();
+            e.stopPropagation();
+            showDecoding(index);
+            document.querySelector('.quote-selector').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Initialize
+        showDecoding(0);
+    </script>
+</body>
+</html>
