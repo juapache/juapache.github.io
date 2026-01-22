@@ -751,22 +751,35 @@
         <div class="hero-content">
             <h1>⚠️ La Democracia en Crisis</h1>
             <p class="subtitle">Costa Rica 2022-2026: Cómo se erosiona la democracia desde adentro</p>
-            <button class="cta-button" id="hero-cta" onclick="changeButtonText()">Descubre lo que está pasando</button>
+            <button class="cta-button" id="hero-cta" onclick="changeButtonText()">Entendamos lo que está pasando</button>
             <div id="scroll-arrow" style="display: none; margin-top: 20px; font-size: 48px; animation: bounce 1.5s infinite;">⬇️</div>
         </div>
     </section>
 
     <!-- PROCESOS DE DESMANTELAMIENTO -->
     <section class="section" id="procesos">
-        <h2 class="section-title">El desmantelamiento de la democracia</h2>
-        <p style="text-align: center; opacity: 0.9; max-width: 900px; margin: 0 auto 30px;">
-            El desmantelamiento de la democracia no siempre ocurre mediante golpes de estado violentos, sino a través de un proceso gradual de erosión institucional.
+        <h2 class="section-title">Nuestra democracia a pedacitos</h2>
+        <p style="text-align: center; opacity: 0.9; max-width: 900px; margin: 0 auto 30px; position: relative;">
+            <span class="tooltip-trigger" style="position: relative; cursor: help; border-bottom: 2px dashed var(--primary); display: inline-block;">
+                El desmantelamiento de la democracia no siempre ocurre mediante golpes de estado violentos (lo que es menos probable en Costa Rica, pero igual puede pasar), sino a través de un proceso gradual de desgaste institucional, desconfianza, polarización social y normalización y escalada de la violencia.
+                <div class="tooltip-box" style="position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background: #d32f2f; color: white; padding: 12px 16px; border-radius: 8px; white-space: nowrap; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                    <a href="https://juapache.github.io/prisioners-dilemma-escalation-es.html" style="color: white; text-decoration: none; font-weight: bold;">¿Quieres saber cómo escala la violencia? →</a>
+                    <div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid #d32f2f;"></div>
+                </div>
+            </span>
         </p>
+
+        <style>
+            .tooltip-trigger:hover .tooltip-box {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        </style>
 
         <div class="process-grid">
             <div class="process-card fade-in" style="--tone: #f9a825;">
                 <div class="process-body">
-                    <h3>1. ⚖️ Uso de la ley como camuflaje</h3>
+                    <h3>1. ⚖️ Uso de la ley como como excusa</h3>
                     <p>Usar las leyes y el sistema legal para concentrar poder, haciéndolo parecer legítimo y democrático.</p>
                     <div class="process-meta" style="margin: 10px 0;">Varol (2015) · Levitsky & Ziblatt (2018)</div>
                     <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;"><strong>Lo que dice el totalitario:</strong> "Dicen que soy corrupto, pero yo protejo a la Ley y a la Constitución con mi alma y corazón"</div>
