@@ -99,6 +99,15 @@
         .impact-number { font-size: 48px; font-weight: 800; color: var(--primary); margin-bottom: 10px; font-family: 'Courier New', monospace; }
         .impact-label { font-size: 16px; opacity: 0.85; }
 
+        /* PILLAR CARDS */
+        .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .pillar-card { background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)); border-radius: 12px; padding: 30px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; cursor: pointer; }
+        .pillar-card:hover { transform: translateY(-5px); border-color: rgba(211, 47, 47, 0.3); background: rgba(255, 255, 255, 0.08); }
+        .pillar-icon { font-size: 48px; margin-bottom: 20px; }
+        .pillar-card h3 { font-size: 22px; margin-bottom: 15px; color: #fff; }
+        .pillar-card p { font-size: 15px; opacity: 0.9; line-height: 1.6; }
+        .pillar-card a { display: inline-block; margin-top: 15px; }
+
         /* ACCORDION */
         .accordion-section { max-width: 1000px; margin: 60px auto; }
         .accordion-item { margin-bottom: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
@@ -388,11 +397,54 @@
         </div>
     </section>
 
+    <!-- COMPARISON ACROSS COUNTRIES -->
+    <section class="section">
+        <h2 class="section-title">This Isn't Just an American Story</h2>
+        <p style="text-align: center; margin-bottom: 40px; opacity: 0.9; font-size: 18px;">This playbook has been deployed successfully in democracies around the world:</p>
+
+        <div class="pillars-grid">
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇨🇷</div>
+                <h3>Costa Rica (Chaves, 2022-Present)</h3>
+                <p><strong>Similar Strategy:</strong> Budget blockades against judiciary, fiscal intimidation, media boycotts, anti-elite rhetoric. Erosion in a country ranked among the world's strongest democracies.</p>
+                <a href="democracia-en-crisis-cr.html" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: bold;">→ See full analysis (Spanish)</a>
+            </div>
+
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇭🇺</div>
+                <h3>Hungary (Orbán, 2010-Present)</h3>
+                <p><strong>Judicial Strategy:</strong> Expanded court from 11 to 15 judges with loyalists. Courts never contradict executive power. Media captured through loyal oligarchs.</p>
+                <a href="https://freedomhouse.org/country/hungary/nations-transit/2024" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: bold;">→ Freedom House Report</a>
+            </div>
+
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇹🇷</div>
+                <h3>Turkey (Erdoğan, 2013-Present)</h3>
+                <p><strong>Judicial Strategy:</strong> Expelled 2,745 judges overnight following 2016 coup attempt. Only obedient judges remain. Constitutional referendum concentrated presidential power.</p>
+                <a href="https://freedomhouse.org/country/turkey/freedom-world/2024" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: bold;">→ Freedom House Report</a>
+            </div>
+
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇻🇪</div>
+                <h3>Venezuela (Chávez/Maduro, 1999-Present)</h3>
+                <p><strong>Judicial Strategy:</strong> Expanded Supreme Court from 20 to 32 judges, all loyalists. Courts became shield for government and weapon against opposition. Total media capture.</p>
+                <a href="https://freedomhouse.org/country/venezuela/freedom-world/2024" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: bold;">→ Freedom House Report</a>
+            </div>
+
+            <div class="pillar-card fade-in">
+                <div class="pillar-icon">🇵🇱</div>
+                <h3>Poland (PiS, 2015-2023)</h3>
+                <p><strong>Judicial Strategy:</strong> Judicial reforms to appoint loyalists, intimidation of independent media, anti-elite campaigns, restriction of civil liberties. Democratic recovery underway post-2023.</p>
+                <a href="https://freedomhouse.org/country/poland/nations-transit/2024" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: bold;">→ Freedom House Report</a>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA -->
     <section class="section">
         <div class="cta-section">
             <h2>Recognize the Pattern</h2>
-            <p>This playbook is not unique to Trump, nor is it unique to the US. It has succeeded in Hungary, Venezuela, Turkey, and Poland. Awareness is the first defense.</p>
+            <p>This playbook transcends borders and ideologies. From Costa Rica to Hungary, Turkey to Venezuela, the tactics are remarkably similar. Awareness is the first defense.</p>
             <div class="cta-buttons">
                 <button class="btn btn-primary" onclick="scrollTo('timeline')">Timeline: US Case Study</button>
                 <button class="btn btn-secondary" onclick="scrollTo('processes')">6 Warning Signs</button>
