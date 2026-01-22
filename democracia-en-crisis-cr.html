@@ -158,8 +158,31 @@
             .timeline::before {
                 left: 30px;
             }
-        }
+            
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding-left: 60px;
+            }
 
+            .timeline-item:nth-child(even) .timeline-content {
+                order: 1;
+            }
+
+            .timeline-item:nth-child(even) .timeline-date {
+                order: 2;
+            }
+            
+            .timeline-date {
+                text-align: left;
+                font-size: 16px;
+            }
+            
+            .timeline-marker {
+                left: 30px;
+            }
+        }
+        
         .timeline-item {
             margin-bottom: 50px;
             display: grid;
@@ -176,21 +199,6 @@
             order: 1;
         }
 
-        @media (max-width: 768px) {
-            .timeline-item {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .timeline-item:nth-child(even) .timeline-content {
-                order: 1;
-            }
-
-            .timeline-item:nth-child(even) .timeline-date {
-                order: 2;
-            }
-        }
-
         .timeline-marker {
             position: absolute;
             left: 50%;
@@ -202,12 +210,6 @@
             border-radius: 50%;
             top: 30px;
             z-index: 10;
-        }
-
-        @media (max-width: 768px) {
-            .timeline-marker {
-                left: 30px;
-            }
         }
 
         .timeline-date {
@@ -681,18 +683,18 @@
                 <div class="process-body">
                     <h3>1. ⚖️ Uso de la ley como camuflaje</h3>
                     <p>Usar las leyes y el sistema legal para concentrar poder, haciéndolo parecer legítimo y democrático.</p>
+                    <div class="process-meta" style="margin: 10px 0;">Varol (2015) · Levitsky & Ziblatt (2018)</div>
                     <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Dicen que soy corrupto, pero yo protejo a la Ley y a la Constitución con mi alma y corazón"</div>
-                    <div class="process-meta">Varol (2015) · Levitsky & Ziblatt (2018)</div>
                 </div>
             </div>
 
             <div class="process-card fade-in" style="--tone: #f57c00;">
                 <div class="process-thumb"></div>
                 <div class="process-body">
-                    <h3>2. 🧪 Captura de los árbitros</h3>
-                    <p>Llenar tribunales y organismos de control con personas leales para proteger al gobierno e investigar a los opositores.</p>
+                    <h3>2. ⚖️ Ataque al Poder Judicial</h3>
+                    <p>Ataques sistemáticos para deslegitimizar al Poder Judicial, para llenar los tribunales y organismos de control con personas leales para proteger al gobierno e investigar a los opositores.</p>
+                    <div class="process-meta" style="margin: 10px 0;">Esen (2025) · van Lit & van Ham (2025)</div>
                     <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Esos jueces están al servicio de la élite, no del pueblo. Hay que renovar la justicia"</div>
-                    <div class="process-meta">Esen (2025) · van Lit & van Ham (2025)</div>
                 </div>
             </div>
 
@@ -701,8 +703,8 @@
                 <div class="process-body">
                     <h3>3. 🚫 Neutralización de la oposición</h3>
                     <p>Usar investigaciones legales y acusaciones públicas para debilitar y desacreditar a los críticos y rivales políticos.</p>
+                    <div class="process-meta" style="margin: 10px 0;">Feierherd (2024) · Varol (2015)</div>
                     <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Mis opositores son corruptos y criminales. ¿Quieren que los deje libres?"</div>
-                    <div class="process-meta">Feierherd (2024) · Varol (2015)</div>
                 </div>
             </div>
 
@@ -711,8 +713,8 @@
                 <div class="process-body">
                     <h3>4. 📰 Captura y asfixia de los medios</h3>
                     <p>Ahogar económicamente a medios críticos y premiar a los leales mediante publicidad estatal y demandas legales.</p>
+                    <div class="process-meta" style="margin: 10px 0;">Dragomir (2019) · Varol (2015)</div>
                     <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Los medios son sicarios. Mienten para destruirme. Yo digo la verdad al pueblo"</div>
-                    <div class="process-meta">Dragomir (2019) · Varol (2015)</div>
                 </div>
             </div>
 
@@ -721,8 +723,8 @@
                 <div class="process-body">
                     <h3>5. 🗳️ Reescritura de las reglas de juego</h3>
                     <p>Cambiar leyes electorales y crear instituciones paralelas para inclinar el sistema a favor del gobierno actual.</p>
+                    <div class="process-meta" style="margin: 10px 0;">Varol (2015) · Garcia-Holgado (2025)</div>
                     <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Estas reformas garantizan la estabilidad y evitan que los corruptos vuelvan"</div>
-                    <div class="process-meta">Varol (2015) · Garcia-Holgado (2025)</div>
                 </div>
             </div>
 
@@ -731,8 +733,8 @@
                 <div class="process-body">
                     <h3>6. 🔥 Deslegitimación de la verdad y polarización</h3>
                     <p>Atacar a expertos, dividir al país entre "pueblo puro" y "élite corrupta", y promover desinformación.</p>
+                    <div class="process-meta" style="margin: 10px 0;">Esen (2025) · Hameleers (2022)</div>
                     <div class="quote" style="font-size: 13px; opacity: 0.85; font-style: italic; margin: 10px 0;">"Los expertos y científicos trabajan para la élite. Yo tengo el sentido común del pueblo"</div>
-                    <div class="process-meta">Esen (2025) · Hameleers (2022)</div>
                 </div>
             </div>
         </div>
