@@ -551,6 +551,38 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
+
+        /* HOME SHORTCUT BUTTON */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), #b71c1c);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 120;
+            box-shadow: 0 6px 16px rgba(211, 47, 47, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(211, 47, 47, 0.55);
+        }
+
+        @media (max-width: 600px) {
+            .home-button {
+                top: 14px;
+                left: 14px;
+                padding: 9px 12px;
+                font-size: 16px;
+            }
+        }
             text-align: center;
             padding: 80px 20px;
             background: rgba(211, 47, 47, 0.1);
@@ -669,6 +701,7 @@
     </style>
 </head>
 <body>
+    <button class="home-button" onclick="window.location.href='https://juapache.github.io/'" aria-label="Volver al inicio">🔙🏠</button>
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
