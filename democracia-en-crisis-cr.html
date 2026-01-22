@@ -642,9 +642,9 @@
 
         /* HOME SHORTCUT BUTTON (SUBTLE) */
         .home-button {
-            position: fixed;
-            top: 16px;
-            left: 16px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
             padding: 10px 14px;
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 10px;
@@ -653,7 +653,7 @@
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            z-index: 120;
+            z-index: 10;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
             transition: opacity 0.2s ease;
         }
@@ -664,8 +664,8 @@
 
         @media (max-width: 600px) {
             .home-button {
-                top: 12px;
-                left: 12px;
+                top: 16px;
+                left: 16px;
                 padding: 9px 12px;
                 font-size: 16px;
             }
