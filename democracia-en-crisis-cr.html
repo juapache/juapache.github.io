@@ -187,7 +187,7 @@
             margin-bottom: 50px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 20px;
             align-items: center;
         }
 
@@ -327,9 +327,15 @@
         /* FOUR PILLARS */
         .pillars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
             margin-top: 50px;
+        }
+
+        @media (max-width: 900px) {
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .pillar-card {
@@ -541,7 +547,10 @@
         }
 
         /* CALL TO ACTION */
-        .cta-section {
+        .cta-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
             text-align: center;
             padding: 80px 20px;
             background: rgba(211, 47, 47, 0.1);
@@ -660,6 +669,9 @@
     </style>
 </head>
 <body>
+    <!-- SCROLL TO TOP BUTTON -->
+    <button class="scroll-to-top-btn" id="scrollTopBtn" onclick="scrollToTop()">⬆️</button>
+
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
@@ -1052,8 +1064,8 @@
 
     <!-- CALL TO ACTION SECTION -->
     <section class="section">
-        <div class="cta-section">
-            <h2>¿Qué hacer ahora?</h2>
+        <div class="cta-section" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(168, 85, 247, 0.15) 100%); border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 16px; padding: 50px 40px;">
+            <h2 style="margin-bottom: 20px;">¿Y ahora qué hacemos?</h2>
             <p>La democracia no es automática. Requiere vigilancia constante, instituciones fuertes y ciudadanos informados.</p>
             
             <div style="margin: 40px 0; text-align: left; opacity: 0.9;">
@@ -1069,8 +1081,8 @@
 
             <div class="cta-buttons">
                 <button class="btn btn-primary" onclick="window.open('https://d1qqtien6gys07.cloudfront.net/wp-content/uploads/2024/07/Cuarto-Informe-del-Estado-de-la-Libertad-de-Expresion-en-Costa-Rica.pdf', '_blank')">Leer informe completo de PROLEDI</button>
-                <button class="btn btn-secondary" onclick="window.open('https://repositorio.conare.ac.cr/items/fb8f5a64-193d-4316-8d60-a9e0c598faf7', '_blank')">Leer informe completo del Estado de la Nación 2025</button>
-                <button class="btn btn-secondary" onclick="window.open('https://upeace.org/wp-content/uploads/2025/11/Reporte-Libertad-de-Expresion-CR-2024-Web-1.pdf', '_blank')">Leer informe completo del Reporte Libertad de Expresión en Costa Rica 2024 de la Universidad para la Paz</button>
+                <button class="btn" style="background: #3b82f6; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onclick="window.open('https://repositorio.conare.ac.cr/items/fb8f5a64-193d-4316-8d60-a9e0c598faf7', '_blank')">Estado de la Nación 2025</button>
+                <button class="btn" style="background: white; color: #0d1b2a; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onclick="window.open('https://upeace.org/wp-content/uploads/2025/11/Reporte-Libertad-de-Expresion-CR-2024-Web-1.pdf', '_blank')">Reporte UPEACE 2024</button>
             </div>
         </div>
     </section>
@@ -1082,7 +1094,7 @@
             <p style="font-size: 1.2rem; margin-bottom: 40px; color: rgba(255, 255, 255, 0.9);">La democracia funciona cuando participás. Tu voto es tu voz.</p>
             
             <div class="cta-buttons">
-                <button class="btn btn-primary" style="background: white; color: #1e3a8a; font-weight: bold; font-size: 1.1rem; padding: 15px 40px;" onclick="window.open('https://apolitico.cr/', '_blank')">Quiero saber más</button>
+                <button class="btn btn-primary" style="background: var(--primary); color: white; font-weight: bold; font-size: 1.1rem; padding: 15px 40px; border: none;" onclick="window.open('https://apolitico.cr/', '_blank')">Quiero saber más</button>
             </div>
         </div>
     </section>
@@ -1099,6 +1111,10 @@
                 <li>📚 Estudios académicos de V-Dem (Varieties of Democracy) sobre captura judicial y autoritarismo sigiloso</li>
                 <li>🔍 Reportes de Freedom House sobre libertad de prensa en Latinoamérica</li>
             </ul>
+            <div style="margin-top: 30px; text-align: center; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="window.open('https://github.com/juapache/Research-Portfolio/tree/main/07-political-violence-costarica/c%C3%B3mo-mueren-democracias/FUENTES', '_blank')" style="background: #16a34a; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">📖 Ver fuentes documentadas</button>
+                <button class="btn btn-primary" onclick="window.open('https://github.com/juapache/Research-Portfolio/tree/main/07-political-violence-costarica/c%C3%B3mo-mueren-democracias', '_blank')" style="background: #2563eb; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">📂 Ver repositorio completo</button>
+            </div>
         </div>
     </section>
 
@@ -1167,6 +1183,23 @@
         });
 
         statBars.forEach(bar => barObserver.observe(bar));
+
+        // Scroll to top button functionality
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
 
         // Console message
         console.log("%c⚠️ LA DEMOCRACIA EN CRISIS", "font-size: 20px; font-weight: bold; color: #d32f2f;");
