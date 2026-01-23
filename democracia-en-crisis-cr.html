@@ -753,8 +753,8 @@
         <div class="hero-content">
             <h1>⚠️ La Democracia en Crisis</h1>
             <p class="subtitle">Costa Rica 2022-2026: Cómo se erosiona la democracia desde adentro</p>
-            <button class="cta-button" id="hero-cta" onclick="changeButtonText()">Exploremos lo que está pasando</button>
-            <div id="scroll-arrow" style="display: none; margin-top: 20px; font-size: 48px; animation: bounce 1.5s infinite;">⬇️</div>
+            <button class="cta-button" id="hero-cta" onclick="handleHeroClick()">Exploremos lo que está pasando</button>
+            <div id="scroll-arrow" style="display: none; margin-top: 20px; font-size: 48px; animation: bounce 1.5s infinite; cursor: pointer;" onclick="handleHeroClick()">⬇️</div>
         </div>
     </section>
 
@@ -1350,6 +1350,12 @@
     </footer>
 
     <script>
+        // Hero CTA: update text, reveal arrow, and scroll to first section
+        function handleHeroClick() {
+            changeButtonText();
+            scrollToSection('procesos');
+        }
+
         // Change button text on click
         function changeButtonText() {
             const button = document.getElementById('hero-cta');
@@ -1362,7 +1368,7 @@
         }
 
         // Smooth scroll
-        function scrollTo(id) {
+        function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
