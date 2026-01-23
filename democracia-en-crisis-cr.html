@@ -751,8 +751,8 @@
         <div class="hero-content">
             <h1>⚠️ La Democracia en Crisis</h1>
             <p class="subtitle">Costa Rica 2022-2026: Cómo se erosiona la democracia desde adentro</p>
-            <button class="cta-button" id="hero-cta">Entendamos lo que está pasando</button>
-            <!-- Removed scroll-arrow and button JS -->
+            <button class="cta-button" id="hero-cta" onclick="changeButtonText()">Entendamos lo que está pasando</button>
+            <div id="scroll-arrow" style="display: none; margin-top: 20px; font-size: 48px; animation: bounce 1.5s infinite;">⬇️</div>
         </div>
     </section>
 
@@ -1348,7 +1348,16 @@
     </footer>
 
     <script>
-
+        // Change button text on click
+        function changeButtonText() {
+            const button = document.getElementById('hero-cta');
+            const arrow = document.getElementById('scroll-arrow');
+            if (button && arrow) {
+                button.textContent = 'Baja para ver la información';
+                button.style.background = 'var(--accent)';
+                arrow.style.display = 'block';
+            }
+        }
 
         // Smooth scroll
         function scrollTo(id) {
