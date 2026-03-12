@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día 1 · Actividad 3 · El Pelador de la Cebolla (Análisis P.I.N.)</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2d;
+      --panel-soft: #1a243d;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --ok: #22c55e;
+      --error: #f43f5e;
+      --accent: #38bdf8;
+      --pos: #f43f5e;
+      --int: #f59e0b;
+      --need: #22c55e;
+      --transition: 0.3s;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1b2746 0%, var(--bg) 55%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .app {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+      background: linear-gradient(165deg, rgba(15, 24, 45, 0.96), rgba(8, 14, 28, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      padding: 14px;
+    }
+
+    .encabezado {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.1rem, 0.9rem + 1.5vw, 1.9rem);
+    }
+
+    .sub {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .contexto {
+      margin: 8px 0 0;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.42;
+      max-width: 80ch;
+    }
+
+    .btn-info {
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      background: rgba(8, 14, 28, 0.95);
+      color: #e0f2fe;
+      border-radius: 999px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .btn-info:hover,
+    .btn-info:focus-visible {
+      transform: scale(1.04);
+      border-color: rgba(56, 189, 248, 0.9);
+      background: rgba(14, 30, 54, 0.95);
+      outline: none;
+    }
+
+    .zona {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    .columna {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 14px;
+      background: rgba(10, 17, 33, 0.86);
+      padding: 12px;
+      min-height: 320px;
+    }
+
+    .columna h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: #e5e7eb;
+    }
+
+    .pila {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      min-height: 260px;
+    }
+
+    .card {
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      background: linear-gradient(160deg, #1d2a47, #17233d);
+      border-radius: 11px;
+      padding: 10px;
+      color: #f8fafc;
+      line-height: 1.35;
+      cursor: grab;
+      user-select: none;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), opacity var(--transition);
+      touch-action: none;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.75);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35), 0 10px 20px rgba(0, 0, 0, 0.2);
+      outline: none;
+    }
+
+    .card.dragging {
+      opacity: 0.6;
+      transform: scale(0.98);
+      cursor: grabbing;
+    }
+
+    .card.seleccionada {
+      border-color: rgba(56, 189, 248, 0.95);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.45), 0 12px 24px rgba(0, 0, 0, 0.25);
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .card.sacudir {
+      animation: sacudir 360ms linear 1;
+    }
+
+    .card.bloqueada {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .card.desaparece {
+      transform: scale(0.2);
+      opacity: 0;
+    }
+
+    .onion-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 520px;
+      padding: 8px;
+    }
+
+    .onion {
+      position: relative;
+      width: min(92vw, 470px);
+      aspect-ratio: 1/1;
+    }
+
+    .capa {
+      position: absolute;
+      border-radius: 50%;
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), filter var(--transition);
+      border: 2px solid transparent;
+      padding: 14px;
+    }
+
+    .capa[data-zona="posicion"] {
+      inset: 0;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.14) 0%, rgba(244, 63, 94, 0.09) 55%, rgba(244, 63, 94, 0.04) 100%);
+      border-color: rgba(244, 63, 94, 0.58);
+      z-index: 1;
+    }
+
+    .capa[data-zona="interes"] {
+      inset: 16%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 70%);
+      border-color: rgba(245, 158, 11, 0.7);
+      z-index: 2;
+    }
+
+    .capa[data-zona="necesidad"] {
+      inset: 34%;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.22) 0%, rgba(56, 189, 248, 0.14) 100%);
+      border-color: rgba(34, 197, 94, 0.82);
+      z-index: 3;
+    }
+
+    .titulo-capa {
+      margin: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(240px, 92%);
+      font-weight: 700;
+      font-size: clamp(0.75rem, 0.6rem + 0.5vw, 0.95rem);
+      line-height: 1.15;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(2, 6, 23, 0.45);
+    }
+
+    .capa[data-zona="posicion"] .titulo-capa { color: #ffe4ea; }
+    .capa[data-zona="interes"] .titulo-capa { color: #fff6d5; }
+    .capa[data-zona="necesidad"] .titulo-capa { color: #e4fff1; }
+
+    .capa[data-zona="posicion"] .titulo-capa {
+      top: 8%;
+      font-size: clamp(0.76rem, 0.62rem + 0.55vw, 0.98rem);
+    }
+
+    .capa[data-zona="interes"] .titulo-capa {
+      top: 74%;
+      font-size: clamp(0.72rem, 0.58rem + 0.45vw, 0.9rem);
+    }
+
+    .capa[data-zona="necesidad"] .titulo-capa {
+      top: 32%;
+      font-size: clamp(0.68rem, 0.54rem + 0.4vw, 0.84rem);
+    }
+
+    .drop-list {
+      position: absolute;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .list-posicion {
+      top: 8%;
+      left: 15%;
+      width: 70%;
+    }
+
+    .list-interes {
+      top: 32%;
+      left: 20%;
+      width: 60%;
+      transform: translateY(-50%);
+    }
+
+    .list-necesidad {
+      top: 54%;
+      left: 34%;
+      width: 32%;
+      transform: translateY(-50%);
+    }
+
+    .mini-card {
+      font-size: 0.66rem;
+      line-height: 1.2;
+      border-radius: 8px;
+      padding: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f8fafc;
+      max-width: 130px;
+      text-align: left;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .modo-arrastre .capa {
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08), 0 0 26px rgba(56, 189, 248, 0.25);
+      transform: scale(1.01);
+    }
+
+    .capa.objetivo {
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.85), 0 0 30px rgba(56, 189, 248, 0.65);
+      transform: scale(1.035);
+      filter: saturate(1.2);
+    }
+
+    .capa.encima {
+      box-shadow: 0 0 0 4px rgba(241, 245, 249, 0.95), 0 0 36px rgba(56, 189, 248, 0.9);
+      transform: scale(1.04);
+    }
+
+    .capa.correcta {
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.8), 0 0 34px rgba(34, 197, 94, 0.65);
+    }
+
+    .estado {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 12px;
+      background: rgba(8, 13, 24, 0.9);
+      padding: 10px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .progreso {
+      margin: 0;
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .feedback {
+      margin: 0;
+      min-height: 2.9em;
+      color: #bfdbfe;
+      line-height: 1.45;
+    }
+
+    .feedback.ok { color: #bbf7d0; }
+    .feedback.error { color: #fecdd3; }
+
+    .nota-drop {
+      margin: 0;
+      color: #93c5fd;
+      font-size: 0.86rem;
+    }
+
+    .nota-drop-mobile {
+      margin: 4px 0 0;
+      color: #bfdbfe;
+      font-size: 0.83rem;
+      display: none;
+    }
+
+    .final {
+      display: none;
+      border: 1px solid rgba(34, 197, 94, 0.44);
+      border-radius: 14px;
+      background: linear-gradient(160deg, rgba(6, 78, 59, 0.38), rgba(8, 28, 21, 0.7));
+      padding: 14px;
+      text-align: center;
+      gap: 10px;
+    }
+
+    .final.activo {
+      display: grid;
+    }
+
+    .medalla {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));
+    }
+
+    .final h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #dcfce7;
+    }
+
+    .final p {
+      margin: 0;
+      color: #d1fae5;
+      line-height: 1.45;
+    }
+
+    .btn-ejemplos {
+      justify-self: center;
+      border: 1px solid rgba(167, 243, 208, 0.6);
+      background: rgba(6, 78, 59, 0.55);
+      color: #ecfdf5;
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .btn-ejemplos:hover,
+    .btn-ejemplos:focus-visible {
+      transform: scale(1.03);
+      border-color: rgba(16, 185, 129, 0.95);
+      background: rgba(6, 95, 70, 0.62);
+      outline: none;
+    }
+
+    .ejemplos-extra {
+      display: none;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 14px;
+      background: rgba(8, 14, 28, 0.88);
+      padding: 12px;
+      gap: 12px;
+    }
+
+    .ejemplos-extra.activo {
+      display: grid;
+    }
+
+    .ejemplos-extra h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+    }
+
+    .ej-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    .ej-card {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.78);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .ej-card h4,
+    .ej-card p {
+      margin: 0;
+    }
+
+    .ej-card p {
+      color: #cbd5e1;
+      line-height: 1.38;
+      font-size: 0.9rem;
+    }
+
+    .ej-juego {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr;
+    }
+
+    .ej-pila {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+
+    .ej-pila .card {
+      font-size: 0.8rem;
+      padding: 8px;
+      border-radius: 9px;
+    }
+
+    .ej-estado {
+      margin: 0;
+      font-size: 0.82rem;
+      color: #bfdbfe;
+      line-height: 1.35;
+      min-height: 2.7em;
+    }
+
+    .ej-progreso {
+      margin: 0;
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .onion.onion-demo {
+      width: min(88vw, 330px);
+      margin: 4px auto;
+    }
+
+    .onion.onion-demo .capa.objetivo {
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.85), 0 0 24px rgba(56, 189, 248, 0.6);
+      transform: scale(1.03);
+    }
+
+    .onion.onion-demo .capa.encima {
+      box-shadow: 0 0 0 3px rgba(241, 245, 249, 0.95), 0 0 28px rgba(56, 189, 248, 0.85);
+      transform: scale(1.03);
+    }
+
+    .onion.onion-demo .titulo-capa {
+      font-size: clamp(0.64rem, 0.52rem + 0.34vw, 0.78rem);
+      padding: 4px 8px;
+      width: min(210px, 92%);
+    }
+
+    .onion.onion-demo .list-posicion {
+      top: 14%;
+      left: 13%;
+      width: 74%;
+    }
+
+    .onion.onion-demo .list-interes {
+      top: 30%;
+      left: 18%;
+      width: 64%;
+    }
+
+    .onion.onion-demo .list-necesidad {
+      top: 56%;
+      left: 31%;
+      width: 38%;
+    }
+
+    .ej-nota {
+      margin: 0;
+      color: #93c5fd;
+      font-size: 0.76rem;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(2, 6, 23, 0.75);
+      padding: 14px;
+      z-index: 20;
+    }
+
+    .modal.activo {
+      display: grid;
+    }
+
+    .modal-box {
+      width: min(580px, 100%);
+      border-radius: 14px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      background: #0f172a;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .modal-box h3,
+    .modal-box p {
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .modal-box p {
+      color: #cbd5e1;
+    }
+
+    .modal-box button {
+      justify-self: end;
+      border: 1px solid rgba(148, 163, 184, 0.42);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f1f5f9;
+      border-radius: 999px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .modal-box button:hover,
+    .modal-box button:focus-visible {
+      transform: scale(1.03);
+      border-color: rgba(56, 189, 248, 0.8);
+      outline: none;
+    }
+
+    @keyframes sacudir {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(5px); }
+      100% { transform: translateX(0); }
+    }
+
+    @media (min-width: 980px) {
+      body {
+        padding: 22px;
+      }
+
+      .app {
+        padding: 18px;
+        gap: 14px;
+      }
+
+      .zona {
+        grid-template-columns: 0.95fr 1.05fr;
+      }
+
+      .columna {
+        min-height: 640px;
+      }
+
+      .list-interes {
+        top: 30%;
+      }
+
+      .list-necesidad {
+        top: 56%;
+      }
+
+      .ej-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .onion.onion-demo {
+        width: min(30vw, 300px);
+      }
+    }
+
+    @media (pointer: coarse) {
+      .nota-drop-mobile {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="El Pelador de la Cebolla: Análisis P.I.N.">
+    <header class="encabezado">
+      <div>
+        <h1>El Pelador de la Cebolla (Análisis P.I.N.)</h1>
+        <p class="sub">Arrastra cada declaración al nivel correcto: Posición, Interés o Necesidad.</p>
+        <p class="contexto">Contexto del caso: un grupo de estudiantes se está manifestando por el uso del parqueadero del campus. Algunas frases expresan exigencias visibles, otras revelan motivaciones, y otras muestran necesidades humanas de fondo.</p>
+      </div>
+      <button class="btn-info" id="btnInfo" type="button" aria-label="Abrir explicación del análisis P.I.N.">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <circle cx="12" cy="7.6" r="1.2" fill="currentColor" />
+          <path d="M12 10.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+      </button>
+    </header>
+
+    <section class="zona">
+      <article class="columna" aria-label="La pila de declaraciones">
+        <h2>La Pila de Declaraciones</h2>
+        <div class="pila" id="pila"></div>
+      </article>
+
+      <article class="columna onion-wrap" aria-label="La cebolla del análisis P.I.N.">
+        <h2>La Cebolla</h2>
+        <p class="nota-drop">Durante el arrastre, suelta la tarjeta sobre el anillo que se ilumina en blanco.</p>
+        <p class="nota-drop-mobile">En celular: toca una tarjeta y luego toca el anillo donde quieres ubicarla.</p>
+        <div class="onion" id="onion">
+          <div class="capa" data-zona="posicion">
+            <p class="titulo-capa">1. POSICIONES<br />(¿Qué exigen?)</p>
+          </div>
+          <div class="capa" data-zona="interes">
+            <p class="titulo-capa">2. INTERESES<br />(¿Por qué?)</p>
+          </div>
+          <div class="capa" data-zona="necesidad">
+            <p class="titulo-capa">3. NECESIDADES<br />(Lo Vital)</p>
+          </div>
+
+          <div class="drop-list list-posicion" id="dropPosicion" aria-hidden="true"></div>
+          <div class="drop-list list-interes" id="dropInteres" aria-hidden="true"></div>
+          <div class="drop-list list-necesidad" id="dropNecesidad" aria-hidden="true"></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="estado" aria-live="polite">
+      <p class="progreso" id="progreso">0 de 6 declaraciones resueltas</p>
+      <p class="feedback" id="feedback">Empieza con cualquier tarjeta. Piensa: ¿es demanda explícita, motivación o necesidad humana fundamental?</p>
+    </section>
+
+    <section class="final" id="finalState" aria-hidden="true">
+      <svg class="medalla" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="52" r="30" fill="#fbbf24" stroke="#fef3c7" stroke-width="5" />
+        <polygon points="60,30 66,46 83,46 69,56 74,72 60,62 46,72 51,56 37,46 54,46" fill="#78350f" />
+        <path d="M42 82l-10 28 20-10 8 16 8-16 20 10-10-28" fill="#0ea5e9" stroke="#7dd3fc" stroke-width="2" />
+      </svg>
+      <h3>¡Análisis completado!</h3>
+      <p>
+        Has clasificado correctamente las 6 declaraciones del conflicto del parqueadero.
+        Excelente lectura analítica de capas P.I.N. Esta capacidad de ir de lo visible
+        a lo vital dialoga con los enfoques de transformación de conflictos difundidos por Vicenç Fisas.
+      </p>
+      <button id="btnVerEjemplos" class="btn-ejemplos" type="button">Ver más ejemplos</button>
+    </section>
+
+    <section id="seccionEjemplos" class="ejemplos-extra" aria-hidden="true">
+      <h3>Más ejemplos aplicados del modelo P.I.N.</h3>
+      <div class="ej-grid">
+        <article class="ej-card" data-ej="estudiantes">
+          <h4>1) Pelea física entre dos estudiantes</h4>
+          <p>Lectura P.I.N. para una pelea en el colegio: lo visible es la agresión, pero el conflicto incluye motivaciones y necesidades más profundas.</p>
+          <div class="ej-juego">
+            <div class="ej-pila"></div>
+            <p class="ej-nota">Arrastra o toca una tarjeta y luego selecciona el anillo correcto.</p>
+            <div class="onion onion-demo" aria-label="Cebolla ejemplo estudiantes">
+              <div class="capa" data-zona="posicion"><p class="titulo-capa">1. POSICIONES</p></div>
+              <div class="capa" data-zona="interes"><p class="titulo-capa">2. INTERESES</p></div>
+              <div class="capa" data-zona="necesidad"><p class="titulo-capa">3. NECESIDADES</p></div>
+              <div class="drop-list list-posicion" data-drop="posicion"></div>
+              <div class="drop-list list-interes" data-drop="interes"></div>
+              <div class="drop-list list-necesidad" data-drop="necesidad"></div>
+            </div>
+            <p class="ej-progreso">0 de 3 resueltas</p>
+            <p class="ej-estado">Clasifica las 3 declaraciones del ejemplo.</p>
+          </div>
+        </article>
+
+        <article class="ej-card" data-ej="politico">
+          <h4>2) Conflicto político entre izquierda y derecha</h4>
+          <p>Lectura P.I.N. para polarización política: la exigencia pública suele ocultar miedos, reconocimiento e identidad colectiva.</p>
+          <div class="ej-juego">
+            <div class="ej-pila"></div>
+            <p class="ej-nota">Arrastra o toca una tarjeta y luego selecciona el anillo correcto.</p>
+            <div class="onion onion-demo" aria-label="Cebolla ejemplo conflicto político">
+              <div class="capa" data-zona="posicion"><p class="titulo-capa">1. POSICIONES</p></div>
+              <div class="capa" data-zona="interes"><p class="titulo-capa">2. INTERESES</p></div>
+              <div class="capa" data-zona="necesidad"><p class="titulo-capa">3. NECESIDADES</p></div>
+              <div class="drop-list list-posicion" data-drop="posicion"></div>
+              <div class="drop-list list-interes" data-drop="interes"></div>
+              <div class="drop-list list-necesidad" data-drop="necesidad"></div>
+            </div>
+            <p class="ej-progreso">0 de 3 resueltas</p>
+            <p class="ej-estado">Clasifica las 3 declaraciones del ejemplo.</p>
+          </div>
+        </article>
+
+        <article class="ej-card" data-ej="paises">
+          <h4>3) Conflicto entre países</h4>
+          <p>Lectura P.I.N. para tensión interestatal: el reclamo territorial se conecta con seguridad, legitimidad y supervivencia.</p>
+          <div class="ej-juego">
+            <div class="ej-pila"></div>
+            <p class="ej-nota">Arrastra o toca una tarjeta y luego selecciona el anillo correcto.</p>
+            <div class="onion onion-demo" aria-label="Cebolla ejemplo conflicto entre países">
+              <div class="capa" data-zona="posicion"><p class="titulo-capa">1. POSICIONES</p></div>
+              <div class="capa" data-zona="interes"><p class="titulo-capa">2. INTERESES</p></div>
+              <div class="capa" data-zona="necesidad"><p class="titulo-capa">3. NECESIDADES</p></div>
+              <div class="drop-list list-posicion" data-drop="posicion"></div>
+              <div class="drop-list list-interes" data-drop="interes"></div>
+              <div class="drop-list list-necesidad" data-drop="necesidad"></div>
+            </div>
+            <p class="ej-progreso">0 de 3 resueltas</p>
+            <p class="ej-estado">Clasifica las 3 declaraciones del ejemplo.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <section class="modal" id="modalInfo" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tituloInfo">
+    <article class="modal-box">
+      <h3 id="tituloInfo">¿Qué es el análisis P.I.N.?</h3>
+      <p>
+        <strong>Posición</strong> es lo que una parte exige públicamente. <strong>Interés</strong> es la razón o motivación detrás de esa exigencia.
+        <strong>Necesidad</strong> es la base humana no negociable (seguridad, reconocimiento, bienestar, identidad).
+      </p>
+      <p>
+        En aula, este enfoque ayuda a pasar de respuestas reactivas a lectura profunda del conflicto,
+        identificando oportunidades reales de transformación.
+      </p>
+      <button type="button" id="cerrarModal">Cerrar</button>
+    </article>
+  </section>
+
+  <script>
+    const dataCartas = [
+      {
+        id: "c1",
+        tipo: "posicion",
+        texto: "¡Exigimos que el parqueadero del bloque A sea exclusivo para estudiantes!"
+      },
+      {
+        id: "c2",
+        tipo: "interes",
+        texto: "Me frustra mucho llegar 10 minutos tarde a clase buscando puesto."
+      },
+      {
+        id: "c3",
+        tipo: "necesidad",
+        texto: "Necesidad de respeto y bienestar emocional para estudiar efectivamente."
+      },
+      {
+        id: "c4",
+        tipo: "posicion",
+        texto: "Si la universidad no nos da parqueadero gratis, haremos un paro."
+      },
+      {
+        id: "c5",
+        tipo: "interes",
+        texto: "Quiero usar mi carro porque el transporte público es muy inseguro a las 10 PM."
+      },
+      {
+        id: "c6",
+        tipo: "necesidad",
+        texto: "Necesidad fundamental de seguridad física y tranquilidad personal."
+      }
+    ];
+
+    const estado = {
+      total: dataCartas.length,
+      resueltas: 0,
+      bloqueadas: new Set(),
+      dragId: null,
+      seleccionId: null
+    };
+
+    const pila = document.getElementById("pila");
+    const progreso = document.getElementById("progreso");
+    const feedback = document.getElementById("feedback");
+    const onion = document.getElementById("onion");
+    const finalState = document.getElementById("finalState");
+
+    const dropMap = {
+      posicion: document.getElementById("dropPosicion"),
+      interes: document.getElementById("dropInteres"),
+      necesidad: document.getElementById("dropNecesidad")
+    };
+
+    const zonas = Array.from(document.querySelectorAll("#onion .capa"));
+    const esTactil = window.matchMedia("(pointer: coarse)").matches;
+
+    const nombresZona = {
+      posicion: "Posiciones",
+      interes: "Intereses",
+      necesidad: "Necesidades"
+    };
+
+    const hints = {
+      posicion: "Pista P.I.N.: una posición es una exigencia explícita (qué piden), no la causa profunda.",
+      interes: "Pista P.I.N.: un interés explica el porqué práctico o emocional detrás de la demanda.",
+      necesidad: "Pista P.I.N.: una necesidad es vital y humana (seguridad, dignidad, bienestar), más profunda que la estrategia."
+    };
+
+    const ejemplosPIN = {
+      estudiantes: [
+        { tipo: "posicion", texto: "¡Que expulsen al agresor hoy mismo!" },
+        { tipo: "interes", texto: "Quiero que dejen de humillarme frente al curso." },
+        { tipo: "necesidad", texto: "Necesidad de seguridad, dignidad y pertenencia escolar." }
+      ],
+      politico: [
+        { tipo: "posicion", texto: "Deben retirar la reforma de inmediato." },
+        { tipo: "interes", texto: "Nos preocupa perder voz y representación política." },
+        { tipo: "necesidad", texto: "Necesidad de reconocimiento, participación y justicia." }
+      ],
+      paises: [
+        { tipo: "posicion", texto: "No cederemos ni un metro de frontera." },
+        { tipo: "interes", texto: "Buscamos proteger rutas y recursos estratégicos." },
+        { tipo: "necesidad", texto: "Necesidad de seguridad colectiva y estabilidad nacional." }
+      ]
+    };
+
+    function crearTarjeta(carta) {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.id = carta.id;
+      card.draggable = true;
+      card.dataset.tipo = carta.tipo;
+      card.setAttribute("role", "listitem");
+      card.setAttribute("tabindex", "0");
+      card.textContent = carta.texto;
+
+      card.addEventListener("dragstart", (event) => {
+        if (estado.bloqueadas.has(carta.id)) {
+          event.preventDefault();
+          return;
+        }
+        estado.dragId = carta.id;
+        card.classList.add("dragging");
+        onion.classList.add("modo-arrastre");
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", carta.id);
+        zonas.forEach((zona) => {
+          zona.classList.toggle("objetivo", zona.dataset.zona === carta.tipo);
+        });
+      });
+
+      card.addEventListener("dragend", () => {
+        card.classList.remove("dragging");
+        onion.classList.remove("modo-arrastre");
+        zonas.forEach((zona) => zona.classList.remove("objetivo", "encima"));
+        estado.dragId = null;
+      });
+
+      card.addEventListener("click", () => {
+        if (!esTactil || estado.bloqueadas.has(carta.id)) {
+          return;
+        }
+
+        const yaSeleccionada = estado.seleccionId === carta.id;
+        document.querySelectorAll(".card.seleccionada").forEach((item) => item.classList.remove("seleccionada"));
+        zonas.forEach((zona) => zona.classList.remove("objetivo"));
+
+        if (yaSeleccionada) {
+          estado.seleccionId = null;
+          setFeedback("Selección cancelada. Toca otra tarjeta para continuar.");
+          return;
+        }
+
+        estado.seleccionId = carta.id;
+        card.classList.add("seleccionada");
+        zonas.forEach((zona) => {
+          zona.classList.toggle("objetivo", zona.dataset.zona === carta.tipo);
+        });
+        const etiqueta = nombresZona[carta.tipo] || "zona";
+        setFeedback(`Tarjeta seleccionada. Ahora toca el anillo de ${etiqueta}.`);
+      });
+
+      return card;
+    }
+
+    function actualizarProgreso() {
+      progreso.textContent = `${estado.resueltas} de ${estado.total} declaraciones resueltas`;
+    }
+
+    function setFeedback(msg, tipo = "") {
+      feedback.textContent = msg;
+      feedback.classList.remove("ok", "error");
+      if (tipo) {
+        feedback.classList.add(tipo);
+      }
+    }
+
+    function mostrarError(card, zonaEsperada) {
+      card.classList.remove("sacudir");
+      void card.offsetWidth;
+      card.classList.add("sacudir");
+      setFeedback(`Ubicación incorrecta. ${hints[zonaEsperada]}`, "error");
+    }
+
+    function crearMiniCard(texto) {
+      const mini = document.createElement("div");
+      mini.className = "mini-card";
+      mini.textContent = texto;
+      return mini;
+    }
+
+    function revisarFinal() {
+      if (estado.resueltas === estado.total) {
+        finalState.classList.add("activo");
+        finalState.setAttribute("aria-hidden", "false");
+        setFeedback("¡Nivel experto! Desmenuzaste posiciones, intereses y necesidades con rigor analítico.", "ok");
+      }
+    }
+
+    function limpiarSeleccionTactil() {
+      estado.seleccionId = null;
+      document.querySelectorAll(".card.seleccionada").forEach((item) => item.classList.remove("seleccionada"));
+      zonas.forEach((z) => z.classList.remove("objetivo", "encima"));
+    }
+
+    function procesarEntrega(card, zona) {
+      const zonaObjetivo = card.dataset.tipo;
+      const zonaActual = zona.dataset.zona;
+
+      if (zonaObjetivo !== zonaActual) {
+        mostrarError(card, zonaObjetivo);
+        return false;
+      }
+
+      estado.bloqueadas.add(card.id);
+      estado.resueltas += 1;
+      actualizarProgreso();
+
+      zona.classList.add("correcta");
+      setTimeout(() => zona.classList.remove("correcta"), 430);
+
+      card.classList.add("bloqueada", "desaparece");
+      card.draggable = false;
+
+      setTimeout(() => {
+        card.remove();
+        dropMap[zonaObjetivo].appendChild(crearMiniCard(card.textContent));
+      }, 260);
+
+      setFeedback("¡Correcto! Clasificación validada según el análisis P.I.N.", "ok");
+      revisarFinal();
+      return true;
+    }
+
+    zonas.forEach((zona) => {
+      zona.addEventListener("dragenter", (event) => {
+        event.preventDefault();
+        zona.classList.add("encima");
+        const etiqueta = nombresZona[zona.dataset.zona] || "zona";
+        setFeedback(`Zona activa: ${etiqueta}. Suelta aquí si corresponde al tipo de declaración.`);
+      });
+
+      zona.addEventListener("dragleave", () => {
+        zona.classList.remove("encima");
+      });
+
+      zona.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+      });
+
+      zona.addEventListener("drop", (event) => {
+        event.preventDefault();
+        zona.classList.remove("encima");
+        const cardId = event.dataTransfer.getData("text/plain") || estado.dragId;
+        if (!cardId || estado.bloqueadas.has(cardId)) {
+          return;
+        }
+
+        const card = document.getElementById(cardId);
+        if (!card) {
+          return;
+        }
+
+        procesarEntrega(card, zona);
+      });
+
+      zona.addEventListener("click", () => {
+        if (!esTactil || !estado.seleccionId || estado.bloqueadas.has(estado.seleccionId)) {
+          return;
+        }
+        const card = document.getElementById(estado.seleccionId);
+        if (!card) {
+          limpiarSeleccionTactil();
+          return;
+        }
+        procesarEntrega(card, zona);
+        limpiarSeleccionTactil();
+      });
+    });
+
+    dataCartas.forEach((carta) => {
+      pila.appendChild(crearTarjeta(carta));
+    });
+
+    actualizarProgreso();
+
+    const modal = document.getElementById("modalInfo");
+    const btnInfo = document.getElementById("btnInfo");
+    const cerrarModal = document.getElementById("cerrarModal");
+    const btnVerEjemplos = document.getElementById("btnVerEjemplos");
+    const seccionEjemplos = document.getElementById("seccionEjemplos");
+
+    function cerrarInfo() {
+      modal.classList.remove("activo");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    btnInfo.addEventListener("click", () => {
+      modal.classList.add("activo");
+      modal.setAttribute("aria-hidden", "false");
+    });
+
+    cerrarModal.addEventListener("click", cerrarInfo);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        cerrarInfo();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        cerrarInfo();
+      }
+    });
+
+    btnVerEjemplos.addEventListener("click", () => {
+      const estaActiva = seccionEjemplos.classList.toggle("activo");
+      seccionEjemplos.setAttribute("aria-hidden", estaActiva ? "false" : "true");
+      btnVerEjemplos.textContent = estaActiva ? "Ocultar ejemplos" : "Ver más ejemplos";
+
+      if (estaActiva) {
+        seccionEjemplos.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+
+    function iniciarJuegoEjemplo(contenedor, cartas, clave) {
+      const pilaEj = contenedor.querySelector(".ej-pila");
+      const onionEj = contenedor.querySelector(".onion-demo");
+      const estadoEj = contenedor.querySelector(".ej-estado");
+      const progresoEj = contenedor.querySelector(".ej-progreso");
+      const zonasEj = Array.from(onionEj.querySelectorAll(".capa"));
+
+      const dropEj = {
+        posicion: onionEj.querySelector('[data-drop="posicion"]'),
+        interes: onionEj.querySelector('[data-drop="interes"]'),
+        necesidad: onionEj.querySelector('[data-drop="necesidad"]')
+      };
+
+      const local = {
+        total: cartas.length,
+        resueltas: 0,
+        bloqueadas: new Set(),
+        seleccion: null,
+        dragId: null
+      };
+
+      function setEstado(msg) {
+        estadoEj.textContent = msg;
+      }
+
+      function setProgreso() {
+        progresoEj.textContent = `${local.resueltas} de ${local.total} resueltas`;
+      }
+
+      function crearCartaEj(carta, index) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.draggable = true;
+        card.dataset.tipo = carta.tipo;
+        card.textContent = carta.texto;
+        card.dataset.cid = `${clave}-${index}`;
+
+        card.addEventListener("dragstart", (event) => {
+          if (local.bloqueadas.has(card.dataset.cid)) {
+            event.preventDefault();
+            return;
+          }
+          local.dragId = card.dataset.cid;
+          card.classList.add("dragging");
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", card.dataset.cid);
+          zonasEj.forEach((zona) => zona.classList.toggle("objetivo", zona.dataset.zona === carta.tipo));
+        });
+
+        card.addEventListener("dragend", () => {
+          card.classList.remove("dragging");
+          zonasEj.forEach((zona) => zona.classList.remove("objetivo", "encima"));
+          local.dragId = null;
+        });
+
+        card.addEventListener("click", () => {
+          if (!esTactil || local.bloqueadas.has(card.dataset.cid)) {
+            return;
+          }
+          const eraSeleccion = local.seleccion === card.dataset.cid;
+          pilaEj.querySelectorAll(".card.seleccionada").forEach((c) => c.classList.remove("seleccionada"));
+          zonasEj.forEach((zona) => zona.classList.remove("objetivo", "encima"));
+
+          if (eraSeleccion) {
+            local.seleccion = null;
+            setEstado("Selección cancelada. Elige otra tarjeta.");
+            return;
+          }
+
+          local.seleccion = card.dataset.cid;
+          card.classList.add("seleccionada");
+          zonasEj.forEach((zona) => zona.classList.toggle("objetivo", zona.dataset.zona === carta.tipo));
+          setEstado(`Tarjeta seleccionada. Toca el anillo de ${nombresZona[carta.tipo]}.`);
+        });
+
+        return card;
+      }
+
+      function buscarCartaPorId(id) {
+        return pilaEj.querySelector(`.card[data-cid="${id}"]`);
+      }
+
+      function resolverEntrega(card, zona) {
+        const tipoEsperado = card.dataset.tipo;
+        if (tipoEsperado !== zona.dataset.zona) {
+          card.classList.remove("sacudir");
+          void card.offsetWidth;
+          card.classList.add("sacudir");
+          setEstado(`Incorrecto. ${hints[tipoEsperado]}`);
+          return;
+        }
+
+        local.bloqueadas.add(card.dataset.cid);
+        local.resueltas += 1;
+        setProgreso();
+
+        zona.classList.add("correcta");
+        setTimeout(() => zona.classList.remove("correcta"), 350);
+
+        card.classList.add("bloqueada", "desaparece");
+        card.draggable = false;
+
+        setTimeout(() => {
+          card.remove();
+          dropEj[tipoEsperado].appendChild(crearMiniCard(card.textContent));
+        }, 230);
+
+        if (local.resueltas === local.total) {
+          setEstado("¡Muy bien! Completaste este ejemplo P.I.N.");
+        } else {
+          setEstado("Correcto. Continúa con la siguiente declaración.");
+        }
+      }
+
+      zonasEj.forEach((zona) => {
+        zona.addEventListener("dragenter", (event) => {
+          event.preventDefault();
+          zona.classList.add("encima");
+        });
+
+        zona.addEventListener("dragleave", () => {
+          zona.classList.remove("encima");
+        });
+
+        zona.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+        });
+
+        zona.addEventListener("drop", (event) => {
+          event.preventDefault();
+          zona.classList.remove("encima");
+          const cid = event.dataTransfer.getData("text/plain") || local.dragId;
+          if (!cid || local.bloqueadas.has(cid)) {
+            return;
+          }
+          const card = buscarCartaPorId(cid);
+          if (!card) {
+            return;
+          }
+          resolverEntrega(card, zona);
+        });
+
+        zona.addEventListener("click", () => {
+          if (!esTactil || !local.seleccion || local.bloqueadas.has(local.seleccion)) {
+            return;
+          }
+          const card = buscarCartaPorId(local.seleccion);
+          if (!card) {
+            local.seleccion = null;
+            return;
+          }
+          resolverEntrega(card, zona);
+          local.seleccion = null;
+          pilaEj.querySelectorAll(".card.seleccionada").forEach((c) => c.classList.remove("seleccionada"));
+          zonasEj.forEach((z) => z.classList.remove("objetivo", "encima"));
+        });
+      });
+
+      cartas.forEach((carta, index) => {
+        pilaEj.appendChild(crearCartaEj(carta, index));
+      });
+
+      setProgreso();
+      setEstado("Clasifica las 3 declaraciones del ejemplo.");
+    }
+
+    Object.entries(ejemplosPIN).forEach(([clave, cartas]) => {
+      const contenedor = document.querySelector(`.ej-card[data-ej="${clave}"]`);
+      if (contenedor) {
+        iniciarJuegoEjemplo(contenedor, cartas, clave);
+      }
+    });
+  </script>
+</body>
+</html>

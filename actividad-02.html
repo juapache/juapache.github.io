@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día 1 · Actividad 2 · El Flujo de la Violencia</title>
+  <style>
+    :root {
+      --fondo: #060a13;
+      --panel: #0b1220;
+      --texto: #e5e7eb;
+      --muted: #94a3b8;
+      --neon-rojo: #ff4d6d;
+      --neon-amarillo: #ffe066;
+      --neon-azul: #38bdf8;
+      --neon-naranja: #ff6b3d;
+      --vib-dur: 1.5s;
+      --vib-int: 1px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #111827 0%, var(--fondo) 60%);
+      color: var(--texto);
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+    }
+
+    .contenedor {
+      width: min(1100px, 100%);
+      background: linear-gradient(160deg, rgba(8, 13, 25, 0.95), rgba(3, 7, 18, 0.98));
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 1rem + 1.1vw, 2rem);
+    }
+
+    .subtitulo,
+    .lectura {
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.55;
+    }
+
+    .meta {
+      display: grid;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.96rem;
+    }
+
+    .meta strong {
+      color: var(--neon-azul);
+    }
+
+    .zona-principal {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 14px;
+    }
+
+    .ejemplos {
+      display: grid;
+      gap: 18px;
+    }
+
+    .ejemplo {
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      background: rgba(2, 6, 23, 0.72);
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .ejemplo h2 {
+      margin: 0;
+      font-size: clamp(1.05rem, 0.9rem + 0.6vw, 1.35rem);
+    }
+
+    .violencias {
+      margin: 0;
+      padding-left: 18px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      display: grid;
+      gap: 6px;
+    }
+
+    .violencias strong {
+      color: #bae6fd;
+    }
+
+    .visor {
+      position: relative;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #030712 0%, #020617 100%);
+      min-height: 560px;
+      overflow: hidden;
+    }
+
+    .flux-ejemplo {
+      --vib-dur: 1.5s;
+      --vib-int: 1px;
+    }
+
+    svg {
+      width: 100%;
+      height: 560px;
+      display: block;
+    }
+
+    .panel {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 14px;
+      background: rgba(2, 6, 23, 0.86);
+      padding: 14px;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .control {
+      display: grid;
+      gap: 8px;
+    }
+
+    .fila-control {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+      gap: 12px;
+    }
+
+    .fila-control strong {
+      color: #e2e8f0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+      accent-color: var(--neon-amarillo);
+    }
+
+    .resultado {
+      margin: 0;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.95rem;
+      color: #dbeafe;
+      line-height: 1.45;
+      min-height: 70px;
+    }
+
+    .nodo {
+      stroke-width: 2;
+      transition: r 220ms ease, fill 220ms ease, filter 220ms ease;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+
+    .nodo-directa {
+      fill: #ff6b6b;
+      color: #ff6b6b;
+      stroke: #ff8fa3;
+    }
+
+    .nodo-estructural {
+      fill: #ffe066;
+      color: #ffe066;
+      stroke: #fff2a8;
+    }
+
+    .nodo-cultural {
+      fill: #38bdf8;
+      color: #38bdf8;
+      stroke: #7dd3fc;
+    }
+
+    .etiqueta {
+      fill: #e2e8f0;
+      font-size: 17px;
+      font-weight: 600;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    .conexion {
+      fill: none;
+      stroke-linecap: round;
+      transition: stroke-width 220ms ease, stroke 220ms ease, opacity 220ms ease;
+      cursor: pointer;
+      filter: drop-shadow(0 0 6px currentColor);
+    }
+
+    .linea-directa {
+      stroke: var(--neon-rojo);
+      color: var(--neon-rojo);
+      stroke-width: 3;
+      opacity: 0.75;
+    }
+
+    .linea-estructural {
+      stroke: var(--neon-amarillo);
+      color: var(--neon-amarillo);
+      stroke-width: 4;
+      opacity: 0.75;
+    }
+
+    .linea-cultural {
+      stroke: var(--neon-azul);
+      color: var(--neon-azul);
+      stroke-width: 3;
+      opacity: 0.75;
+    }
+
+    .linea-vibrante {
+      animation: vibrar var(--vib-dur) linear infinite;
+      stroke-dasharray: 7 6;
+    }
+
+    .directa-inevitable {
+      animation: brilloDirecta 0.42s ease-in-out infinite;
+      filter: drop-shadow(0 0 18px #ff1744);
+    }
+
+    .directa-agitada {
+      animation: sacudirDirecta var(--shake-dur, 0.8s) linear infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .spark {
+      fill: #ff2d55;
+      pointer-events: none;
+      filter: drop-shadow(0 0 6px #ff2d55);
+    }
+
+    .emoji-token {
+      pointer-events: none;
+      user-select: none;
+      dominant-baseline: middle;
+      text-anchor: middle;
+      font-size: 16px;
+      opacity: 0;
+    }
+
+    .tooltip {
+      position: absolute;
+      pointer-events: none;
+      max-width: 320px;
+      font-size: 0.88rem;
+      line-height: 1.35;
+      color: #f8fafc;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 8px;
+      padding: 8px 10px;
+      transform: translate(-50%, -115%);
+      opacity: 0;
+      transition: opacity 140ms ease;
+      z-index: 3;
+    }
+
+    .linea-division {
+      stroke: rgba(148, 163, 184, 0.7);
+      stroke-width: 2;
+      stroke-dasharray: 6 6;
+    }
+
+    .zona-triangulo {
+      fill: #cbd5e1;
+      font-size: 13px;
+      font-weight: 600;
+      text-anchor: middle;
+      letter-spacing: 0.2px;
+      opacity: 0.9;
+    }
+
+    .etiqueta-base {
+      fill: #93c5fd;
+      font-size: 13px;
+      text-anchor: middle;
+      font-weight: 600;
+    }
+
+    .flecha-base {
+      stroke: #93c5fd;
+      stroke-width: 1.8;
+      fill: none;
+      opacity: 0.92;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(2, 6, 23, 0.72);
+      z-index: 20;
+      padding: 16px;
+    }
+
+    .modal.activo {
+      display: grid;
+    }
+
+    .modal-contenido {
+      width: min(560px, 100%);
+      background: #0b1220;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+      display: grid;
+      gap: 10px;
+    }
+
+    .modal h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #e0f2fe;
+    }
+
+    .modal p {
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .modal button {
+      justify-self: end;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      color: #e2e8f0;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+
+    @keyframes vibrar {
+      0% {
+        transform: translate(0, 0);
+        stroke-dashoffset: 0;
+      }
+      25% {
+        transform: translate(var(--vib-int), calc(var(--vib-int) * -1));
+      }
+      50% {
+        transform: translate(calc(var(--vib-int) * -1), var(--vib-int));
+        stroke-dashoffset: -16;
+      }
+      75% {
+        transform: translate(var(--vib-int), var(--vib-int));
+      }
+      100% {
+        transform: translate(0, 0);
+        stroke-dashoffset: -32;
+      }
+    }
+
+    @keyframes brilloDirecta {
+      0%,
+      100% {
+        opacity: 0.78;
+        filter: drop-shadow(0 0 10px #ff1744);
+      }
+      50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 24px #ff1744);
+      }
+    }
+
+    @keyframes sacudirDirecta {
+      0% { transform: translate(0, 0); }
+      15% { transform: translate(var(--shake-int, 1px), calc(var(--shake-int, 1px) * -1)); }
+      30% { transform: translate(calc(var(--shake-int, 1px) * -1), var(--shake-int, 1px)); }
+      45% { transform: translate(calc(var(--shake-int, 1px) * 1.2), calc(var(--shake-int, 1px) * 0.2)); }
+      60% { transform: translate(calc(var(--shake-int, 1px) * -1.2), calc(var(--shake-int, 1px) * -0.2)); }
+      75% { transform: translate(calc(var(--shake-int, 1px) * 0.8), var(--shake-int, 1px)); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @media (max-width: 940px) {
+      .zona-principal {
+        grid-template-columns: 1fr;
+      }
+
+      .visor,
+      svg {
+        min-height: 500px;
+        height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="contenedor">
+    <h1>Día 1: Diagnóstico de Conflictos · Actividad 2 · El Flujo de la Violencia</h1>
+    <p class="subtitulo">
+      Visualización dinámica inspirada en el triángulo de Galtung para observar cómo la violencia directa, estructural y cultural se refuerzan como circuito.
+    </p>
+
+    <section class="meta" aria-label="Propósito pedagógico">
+      <div><strong>Objetivo:</strong> demostrar la interconectividad y el refuerzo mutuo entre violencias directa, estructural y cultural.</div>
+      <div><strong>Meta final:</strong> identificar nodos de intervención y concluir que actuar solo sobre la violencia directa no basta si no baja el “voltaje” estructural y cultural.</div>
+      <div><strong>Fundamento académico:</strong> Johan Galtung (simetría y dinámica): la violencia opera como proceso y bucle de retroalimentación.</div>
+    </section>
+
+    <section class="ejemplos" aria-label="Ejemplos aplicados del flujo de violencia">
+      <article class="ejemplo flux-ejemplo" data-ejemplo="generico">
+        <h2>El Triángulo de la Violencia</h2>
+        <ul class="violencias">
+          <li><strong>Violencia directa 💪 👊 🔪 💥:</strong> daño visible e inmediato entre actores.</li>
+          <li><strong>Violencia estructural ⚖️ 📉 🏛️:</strong> condiciones institucionales o sociales que niegan necesidades y derechos.</li>
+          <li><strong>Violencia cultural 🗣️ 👥 👑 ⛪:</strong> creencias, narrativas y símbolos que legitiman la desigualdad o la agresión.</li>
+        </ul>
+
+        <section class="zona-principal">
+          <article class="visor" aria-label="Triángulo de flujo de violencia, versión genérica">
+            <div class="tooltip" role="status" aria-live="polite"></div>
+
+            <svg viewBox="0 0 900 560" role="img">
+              <g>
+                <line class="conexion linea-directa linea-ds" x1="450" y1="110" x2="180" y2="430" data-key="ds" />
+                <line class="conexion linea-estructural linea-sc" x1="180" y1="430" x2="720" y2="430" data-key="sc" />
+                <line class="conexion linea-cultural linea-cd" x1="720" y1="430" x2="450" y2="110" data-key="cd" />
+              </g>
+
+              <g fill="#93c5fd" font-size="13" text-anchor="middle">
+                <text x="305" y="265">Estructura ↔ Directa</text>
+                <text x="450" y="452">Estructura ↔ Cultura</text>
+                <text x="595" y="265">Cultura ↔ Directa</text>
+              </g>
+
+              <g>
+                <circle class="nodo nodo-directa nodo-directa-ref" cx="450" cy="110" r="26" />
+                <circle class="nodo nodo-estructural nodo-estructural-ref" cx="180" cy="430" r="28" />
+                <circle class="nodo nodo-cultural nodo-cultural-ref" cx="720" cy="430" r="28" />
+              </g>
+
+              <g>
+                <text class="etiqueta" x="450" y="64">Violencia Directa</text>
+                <text class="etiqueta" x="180" y="476">Violencia Estructural</text>
+                <text class="etiqueta" x="720" y="476">Violencia Cultural</text>
+              </g>
+
+              <g class="sparks-layer" aria-hidden="true"></g>
+            </svg>
+          </article>
+
+          <aside class="panel" aria-label="Controles de intensidad, triángulo genérico">
+            <h2>Controles de intensidad</h2>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Directa</label>
+                <strong class="valor-directa">35%</strong>
+              </div>
+              <input class="slider-directa" type="range" min="0" max="100" step="1" value="35" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Estructural</label>
+                <strong class="valor-estructural">55%</strong>
+              </div>
+              <input class="slider-estructural" type="range" min="0" max="100" step="1" value="55" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Cultural</label>
+                <strong class="valor-cultural">45%</strong>
+              </div>
+              <input class="slider-cultural" type="range" min="0" max="100" step="1" value="45" />
+            </div>
+
+            <p class="resultado">
+              Ajusta los tres deslizadores para observar cómo cambia el circuito y detectar dónde intervenir primero.
+            </p>
+
+            <p class="lectura">
+              Esta versión sirve como marco conceptual base antes de pasar a casos específicos.
+            </p>
+          </aside>
+        </section>
+      </article>
+
+      <article class="ejemplo flux-ejemplo" data-ejemplo="estudiantes">
+        <h2>1) Pelea física entre dos estudiantes</h2>
+        <p class="lectura">
+          Dos estudiantes de colegio se golpean en un pasillo durante el recreo, aparentemente “sin razón”. Al revisar mejor, había burlas repetidas, rumores humillantes y ausencia de intervención adulta sostenida. El conflicto explota en lo visible, pero venía acumulándose desde antes. ¿Qué otros elementos pueden estar incidiendo en esta manifestación de violencia?
+        </p>
+        <ul class="violencias">
+          <li><strong>Violencia directa 💪 👊 🔪 💥:</strong> un estudiante golpea a otro en el pasillo.</li>
+          <li><strong>Violencia estructural ⚖️ 📉 🏛️:</strong> la institución niega necesidades básicas (sin protocolo de apoyo psicosocial y sin atención oportuna a denuncias de acoso).</li>
+          <li><strong>Violencia cultural 🗣️ 👥 👑 ⛪:</strong> normalización de violencia machista u homófoba (“así se hacen respetar”, “eso le pasa por ser afeminado”).</li>
+        </ul>
+
+        <section class="zona-principal">
+          <article class="visor" aria-label="Triángulo de flujo de violencia, ejemplo de estudiantes">
+            <div class="tooltip" role="status" aria-live="polite"></div>
+
+            <svg viewBox="0 0 900 560" role="img">
+              <g>
+                <line class="conexion linea-directa linea-ds" x1="450" y1="110" x2="180" y2="430" data-key="ds" />
+                <line class="conexion linea-estructural linea-sc" x1="180" y1="430" x2="720" y2="430" data-key="sc" />
+                <line class="conexion linea-cultural linea-cd" x1="720" y1="430" x2="450" y2="110" data-key="cd" />
+              </g>
+
+              <g fill="#93c5fd" font-size="13" text-anchor="middle">
+                <text x="305" y="265">Estructura ↔ Directa</text>
+                <text x="450" y="452">Estructura ↔ Cultura</text>
+                <text x="595" y="265">Cultura ↔ Directa</text>
+              </g>
+
+              <g>
+                <circle class="nodo nodo-directa nodo-directa-ref" cx="450" cy="110" r="26" />
+                <circle class="nodo nodo-estructural nodo-estructural-ref" cx="180" cy="430" r="28" />
+                <circle class="nodo nodo-cultural nodo-cultural-ref" cx="720" cy="430" r="28" />
+              </g>
+
+              <g>
+                <text class="etiqueta" x="450" y="64">Violencia Directa</text>
+                <text class="etiqueta" x="180" y="476">Violencia Estructural</text>
+                <text class="etiqueta" x="720" y="476">Violencia Cultural</text>
+              </g>
+
+              <g class="sparks-layer" aria-hidden="true"></g>
+            </svg>
+          </article>
+
+          <aside class="panel" aria-label="Controles de intensidad, ejemplo de estudiantes">
+            <h2>Controles de intensidad</h2>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Directa</label>
+                <strong class="valor-directa">35%</strong>
+              </div>
+              <input class="slider-directa" type="range" min="0" max="100" step="1" value="35" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Estructural</label>
+                <strong class="valor-estructural">55%</strong>
+              </div>
+              <input class="slider-estructural" type="range" min="0" max="100" step="1" value="55" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Cultural</label>
+                <strong class="valor-cultural">45%</strong>
+              </div>
+              <input class="slider-cultural" type="range" min="0" max="100" step="1" value="45" />
+            </div>
+
+            <p class="resultado">
+              Ajusta los tres deslizadores para observar cómo cambia el circuito y detectar dónde intervenir primero.
+            </p>
+
+            <p class="lectura">
+              Pista pedagógica: cuando lo cultural y lo estructural se mantienen altos, lo directo tiende a reactivarse incluso tras medidas de control inmediato.
+            </p>
+          </aside>
+        </section>
+      </article>
+
+      <article class="ejemplo flux-ejemplo" data-ejemplo="politico">
+        <h2>2) Conflicto político entre izquierda y derecha</h2>
+        <p class="lectura">
+          En una ciudad polarizada, una protesta termina en agresiones entre grupos de izquierda y derecha. Cada bando llega convencido de que el otro representa una amenaza total y de que “defenderse” justifica todo. Lo que parece un choque puntual refleja tensiones acumuladas en instituciones, medios y discursos públicos. ¿Qué factores estructurales y culturales están alimentando esta escalada?
+        </p>
+        <ul class="violencias">
+          <li><strong>Violencia directa 💪 👊 🔪 💥:</strong> ataques físicos en manifestaciones y agresiones a militantes.</li>
+          <li><strong>Violencia estructural ⚖️ 📉 🏛️:</strong> barreras de representación, acceso desigual a medios y reglas institucionales que favorecen a un bloque.</li>
+          <li><strong>Violencia cultural 🗣️ 👥 👑 ⛪:</strong> estigmatización (“enemigos de la patria”, “traidores”, “parásitos”), que deshumaniza al adversario político.</li>
+        </ul>
+
+        <section class="zona-principal">
+          <article class="visor" aria-label="Triángulo de flujo de violencia, ejemplo político">
+            <div class="tooltip" role="status" aria-live="polite"></div>
+
+            <svg viewBox="0 0 900 560" role="img">
+              <g>
+                <line class="conexion linea-directa linea-ds" x1="450" y1="110" x2="180" y2="430" data-key="ds" />
+                <line class="conexion linea-estructural linea-sc" x1="180" y1="430" x2="720" y2="430" data-key="sc" />
+                <line class="conexion linea-cultural linea-cd" x1="720" y1="430" x2="450" y2="110" data-key="cd" />
+              </g>
+
+              <g fill="#93c5fd" font-size="13" text-anchor="middle">
+                <text x="305" y="265">Estructura ↔ Directa</text>
+                <text x="450" y="452">Estructura ↔ Cultura</text>
+                <text x="595" y="265">Cultura ↔ Directa</text>
+              </g>
+
+              <g>
+                <circle class="nodo nodo-directa nodo-directa-ref" cx="450" cy="110" r="26" />
+                <circle class="nodo nodo-estructural nodo-estructural-ref" cx="180" cy="430" r="28" />
+                <circle class="nodo nodo-cultural nodo-cultural-ref" cx="720" cy="430" r="28" />
+              </g>
+
+              <g>
+                <text class="etiqueta" x="450" y="64">Violencia Directa</text>
+                <text class="etiqueta" x="180" y="476">Violencia Estructural</text>
+                <text class="etiqueta" x="720" y="476">Violencia Cultural</text>
+              </g>
+
+              <g class="sparks-layer" aria-hidden="true"></g>
+            </svg>
+          </article>
+
+          <aside class="panel" aria-label="Controles de intensidad, ejemplo político">
+            <h2>Controles de intensidad</h2>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Directa</label>
+                <strong class="valor-directa">40%</strong>
+              </div>
+              <input class="slider-directa" type="range" min="0" max="100" step="1" value="40" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Estructural</label>
+                <strong class="valor-estructural">60%</strong>
+              </div>
+              <input class="slider-estructural" type="range" min="0" max="100" step="1" value="60" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Cultural</label>
+                <strong class="valor-cultural">65%</strong>
+              </div>
+              <input class="slider-cultural" type="range" min="0" max="100" step="1" value="65" />
+            </div>
+
+            <p class="resultado">
+              Ajusta los tres deslizadores para observar cómo cambia el circuito y detectar dónde intervenir primero.
+            </p>
+
+            <p class="lectura">
+              En polarización política, el lenguaje de enemistad puede acelerar rápidamente el salto hacia violencia directa.
+            </p>
+          </aside>
+        </section>
+      </article>
+
+      <article class="ejemplo flux-ejemplo" data-ejemplo="paises">
+        <h2>3) Conflicto entre países</h2>
+        <p class="lectura">
+          Dos países vecinos aumentan su tensión fronteriza después de meses de sanciones, propaganda hostil y disputas por recursos estratégicos. Un incidente menor desencadena ataques y respuestas militares. Aunque el hecho visible parece repentino, su energía viene de desigualdades históricas y narrativas de enemistad. ¿Qué componentes invisibles sostienen este ciclo de violencia?
+        </p>
+        <ul class="violencias">
+          <li><strong>Violencia directa 💪 👊 🔪 💥:</strong> incursiones militares, bombardeos o ataques fronterizos.</li>
+          <li><strong>Violencia estructural ⚖️ 📉 🏛️:</strong> bloqueos económicos, tratados asimétricos y control desigual de recursos estratégicos.</li>
+          <li><strong>Violencia cultural 🗣️ 👥 👑 ⛪:</strong> narrativas nacionalistas excluyentes y propaganda que deshumaniza a la población del otro país.</li>
+        </ul>
+
+        <section class="zona-principal">
+          <article class="visor" aria-label="Triángulo de flujo de violencia, ejemplo entre países">
+            <div class="tooltip" role="status" aria-live="polite"></div>
+
+            <svg viewBox="0 0 900 560" role="img">
+              <g>
+                <line class="conexion linea-directa linea-ds" x1="450" y1="110" x2="180" y2="430" data-key="ds" />
+                <line class="conexion linea-estructural linea-sc" x1="180" y1="430" x2="720" y2="430" data-key="sc" />
+                <line class="conexion linea-cultural linea-cd" x1="720" y1="430" x2="450" y2="110" data-key="cd" />
+              </g>
+
+              <g fill="#93c5fd" font-size="13" text-anchor="middle">
+                <text x="305" y="265">Estructura ↔ Directa</text>
+                <text x="450" y="452">Estructura ↔ Cultura</text>
+                <text x="595" y="265">Cultura ↔ Directa</text>
+              </g>
+
+              <g>
+                <circle class="nodo nodo-directa nodo-directa-ref" cx="450" cy="110" r="26" />
+                <circle class="nodo nodo-estructural nodo-estructural-ref" cx="180" cy="430" r="28" />
+                <circle class="nodo nodo-cultural nodo-cultural-ref" cx="720" cy="430" r="28" />
+              </g>
+
+              <g>
+                <text class="etiqueta" x="450" y="64">Violencia Directa</text>
+                <text class="etiqueta" x="180" y="476">Violencia Estructural</text>
+                <text class="etiqueta" x="720" y="476">Violencia Cultural</text>
+              </g>
+
+              <g class="sparks-layer" aria-hidden="true"></g>
+            </svg>
+          </article>
+
+          <aside class="panel" aria-label="Controles de intensidad, ejemplo entre países">
+            <h2>Controles de intensidad</h2>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Directa</label>
+                <strong class="valor-directa">50%</strong>
+              </div>
+              <input class="slider-directa" type="range" min="0" max="100" step="1" value="50" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Estructural</label>
+                <strong class="valor-estructural">68%</strong>
+              </div>
+              <input class="slider-estructural" type="range" min="0" max="100" step="1" value="68" />
+            </div>
+
+            <div class="control">
+              <div class="fila-control">
+                <label>Violencia Cultural</label>
+                <strong class="valor-cultural">62%</strong>
+              </div>
+              <input class="slider-cultural" type="range" min="0" max="100" step="1" value="62" />
+            </div>
+
+            <p class="resultado">
+              Ajusta los tres deslizadores para observar cómo cambia el circuito y detectar dónde intervenir primero.
+            </p>
+
+            <p class="lectura">
+              La deshumanización interestatal puede justificar sanciones o ataques y sostener ciclos prolongados de escalada.
+            </p>
+          </aside>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <section id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="tituloModal" aria-modal="true">
+    <article class="modal-contenido">
+      <h3 id="tituloModal">Conexión del circuito</h3>
+      <p id="textoModal"></p>
+      <button id="cerrarModal" type="button">Cerrar</button>
+    </article>
+  </section>
+
+  <script>
+    const modal = document.getElementById("modal");
+    const textoModal = document.getElementById("textoModal");
+    const tituloModal = document.getElementById("tituloModal");
+    const cerrarModal = document.getElementById("cerrarModal");
+
+    const configuraciones = {
+      generico: {
+        nombre: "análisis conceptual",
+        conexiones: {
+          ds: {
+            titulo: "Estructura ↔ Directa",
+            texto: "Desigualdades y exclusiones estructurales incrementan la probabilidad de brotes visibles de violencia directa."
+          },
+          sc: {
+            titulo: "Estructura ↔ Cultura",
+            texto: "La cultura legitima estructuras injustas, y esas estructuras refuerzan creencias que normalizan la desigualdad."
+          },
+          cd: {
+            titulo: "Cultura ↔ Directa",
+            texto: "La cultura puede presentar la agresión directa como correcta, necesaria o inevitable."
+          }
+        },
+        mensajes: {
+          critico: "⚠️ Circuito crítico: cuando estructura y cultura superan 70%, la violencia directa se reactiva por inercia sistémica.",
+          directaAlta: "La violencia directa está alta. Contener el síntoma no basta: hay que transformar estructura y cultura al mismo tiempo.",
+          voltajeAlto: "Hay alto voltaje sistémico. Aunque lo directo parezca estable, la escalada sigue latente.",
+          gestionable: "Nivel de tensión gestionable. Momento oportuno para prevención y transformación estructural/cultural."
+        }
+      },
+      estudiantes: {
+        nombre: "contexto estudiantil",
+        conexiones: {
+          ds: {
+            titulo: "Estructura ↔ Directa (escuela)",
+            texto: "Cuando la institución no atiende denuncias ni garantiza apoyo psicosocial, aumentan respuestas violentas directas entre estudiantes."
+          },
+          sc: {
+            titulo: "Estructura ↔ Cultura (escuela)",
+            texto: "Normas institucionales débiles frente a discriminación permiten que insultos machistas u homófobos se normalicen en la vida escolar."
+          },
+          cd: {
+            titulo: "Cultura ↔ Directa (escuela)",
+            texto: "La cultura hace que la violencia directa parezca aceptable (ej.: ‘Se lo merece por ser de tal grupo’)."
+          }
+        },
+        mensajes: {
+          critico: "⚠️ Circuito crítico en la institución: cultura discriminatoria y estructura escolar débil están disparando nuevas peleas aunque hoy parezca ‘calmado’.",
+          directaAlta: "La violencia física está alta: hay peleas constantes en pasillos y aulas. Separar a estudiantes o sancionar de forma aislada no alcanza; hay que cambiar la cultura escolar (normalización de machismo/homofobia) y la estructura (protocolos, apoyo psicosocial, reglas y seguimiento).",
+          voltajeAlto: "Todavía no hay tantas peleas visibles, pero el voltaje está alto: persisten burlas, exclusiones y fallas institucionales que pueden activar nuevos golpes.",
+          gestionable: "Hay una ventana preventiva: fortalecer convivencia, atención temprana y normas inclusivas para evitar que la tensión llegue a agresión física."
+        }
+      },
+      politico: {
+        nombre: "polarización política",
+        conexiones: {
+          ds: {
+            titulo: "Estructura ↔ Directa (política)",
+            texto: "Reglas percibidas como sesgadas y exclusión política alimentan choques en calles, mítines y actos partidarios."
+          },
+          sc: {
+            titulo: "Estructura ↔ Cultura (política)",
+            texto: "Medios y marcos institucionales que privilegian una narrativa refuerzan estigmas sobre el adversario."
+          },
+          cd: {
+            titulo: "Cultura ↔ Directa (política)",
+            texto: "Si el rival se presenta como ‘enemigo interno’, la agresión física empieza a verse como defensa legítima."
+          }
+        },
+        mensajes: {
+          critico: "⚠️ Circuito crítico en polarización política: instituciones sesgadas + deshumanización narrativa reactivan choques en calle.",
+          directaAlta: "La violencia directa está alta en el conflicto político. Frenar choques puntuales no alcanza sin reformas institucionales y desescalada discursiva.",
+          voltajeAlto: "Hay alto voltaje: aunque bajen incidentes inmediatos, el conflicto puede reactivarse por reglas y narrativas hostiles.",
+          gestionable: "Momento para pactos de no agresión, garantías de representación y lenguaje público menos deshumanizante."
+        }
+      },
+      paises: {
+        nombre: "conflicto entre países",
+        conexiones: {
+          ds: {
+            titulo: "Estructura ↔ Directa (interestatal)",
+            texto: "Bloqueos, asimetrías de poder y disputas por recursos pueden escalar hacia choques armados."
+          },
+          sc: {
+            titulo: "Estructura ↔ Cultura (interestatal)",
+            texto: "La arquitectura geopolítica desigual se legitima con narrativas de superioridad nacional."
+          },
+          cd: {
+            titulo: "Cultura ↔ Directa (interestatal)",
+            texto: "La propaganda deshumanizante convierte ataques contra el otro país en acciones ‘necesarias’ o ‘inevitables’."
+          }
+        },
+        mensajes: {
+          critico: "⚠️ Circuito crítico interestatal: asimetría estructural y propaganda hostil empujan a nuevos episodios armados.",
+          directaAlta: "La violencia directa entre países está alta. Un alto al fuego aislado no basta sin cambios en estructura geopolítica y narrativa pública.",
+          voltajeAlto: "Persisten condiciones de escalada: bloqueos, disputas estratégicas y deshumanización mutua mantienen el riesgo activo.",
+          gestionable: "Ventana de desescalada: negociación, medidas de confianza y revisión de arreglos estructurales desiguales."
+        }
+      }
+    };
+
+    function interpolarColor(inicio, fin, t) {
+      const r = Math.round(inicio[0] + (fin[0] - inicio[0]) * t);
+      const g = Math.round(inicio[1] + (fin[1] - inicio[1]) * t);
+      const b = Math.round(inicio[2] + (fin[2] - inicio[2]) * t);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function abrirModal(data) {
+      if (!data) {
+        return;
+      }
+      tituloModal.textContent = data.titulo;
+      textoModal.textContent = data.texto;
+      modal.classList.add("activo");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function cerrarModalDialogo() {
+      modal.classList.remove("activo");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function iniciarFlujo(ejemplo) {
+      const key = ejemplo.dataset.ejemplo;
+      const config = configuraciones[key];
+
+      const sliderDirecta = ejemplo.querySelector(".slider-directa");
+      const sliderEstructural = ejemplo.querySelector(".slider-estructural");
+      const sliderCultural = ejemplo.querySelector(".slider-cultural");
+
+      const valorDirecta = ejemplo.querySelector(".valor-directa");
+      const valorEstructural = ejemplo.querySelector(".valor-estructural");
+      const valorCultural = ejemplo.querySelector(".valor-cultural");
+      const resultado = ejemplo.querySelector(".resultado");
+
+      const nodoDirecta = ejemplo.querySelector(".nodo-directa-ref");
+      const nodoEstructural = ejemplo.querySelector(".nodo-estructural-ref");
+      const nodoCultural = ejemplo.querySelector(".nodo-cultural-ref");
+
+      const lineaDS = ejemplo.querySelector(".linea-ds");
+      const lineaSC = ejemplo.querySelector(".linea-sc");
+      const lineaCD = ejemplo.querySelector(".linea-cd");
+
+      const sparksLayer = ejemplo.querySelector(".sparks-layer");
+      const tooltip = ejemplo.querySelector(".tooltip");
+      const svg = ejemplo.querySelector("svg");
+      const etiquetasAntiguas = svg.querySelector("g[fill='#93c5fd']");
+
+      const emojis = {
+        directa: ["💪", "👊", "🔪", "💥"],
+        estructural: ["⚖️", "📉", "🏛️"],
+        cultural: ["🗣️", "👥", "👑", "⛪"]
+      };
+
+      const centros = {
+        directa: { x: 450, y: 110, color: "#ff6b6b" },
+        estructural: { x: 180, y: 430, color: "#ffe066" },
+        cultural: { x: 720, y: 430, color: "#38bdf8" }
+      };
+
+      let emojiLayers = svg.querySelector(".emoji-layers");
+      if (!emojiLayers) {
+        emojiLayers = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        emojiLayers.setAttribute("class", "emoji-layers");
+
+        ["directa", "estructural", "cultural"].forEach((tipo) => {
+          const capa = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          capa.setAttribute("class", `emoji-layer emoji-layer-${tipo}`);
+          emojiLayers.appendChild(capa);
+        });
+
+        svg.insertBefore(emojiLayers, sparksLayer);
+      }
+
+      const emojiLayerDirecta = svg.querySelector(".emoji-layer-directa");
+      const emojiLayerEstructural = svg.querySelector(".emoji-layer-estructural");
+      const emojiLayerCultural = svg.querySelector(".emoji-layer-cultural");
+
+      if (etiquetasAntiguas) {
+        etiquetasAntiguas.innerHTML = `
+          <line class="flecha-base" x1="660" y1="418" x2="240" y2="418" />
+          <polygon points="240,418 250,413 250,423" fill="#93c5fd" />
+          <line class="flecha-base" x1="240" y1="442" x2="660" y2="442" />
+          <polygon points="660,442 650,437 650,447" fill="#93c5fd" />
+          <text class="etiqueta-base" x="450" y="412">Refuerza (Violencia Cultural → Violencia Estructural)</text>
+          <text class="etiqueta-base" x="450" y="462">Legitima (Violencia Estructural → Violencia Cultural)</text>
+        `;
+      }
+
+      if (!svg.querySelector(".linea-division")) {
+        const capa = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        capa.innerHTML = `
+          <line class="linea-division" x1="250" y1="270" x2="650" y2="270"></line>
+          <text class="zona-triangulo" x="450" y="255">Violencia Visible</text>
+          <text class="zona-triangulo" x="450" y="292">Violencia Invisible</text>
+        `;
+        svg.insertBefore(capa, sparksLayer);
+      }
+
+      let sparkIntervalId = null;
+      let emojiIntervalDirecta = null;
+      let emojiIntervalEstructural = null;
+      let emojiIntervalCultural = null;
+
+      function generarEmoji(tipo, nivel) {
+        const layer = tipo === "directa"
+          ? emojiLayerDirecta
+          : tipo === "estructural"
+            ? emojiLayerEstructural
+            : emojiLayerCultural;
+
+        const centro = centros[tipo];
+        const setEmojis = emojis[tipo];
+        const emoji = setEmojis[Math.floor(Math.random() * setEmojis.length)];
+
+        const token = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        token.setAttribute("class", "emoji-token");
+        token.setAttribute("x", String(centro.x + (Math.random() * 24 - 12)));
+        token.setAttribute("y", String(centro.y + (Math.random() * 20 - 10)));
+        token.setAttribute("fill", centro.color);
+        token.setAttribute("font-size", String(14 + Math.random() * 6 + nivel * 0.06));
+        token.textContent = emoji;
+        layer.appendChild(token);
+
+        const angulo = Math.random() * Math.PI * 2;
+        const distancia = 16 + Math.random() * (20 + nivel * 0.35);
+        const dx = Math.cos(angulo) * distancia;
+        const dy = Math.sin(angulo) * distancia - (tipo === "directa" ? 8 : 0);
+
+        token.animate(
+          [
+            { transform: "translate(0, 0) scale(0.75)", opacity: 0 },
+            { transform: `translate(${dx * 0.25}px, ${dy * 0.25}px) scale(1)`, opacity: 1, offset: 0.25 },
+            { transform: `translate(${dx}px, ${dy}px) scale(0.86)`, opacity: 0 }
+          ],
+          { duration: 820 + Math.random() * 520, easing: "ease-out" }
+        );
+
+        setTimeout(() => token.remove(), 1600);
+      }
+
+      function actualizarIntervaloEmojis(tipo, nivel) {
+        const limpiar = {
+          directa: () => {
+            if (emojiIntervalDirecta) clearInterval(emojiIntervalDirecta);
+          },
+          estructural: () => {
+            if (emojiIntervalEstructural) clearInterval(emojiIntervalEstructural);
+          },
+          cultural: () => {
+            if (emojiIntervalCultural) clearInterval(emojiIntervalCultural);
+          }
+        };
+
+        limpiar[tipo]();
+
+        if (nivel < 10) {
+          return;
+        }
+
+        const zonaCritica = Math.max(0, nivel - 80);
+        const factorCritico = 1 + zonaCritica * 0.18;
+        const frecuenciaBase = Math.max(130, 1350 - nivel * 11);
+        const frecuencia = zonaCritica > 0
+          ? Math.max(55, Math.round(frecuenciaBase / factorCritico))
+          : frecuenciaBase;
+
+        const emojisPorPulso = nivel >= 80
+          ? Math.min(5, 1 + Math.floor(zonaCritica / 4))
+          : 1;
+
+        const emitirRafaga = () => {
+          for (let i = 0; i < emojisPorPulso; i += 1) {
+            generarEmoji(tipo, nivel);
+          }
+        };
+
+        if (tipo === "directa") {
+          emojiIntervalDirecta = setInterval(emitirRafaga, frecuencia);
+        }
+        if (tipo === "estructural") {
+          emojiIntervalEstructural = setInterval(emitirRafaga, frecuencia);
+        }
+        if (tipo === "cultural") {
+          emojiIntervalCultural = setInterval(emitirRafaga, frecuencia);
+        }
+      }
+
+      function generarSpark() {
+        const cx = 450 + (Math.random() * 22 - 11);
+        const cy = 110 + (Math.random() * 16 - 8);
+        const spark = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        const radio = 2.6 + Math.random() * 4.8;
+
+        spark.setAttribute("cx", String(cx));
+        spark.setAttribute("cy", String(cy));
+        spark.setAttribute("r", String(radio));
+        spark.setAttribute("class", "spark");
+        spark.style.opacity = "0.95";
+        sparksLayer.appendChild(spark);
+
+        const angulo = -Math.PI / 2 + (Math.random() * 1.4 - 0.7);
+        const distancia = 26 + Math.random() * 70;
+        const destinoX = cx + Math.cos(angulo) * distancia;
+        const destinoY = cy + Math.sin(angulo) * distancia;
+
+        spark.animate(
+          [
+            { transform: "translate(0,0) scale(1)", opacity: 0.95 },
+            { transform: `translate(${destinoX - cx}px, ${destinoY - cy}px) scale(0.4)`, opacity: 0 }
+          ],
+          { duration: 300 + Math.random() * 250, easing: "ease-out" }
+        );
+
+        setTimeout(() => spark.remove(), 640);
+      }
+
+      function actualizarSparks(frecuencia) {
+        if (sparkIntervalId) {
+          clearInterval(sparkIntervalId);
+        }
+        sparkIntervalId = setInterval(() => generarSpark(), frecuencia);
+      }
+
+      function actualizarEstado() {
+        const directa = Number(sliderDirecta.value);
+        const estructural = Number(sliderEstructural.value);
+        const cultural = Number(sliderCultural.value);
+
+        valorDirecta.textContent = `${directa}%`;
+        valorEstructural.textContent = `${estructural}%`;
+        valorCultural.textContent = `${cultural}%`;
+
+        const umbralInevitable = estructural > 70 && cultural > 70;
+        const directaEfectiva = umbralInevitable ? Math.max(directa, 82) : directa;
+
+        nodoEstructural.setAttribute("r", String(22 + estructural * 0.25));
+
+        const colorCultural = interpolarColor([56, 189, 248], [255, 74, 43], cultural / 100);
+        nodoCultural.setAttribute("fill", colorCultural);
+        nodoCultural.setAttribute("stroke", colorCultural);
+        nodoCultural.style.color = colorCultural;
+
+        lineaSC.style.strokeWidth = String(3 + estructural * 0.08);
+
+        const intensidadCultural = cultural / 100;
+        const duracionVibracion = 1.5 - intensidadCultural * 1.2;
+        const intensidadVibracion = 1.1 + intensidadCultural * 3.8;
+        ejemplo.style.setProperty("--vib-dur", `${Math.max(0.25, duracionVibracion)}s`);
+        ejemplo.style.setProperty("--vib-int", `${intensidadVibracion.toFixed(2)}px`);
+
+        lineaCD.classList.toggle("linea-vibrante", cultural > 8);
+        lineaSC.classList.toggle("linea-vibrante", cultural > 8);
+
+        const brilloCultural = 0.55 + intensidadCultural * 0.85;
+        lineaCD.style.opacity = String(brilloCultural);
+        lineaSC.style.opacity = String(0.55 + Math.max(intensidadCultural, estructural / 100) * 0.75);
+        lineaCD.style.strokeWidth = String(3 + cultural * 0.06);
+        lineaDS.style.strokeWidth = String(2.8 + directaEfectiva * 0.06);
+
+        nodoDirecta.setAttribute("r", String(24 + directaEfectiva * 0.12));
+        nodoDirecta.classList.toggle("directa-inevitable", umbralInevitable);
+        nodoDirecta.style.filter = `drop-shadow(0 0 ${8 + directaEfectiva * 0.16}px #ff4d6d)`;
+        nodoEstructural.style.filter = `drop-shadow(0 0 ${8 + estructural * 0.14}px #ffe066)`;
+        nodoCultural.style.filter = `drop-shadow(0 0 ${8 + cultural * 0.16}px ${colorCultural})`;
+
+        const frecuencia = 1000 - directaEfectiva * 10;
+        actualizarSparks(Math.max(90, frecuencia));
+
+        actualizarIntervaloEmojis("directa", directa);
+        actualizarIntervaloEmojis("estructural", estructural);
+        actualizarIntervaloEmojis("cultural", cultural);
+
+        const intensidadSacudida = 0.4 + (directaEfectiva / 100) * 5.2;
+        const duracionSacudida = 0.95 - (directaEfectiva / 100) * 0.75;
+        nodoDirecta.style.setProperty("--shake-int", `${intensidadSacudida.toFixed(2)}px`);
+        nodoDirecta.style.setProperty("--shake-dur", `${Math.max(0.14, duracionSacudida).toFixed(2)}s`);
+        nodoDirecta.classList.toggle("directa-agitada", directaEfectiva > 8);
+
+        const mensajes = config.mensajes || {
+          critico: `⚠️ Circuito crítico en ${config.nombre}: lo estructural y cultural superan 70%; la violencia directa se reactiva aunque su deslizador esté bajo.`,
+          directaAlta: "La violencia directa está alta. Reducir solo el brote no alcanza; hay que intervenir en estructura y cultura simultáneamente.",
+          voltajeAlto: "Hay alto voltaje sistémico. Aunque la violencia directa esté moderada, la escalada sigue latente.",
+          gestionable: "Nivel de tensión gestionable. Momento oportuno para prevención y transformación estructural/cultural."
+        };
+
+        if (umbralInevitable) {
+          resultado.textContent = mensajes.critico;
+        } else if (directa > 65) {
+          resultado.textContent = mensajes.directaAlta;
+        } else if (estructural > 65 || cultural > 65) {
+          resultado.textContent = mensajes.voltajeAlto;
+        } else {
+          resultado.textContent = mensajes.gestionable;
+        }
+      }
+
+      [lineaDS, lineaSC, lineaCD].forEach((linea) => {
+        linea.addEventListener("mouseenter", (event) => {
+          const data = config.conexiones[event.target.dataset.key];
+          if (!data) {
+            return;
+          }
+          tooltip.textContent = data.texto;
+          tooltip.style.opacity = "1";
+        });
+
+        linea.addEventListener("mousemove", (event) => {
+          const bounds = event.currentTarget.ownerSVGElement.getBoundingClientRect();
+          tooltip.style.left = `${event.clientX - bounds.left}px`;
+          tooltip.style.top = `${event.clientY - bounds.top}px`;
+        });
+
+        linea.addEventListener("mouseleave", () => {
+          tooltip.style.opacity = "0";
+        });
+
+        linea.addEventListener("click", (event) => {
+          abrirModal(config.conexiones[event.target.dataset.key]);
+        });
+      });
+
+      [sliderDirecta, sliderEstructural, sliderCultural].forEach((slider) => {
+        slider.addEventListener("input", actualizarEstado);
+      });
+
+      actualizarEstado();
+    }
+
+    cerrarModal.addEventListener("click", cerrarModalDialogo);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        cerrarModalDialogo();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        cerrarModalDialogo();
+      }
+    });
+
+    document.querySelectorAll(".flux-ejemplo").forEach(iniciarFlujo);
+  </script>
+</body>
+</html>

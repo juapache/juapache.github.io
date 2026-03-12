@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día 1 · Actividad 1 · Zoom de Lederach</title>
+  <style>
+    :root {
+      --fondo: #0f172a;
+      --panel: #111827;
+      --texto: #e5e7eb;
+      --muted: #9ca3af;
+      --acento: #38bdf8;
+      --acento-2: #f59e0b;
+      --nodo: #22d3ee;
+      --linea: rgba(56, 189, 248, 0.5);
+      --sistema: #1f2937;
+      --sistema-borde: #7f1d1d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0%, var(--fondo) 60%);
+      color: var(--texto);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .contenedor {
+      width: min(1000px, 100%);
+      background: linear-gradient(160deg, rgba(17, 24, 39, 0.95), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 1rem + 1.2vw, 2rem);
+    }
+
+    .subtitulo {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .meta strong {
+      color: var(--acento);
+    }
+
+    .visor {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #0b1220 0%, #050a14 100%);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      min-height: 460px;
+    }
+
+    svg {
+      width: 100%;
+      height: 460px;
+      display: block;
+    }
+
+    .etiqueta-nivel {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--texto);
+      backdrop-filter: blur(3px);
+    }
+
+    .controles {
+      display: grid;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .fila-control {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--acento-2);
+      cursor: pointer;
+    }
+
+    .leyenda {
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.6;
+      min-height: 3.2em;
+    }
+
+    .suave {
+      transition: transform 700ms ease, opacity 700ms ease;
+      transform-origin: center;
+    }
+
+    .episodio-icono {
+      transition: transform 700ms ease, opacity 700ms ease;
+      transform-origin: center;
+    }
+
+    .sistema-caja {
+      transition: opacity 700ms ease, transform 700ms ease;
+      transform-origin: center;
+    }
+
+    .red-linea {
+      stroke-dasharray: 6 6;
+      animation: pulsoLinea 4s linear infinite;
+    }
+
+    .ejemplos {
+      display: grid;
+      gap: 18px;
+      margin-top: 8px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.35);
+    }
+
+    .ejemplos h2 {
+      margin: 0;
+      font-size: clamp(1.1rem, 0.9rem + 0.8vw, 1.55rem);
+    }
+
+    .bloque-ejemplo {
+      background: rgba(2, 6, 23, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 14px;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .bloque-ejemplo h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #dbeafe;
+    }
+
+    .bloque-ejemplo p {
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .toggle-perspectiva {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .boton-parte {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.9);
+      color: #dbeafe;
+      padding: 7px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 220ms ease;
+      font-size: 0.9rem;
+    }
+
+    .boton-parte[aria-pressed="true"] {
+      border-color: rgba(56, 189, 248, 0.85);
+      background: rgba(56, 189, 248, 0.2);
+      color: #e0f2fe;
+    }
+
+    .visor-ejemplo {
+      min-height: 360px;
+    }
+
+    .visor-ejemplo svg {
+      height: 360px;
+    }
+
+    .visor-ejemplo .etiqueta-nivel {
+      font-size: 0.85rem;
+      padding: 6px 10px;
+    }
+
+    .rel-texto {
+      font-size: 12px;
+      fill: #bae6fd;
+      text-anchor: middle;
+    }
+
+    @keyframes pulsoLinea {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .contenedor {
+        padding: 16px;
+      }
+
+      .visor,
+      svg {
+        min-height: 400px;
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="contenedor">
+    <h1>Día 1: Diagnóstico de Conflictos · Zoom de Lederach</h1>
+    <p class="subtitulo">
+      Esta actividad muestra la diferencia entre el <strong>episodio</strong> visible de un conflicto y su <strong>epicentro</strong> relacional-estructural.
+    </p>
+
+    <section class="meta" aria-label="Propósito pedagógico">
+      <div><strong>Objetivo:</strong> visualizar por qué resolver solo el evento inmediato no transforma el conflicto.</div>
+      <div><strong>Meta final:</strong> comprender que la resolución del episodio es temporal si no se trabaja la red histórica y estructural.</div>
+      <div><strong>Fundamento:</strong> John Paul Lederach, <em>The Little Book of Conflict Transformation</em> (dimensión temporal: de resolución a transformación).</div>
+    </section>
+
+    <section class="visor" aria-label="Visor de zoom del conflicto">
+      <div class="etiqueta-nivel" id="etiquetaNivel">Nivel 1 · Episodio</div>
+      <svg viewBox="0 0 1000 460" role="img" aria-labelledby="tituloSvg descripcionSvg">
+        <title id="tituloSvg">Zoom de conflicto: episodio, red relacional y estructura</title>
+        <desc id="descripcionSvg">Un ícono de choque se reduce para revelar una red de relaciones y finalmente una caja estructural de injusticia sistémica.</desc>
+
+        <g id="capaEstructural" class="sistema-caja" opacity="0" transform="translate(80,45) scale(0.95)">
+          <rect x="0" y="0" width="840" height="360" rx="18" fill="var(--sistema)" stroke="var(--sistema-borde)" stroke-width="5" />
+          <text x="420" y="42" text-anchor="middle" fill="#fecaca" font-size="28" font-weight="700">Injusticia sistémica</text>
+          <text x="420" y="74" text-anchor="middle" fill="#fca5a5" font-size="16">Condiciones estructurales que reproducen el conflicto</text>
+        </g>
+
+        <g id="capaRelacional" class="suave" opacity="0" transform="translate(500,230) scale(0.8)">
+          <g stroke="var(--linea)" stroke-width="3" fill="none" class="red-linea">
+            <line x1="0" y1="0" x2="-220" y2="-130" />
+            <line x1="0" y1="0" x2="220" y2="-120" />
+            <line x1="0" y1="0" x2="-250" y2="70" />
+            <line x1="0" y1="0" x2="250" y2="80" />
+            <line x1="-220" y1="-130" x2="-250" y2="70" />
+            <line x1="220" y1="-120" x2="250" y2="80" />
+            <line x1="-220" y1="-130" x2="220" y2="-120" />
+            <line x1="-250" y1="70" x2="250" y2="80" />
+            <line x1="-120" y1="-200" x2="0" y2="0" />
+            <line x1="120" y1="-200" x2="0" y2="0" />
+            <line x1="0" y1="0" x2="0" y2="210" />
+          </g>
+
+          <g fill="var(--nodo)">
+            <circle cx="0" cy="0" r="20" />
+            <circle cx="-220" cy="-130" r="15" />
+            <circle cx="220" cy="-120" r="15" />
+            <circle cx="-250" cy="70" r="15" />
+            <circle cx="250" cy="80" r="15" />
+            <circle cx="-120" cy="-200" r="13" />
+            <circle cx="120" cy="-200" r="13" />
+            <circle cx="0" cy="210" r="13" />
+          </g>
+
+          <g fill="#bae6fd" font-size="14" text-anchor="middle">
+            <text x="0" y="-30">Relación inmediata</text>
+            <text x="-220" y="-150">Memoria histórica</text>
+            <text x="220" y="-140">Instituciones</text>
+            <text x="-250" y="95">Identidad</text>
+            <text x="250" y="105">Poder</text>
+            <text x="-120" y="-220">Narrativas</text>
+            <text x="120" y="-220">Desigualdad</text>
+            <text x="0" y="235">Economía política</text>
+          </g>
+        </g>
+
+        <g id="capaEpisodio" class="episodio-icono" transform="translate(500,230) scale(1)">
+          <circle cx="-34" cy="0" r="52" fill="#fb7185" opacity="0.88"></circle>
+          <circle cx="34" cy="0" r="52" fill="#f97316" opacity="0.88"></circle>
+          <polygon points="0,-36 16,-6 4,-6 14,20 -18,-6 -5,-6" fill="#fef08a"></polygon>
+          <text x="0" y="88" fill="#f8fafc" font-size="19" text-anchor="middle" font-weight="700">Episodio visible</text>
+          <text x="0" y="111" fill="#cbd5e1" font-size="14" text-anchor="middle">chispa inmediata del conflicto</text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="controles" aria-label="Controles de zoom">
+      <div class="fila-control">
+        <label for="zoom">Nivel de zoom analítico</label>
+        <strong id="nivelTexto">1 de 3</strong>
+      </div>
+      <input id="zoom" type="range" min="1" max="3" step="1" value="1" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" aria-label="Control para ampliar del episodio al epicentro" />
+      <p class="leyenda" id="leyenda">
+        Nivel 1 (Episodio): observas el evento inmediato. Aquí suele concentrarse la respuesta de corto plazo.
+      </p>
+    </section>
+
+    <section class="ejemplos" aria-label="Ejemplos aplicados del zoom de Lederach">
+      <h2>Veamos algunos ejemplos:</h2>
+
+      <article class="bloque-ejemplo" id="ejemplo-estudiantes">
+        <h3>a) Pelea física entre dos estudiantes</h3>
+        <p>
+          Mueve el zoom para pasar del evento visible a su epicentro. Cambia la perspectiva para observar cómo cambian la identidad, la memoria histórica y la narrativa relacional.
+        </p>
+        <div class="toggle-perspectiva" role="group" aria-label="Perspectiva del conflicto estudiantil"></div>
+
+        <section class="visor visor-ejemplo" aria-label="Visualización ejemplo estudiantes">
+          <div class="etiqueta-nivel etiqueta-nivel-ejemplo">Nivel 1 · Episodio</div>
+          <svg viewBox="0 0 1000 360" role="img" aria-label="Ejemplo de conflicto estudiantil">
+            <g class="sistema-caja sistema-ejemplo" opacity="0" transform="translate(100,35) scale(0.95)">
+              <rect x="0" y="0" width="800" height="280" rx="16" fill="var(--sistema)" stroke="var(--sistema-borde)" stroke-width="4" />
+              <text x="400" y="34" text-anchor="middle" fill="#fecaca" font-size="22" font-weight="700" class="estructura-titulo"></text>
+              <text x="400" y="58" text-anchor="middle" fill="#fca5a5" font-size="14" class="estructura-sub"></text>
+            </g>
+
+            <g class="suave capa-relacional-ejemplo" opacity="0" transform="translate(500,180) scale(0.8)">
+              <g stroke="var(--linea)" stroke-width="3" fill="none" class="red-linea">
+                <line x1="0" y1="0" x2="-220" y2="-90" />
+                <line x1="0" y1="0" x2="220" y2="-90" />
+                <line x1="0" y1="0" x2="-250" y2="55" />
+                <line x1="0" y1="0" x2="250" y2="60" />
+                <line x1="-220" y1="-90" x2="-250" y2="55" />
+                <line x1="220" y1="-90" x2="250" y2="60" />
+                <line x1="-220" y1="-90" x2="220" y2="-90" />
+                <line x1="-250" y1="55" x2="250" y2="60" />
+                <line x1="-120" y1="-150" x2="0" y2="0" />
+                <line x1="120" y1="-150" x2="0" y2="0" />
+                <line x1="0" y1="0" x2="0" y2="150" />
+              </g>
+              <g fill="var(--nodo)">
+                <circle cx="0" cy="0" r="18" />
+                <circle cx="-220" cy="-90" r="13" />
+                <circle cx="220" cy="-90" r="13" />
+                <circle cx="-250" cy="55" r="13" />
+                <circle cx="250" cy="60" r="13" />
+                <circle cx="-120" cy="-150" r="12" />
+                <circle cx="120" cy="-150" r="12" />
+                <circle cx="0" cy="150" r="12" />
+              </g>
+              <g class="rel-texto">
+                <text x="0" y="-24" class="rel-etiqueta" data-i="0"></text>
+                <text x="-220" y="-110" class="rel-etiqueta" data-i="1"></text>
+                <text x="220" y="-110" class="rel-etiqueta" data-i="2"></text>
+                <text x="-250" y="80" class="rel-etiqueta" data-i="3"></text>
+                <text x="250" y="84" class="rel-etiqueta" data-i="4"></text>
+                <text x="-120" y="-170" class="rel-etiqueta" data-i="5"></text>
+                <text x="120" y="-170" class="rel-etiqueta" data-i="6"></text>
+                <text x="0" y="174" class="rel-etiqueta" data-i="7"></text>
+              </g>
+            </g>
+
+            <g class="episodio-icono capa-episodio-ejemplo" transform="translate(500,180) scale(1)">
+              <circle cx="-30" cy="0" r="45" fill="#fb7185" opacity="0.88"></circle>
+              <circle cx="30" cy="0" r="45" fill="#f97316" opacity="0.88"></circle>
+              <polygon points="0,-30 14,-6 4,-6 12,16 -14,-6 -4,-6" fill="#fef08a"></polygon>
+              <text x="0" y="76" fill="#f8fafc" font-size="17" text-anchor="middle" font-weight="700" class="episodio-titulo"></text>
+              <text x="0" y="98" fill="#cbd5e1" font-size="13" text-anchor="middle" class="episodio-sub"></text>
+            </g>
+          </svg>
+        </section>
+
+        <section class="controles" aria-label="Controles del ejemplo estudiantes">
+          <div class="fila-control">
+            <label>Nivel de zoom analítico</label>
+            <strong class="nivel-texto-ejemplo">1 de 3</strong>
+          </div>
+          <input class="zoom-ejemplo" type="range" min="1" max="3" step="1" value="1" />
+          <p class="leyenda leyenda-ejemplo"></p>
+        </section>
+      </article>
+
+      <article class="bloque-ejemplo" id="ejemplo-politica">
+        <h3>b) Conflicto político entre izquierda y derecha</h3>
+        <p>
+          El episodio (insulto, bloqueo, protesta) es visible, pero el epicentro incluye memorias colectivas, instituciones, medios y distribución de poder.
+        </p>
+        <div class="toggle-perspectiva" role="group" aria-label="Perspectiva del conflicto político"></div>
+
+        <section class="visor visor-ejemplo" aria-label="Visualización ejemplo político">
+          <div class="etiqueta-nivel etiqueta-nivel-ejemplo">Nivel 1 · Episodio</div>
+          <svg viewBox="0 0 1000 360" role="img" aria-label="Ejemplo de conflicto político">
+            <g class="sistema-caja sistema-ejemplo" opacity="0" transform="translate(100,35) scale(0.95)">
+              <rect x="0" y="0" width="800" height="280" rx="16" fill="var(--sistema)" stroke="var(--sistema-borde)" stroke-width="4" />
+              <text x="400" y="34" text-anchor="middle" fill="#fecaca" font-size="22" font-weight="700" class="estructura-titulo"></text>
+              <text x="400" y="58" text-anchor="middle" fill="#fca5a5" font-size="14" class="estructura-sub"></text>
+            </g>
+
+            <g class="suave capa-relacional-ejemplo" opacity="0" transform="translate(500,180) scale(0.8)">
+              <g stroke="var(--linea)" stroke-width="3" fill="none" class="red-linea">
+                <line x1="0" y1="0" x2="-220" y2="-90" />
+                <line x1="0" y1="0" x2="220" y2="-90" />
+                <line x1="0" y1="0" x2="-250" y2="55" />
+                <line x1="0" y1="0" x2="250" y2="60" />
+                <line x1="-220" y1="-90" x2="-250" y2="55" />
+                <line x1="220" y1="-90" x2="250" y2="60" />
+                <line x1="-220" y1="-90" x2="220" y2="-90" />
+                <line x1="-250" y1="55" x2="250" y2="60" />
+                <line x1="-120" y1="-150" x2="0" y2="0" />
+                <line x1="120" y1="-150" x2="0" y2="0" />
+                <line x1="0" y1="0" x2="0" y2="150" />
+              </g>
+              <g fill="var(--nodo)">
+                <circle cx="0" cy="0" r="18" />
+                <circle cx="-220" cy="-90" r="13" />
+                <circle cx="220" cy="-90" r="13" />
+                <circle cx="-250" cy="55" r="13" />
+                <circle cx="250" cy="60" r="13" />
+                <circle cx="-120" cy="-150" r="12" />
+                <circle cx="120" cy="-150" r="12" />
+                <circle cx="0" cy="150" r="12" />
+              </g>
+              <g class="rel-texto">
+                <text x="0" y="-24" class="rel-etiqueta" data-i="0"></text>
+                <text x="-220" y="-110" class="rel-etiqueta" data-i="1"></text>
+                <text x="220" y="-110" class="rel-etiqueta" data-i="2"></text>
+                <text x="-250" y="80" class="rel-etiqueta" data-i="3"></text>
+                <text x="250" y="84" class="rel-etiqueta" data-i="4"></text>
+                <text x="-120" y="-170" class="rel-etiqueta" data-i="5"></text>
+                <text x="120" y="-170" class="rel-etiqueta" data-i="6"></text>
+                <text x="0" y="174" class="rel-etiqueta" data-i="7"></text>
+              </g>
+            </g>
+
+            <g class="episodio-icono capa-episodio-ejemplo" transform="translate(500,180) scale(1)">
+              <circle cx="-30" cy="0" r="45" fill="#fb7185" opacity="0.88"></circle>
+              <circle cx="30" cy="0" r="45" fill="#f97316" opacity="0.88"></circle>
+              <polygon points="0,-30 14,-6 4,-6 12,16 -14,-6 -4,-6" fill="#fef08a"></polygon>
+              <text x="0" y="76" fill="#f8fafc" font-size="17" text-anchor="middle" font-weight="700" class="episodio-titulo"></text>
+              <text x="0" y="98" fill="#cbd5e1" font-size="13" text-anchor="middle" class="episodio-sub"></text>
+            </g>
+          </svg>
+        </section>
+
+        <section class="controles" aria-label="Controles del ejemplo político">
+          <div class="fila-control">
+            <label>Nivel de zoom analítico</label>
+            <strong class="nivel-texto-ejemplo">1 de 3</strong>
+          </div>
+          <input class="zoom-ejemplo" type="range" min="1" max="3" step="1" value="1" />
+          <p class="leyenda leyenda-ejemplo"></p>
+        </section>
+      </article>
+
+      <article class="bloque-ejemplo" id="ejemplo-paises">
+        <h3>c) Conflicto entre países</h3>
+        <p>
+          El choque diplomático o militar es un episodio. El análisis transformador exige mirar fronteras históricas, seguridad, recursos y arquitectura internacional.
+        </p>
+        <div class="toggle-perspectiva" role="group" aria-label="Perspectiva del conflicto entre países"></div>
+
+        <section class="visor visor-ejemplo" aria-label="Visualización ejemplo entre países">
+          <div class="etiqueta-nivel etiqueta-nivel-ejemplo">Nivel 1 · Episodio</div>
+          <svg viewBox="0 0 1000 360" role="img" aria-label="Ejemplo de conflicto entre países">
+            <g class="sistema-caja sistema-ejemplo" opacity="0" transform="translate(100,35) scale(0.95)">
+              <rect x="0" y="0" width="800" height="280" rx="16" fill="var(--sistema)" stroke="var(--sistema-borde)" stroke-width="4" />
+              <text x="400" y="34" text-anchor="middle" fill="#fecaca" font-size="22" font-weight="700" class="estructura-titulo"></text>
+              <text x="400" y="58" text-anchor="middle" fill="#fca5a5" font-size="14" class="estructura-sub"></text>
+            </g>
+
+            <g class="suave capa-relacional-ejemplo" opacity="0" transform="translate(500,180) scale(0.8)">
+              <g stroke="var(--linea)" stroke-width="3" fill="none" class="red-linea">
+                <line x1="0" y1="0" x2="-220" y2="-90" />
+                <line x1="0" y1="0" x2="220" y2="-90" />
+                <line x1="0" y1="0" x2="-250" y2="55" />
+                <line x1="0" y1="0" x2="250" y2="60" />
+                <line x1="-220" y1="-90" x2="-250" y2="55" />
+                <line x1="220" y1="-90" x2="250" y2="60" />
+                <line x1="-220" y1="-90" x2="220" y2="-90" />
+                <line x1="-250" y1="55" x2="250" y2="60" />
+                <line x1="-120" y1="-150" x2="0" y2="0" />
+                <line x1="120" y1="-150" x2="0" y2="0" />
+                <line x1="0" y1="0" x2="0" y2="150" />
+              </g>
+              <g fill="var(--nodo)">
+                <circle cx="0" cy="0" r="18" />
+                <circle cx="-220" cy="-90" r="13" />
+                <circle cx="220" cy="-90" r="13" />
+                <circle cx="-250" cy="55" r="13" />
+                <circle cx="250" cy="60" r="13" />
+                <circle cx="-120" cy="-150" r="12" />
+                <circle cx="120" cy="-150" r="12" />
+                <circle cx="0" cy="150" r="12" />
+              </g>
+              <g class="rel-texto">
+                <text x="0" y="-24" class="rel-etiqueta" data-i="0"></text>
+                <text x="-220" y="-110" class="rel-etiqueta" data-i="1"></text>
+                <text x="220" y="-110" class="rel-etiqueta" data-i="2"></text>
+                <text x="-250" y="80" class="rel-etiqueta" data-i="3"></text>
+                <text x="250" y="84" class="rel-etiqueta" data-i="4"></text>
+                <text x="-120" y="-170" class="rel-etiqueta" data-i="5"></text>
+                <text x="120" y="-170" class="rel-etiqueta" data-i="6"></text>
+                <text x="0" y="174" class="rel-etiqueta" data-i="7"></text>
+              </g>
+            </g>
+
+            <g class="episodio-icono capa-episodio-ejemplo" transform="translate(500,180) scale(1)">
+              <circle cx="-30" cy="0" r="45" fill="#fb7185" opacity="0.88"></circle>
+              <circle cx="30" cy="0" r="45" fill="#f97316" opacity="0.88"></circle>
+              <polygon points="0,-30 14,-6 4,-6 12,16 -14,-6 -4,-6" fill="#fef08a"></polygon>
+              <text x="0" y="76" fill="#f8fafc" font-size="17" text-anchor="middle" font-weight="700" class="episodio-titulo"></text>
+              <text x="0" y="98" fill="#cbd5e1" font-size="13" text-anchor="middle" class="episodio-sub"></text>
+            </g>
+          </svg>
+        </section>
+
+        <section class="controles" aria-label="Controles del ejemplo entre países">
+          <div class="fila-control">
+            <label>Nivel de zoom analítico</label>
+            <strong class="nivel-texto-ejemplo">1 de 3</strong>
+          </div>
+          <input class="zoom-ejemplo" type="range" min="1" max="3" step="1" value="1" />
+          <p class="leyenda leyenda-ejemplo"></p>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const zoom = document.getElementById('zoom');
+    const nivelTexto = document.getElementById('nivelTexto');
+    const etiquetaNivel = document.getElementById('etiquetaNivel');
+    const leyenda = document.getElementById('leyenda');
+
+    const capaEpisodio = document.getElementById('capaEpisodio');
+    const capaRelacional = document.getElementById('capaRelacional');
+    const capaEstructural = document.getElementById('capaEstructural');
+
+    const configuraciones = {
+      1: {
+        etiqueta: 'Nivel 1 · Episodio',
+        textoNivel: '1 de 3',
+        leyenda: 'Nivel 1 (Episodio): observas el evento inmediato. Aquí suele concentrarse la respuesta de corto plazo.',
+        episodioTransform: 'translate(500,230) scale(1)',
+        episodioOpacity: '1',
+        relacionalTransform: 'translate(500,230) scale(0.8)',
+        relacionalOpacity: '0',
+        estructuralTransform: 'translate(80,45) scale(0.95)',
+        estructuralOpacity: '0'
+      },
+      2: {
+        etiqueta: 'Nivel 2 · Relacional',
+        textoNivel: '2 de 3',
+        leyenda: 'Nivel 2 (Relacional): el episodio se reduce y aparece la red de vínculos, memorias, identidades e instituciones que sostienen el conflicto.',
+        episodioTransform: 'translate(500,230) scale(0.45)',
+        episodioOpacity: '0.88',
+        relacionalTransform: 'translate(500,230) scale(1)',
+        relacionalOpacity: '1',
+        estructuralTransform: 'translate(80,45) scale(0.95)',
+        estructuralOpacity: '0'
+      },
+      3: {
+        etiqueta: 'Nivel 3 · Estructural',
+        textoNivel: '3 de 3',
+        leyenda: 'Nivel 3 (Estructural): la red completa queda contenida por la injusticia sistémica. Sin transformar esta base, la resolución del episodio será temporal.',
+        episodioTransform: 'translate(500,230) scale(0.22)',
+        episodioOpacity: '0.7',
+        relacionalTransform: 'translate(500,230) scale(1.07)',
+        relacionalOpacity: '1',
+        estructuralTransform: 'translate(80,45) scale(1)',
+        estructuralOpacity: '1'
+      }
+    };
+
+    function aplicarNivel(nivel) {
+      const cfg = configuraciones[nivel];
+      etiquetaNivel.textContent = cfg.etiqueta;
+      nivelTexto.textContent = cfg.textoNivel;
+      leyenda.textContent = cfg.leyenda;
+
+      capaEpisodio.setAttribute('transform', cfg.episodioTransform);
+      capaEpisodio.setAttribute('opacity', cfg.episodioOpacity);
+
+      capaRelacional.setAttribute('transform', cfg.relacionalTransform);
+      capaRelacional.setAttribute('opacity', cfg.relacionalOpacity);
+
+      capaEstructural.setAttribute('transform', cfg.estructuralTransform);
+      capaEstructural.setAttribute('opacity', cfg.estructuralOpacity);
+
+      zoom.setAttribute('aria-valuenow', String(nivel));
+    }
+
+    zoom.addEventListener('input', (evento) => {
+      aplicarNivel(Number(evento.target.value));
+    });
+
+    aplicarNivel(1);
+
+    const datosEjemplos = {
+      'ejemplo-estudiantes': {
+        partes: {
+          parte1: {
+            nombre: 'Parte 1 · Estudiante A',
+            episodioTitulo: 'Golpe en el pasillo',
+            episodioSub: '"Me atacó sin razón"',
+            relacional: [
+              'Relación dañada',
+              'Memoria de burlas',
+              'Autoridad escolar',
+              'Identidad: latino',
+              'Estigma de extranjero',
+              'Rumores en aula',
+              'Redes sociales',
+              'Presión del grupo'
+            ]
+          },
+          parte2: {
+            nombre: 'Parte 2 · Estudiante B',
+            episodioTitulo: 'Respuesta a provocación',
+            episodioSub: '"Me defendí"',
+            relacional: [
+              'Relación fracturada',
+              'Historial de exclusión',
+              'Reglas inconsistentes',
+              'Identidad: foráneo',
+              'Experiencias de racismo',
+              'Narrativa de amenaza',
+              'Apoyo de pares',
+              'Miedo a perder estatus'
+            ]
+          }
+        },
+        estructura: {
+          titulo: 'Violencia escolar normalizada',
+          sub: 'Desigualdad, discriminación y falta de mediación transformadora'
+        },
+        leyendas: {
+          1: 'Nivel 1: vemos la pelea física y buscamos sanción rápida.',
+          2: 'Nivel 2: aparecen identidades, memoria histórica, narrativas y redes de influencia.',
+          3: 'Nivel 3: emerge la estructura escolar y social que reproduce el conflicto.'
+        }
+      },
+      'ejemplo-politica': {
+        partes: {
+          parte1: {
+            nombre: 'Parte 1 · Bloque de izquierda',
+            episodioTitulo: 'Choque en el Congreso',
+            episodioSub: '"Nos bloquean reformas"',
+            relacional: [
+              'Ruptura de diálogo',
+              'Memoria de exclusión',
+              'Congreso polarizado',
+              'Identidad popular',
+              'Narrativa anti-élite',
+              'Sindicatos y barrios',
+              'Medios partidizados',
+              'Desigualdad territorial'
+            ]
+          },
+          parte2: {
+            nombre: 'Parte 2 · Bloque de derecha',
+            episodioTitulo: 'Choque en el Congreso',
+            episodioSub: '"Quieren imponer agenda"',
+            relacional: [
+              'Quiebre de confianza',
+              'Memoria de crisis fiscal',
+              'Instituciones bajo presión',
+              'Identidad liberal-conservadora',
+              'Narrativa de orden',
+              'Cámaras empresariales',
+              'Medios ideologizados',
+              'Temor a inestabilidad'
+            ]
+          }
+        },
+        estructura: {
+          titulo: 'Polarización político-institucional',
+          sub: 'Arquitectura mediática, desigualdad y reglas de competencia que escalan el conflicto'
+        },
+        leyendas: {
+          1: 'Nivel 1: el episodio se ve como debate agresivo o bloqueo legislativo.',
+          2: 'Nivel 2: emergen memorias colectivas, identidades políticas y redes de poder.',
+          3: 'Nivel 3: se observan reglas estructurales que incentivan polarización sostenida.'
+        }
+      },
+      'ejemplo-paises': {
+        partes: {
+          parte1: {
+            nombre: 'Parte 1 · País A',
+            episodioTitulo: 'Incidente fronterizo',
+            episodioSub: '"Violaron nuestra soberanía"',
+            relacional: [
+              'Canales rotos',
+              'Memoria de guerra',
+              'Doctrina de seguridad',
+              'Identidad nacional',
+              'Narrativa de defensa',
+              'Alianzas regionales',
+              'Competencia por recursos',
+              'Presión de opinión pública'
+            ]
+          },
+          parte2: {
+            nombre: 'Parte 2 · País B',
+            episodioTitulo: 'Incidente fronterizo',
+            episodioSub: '"Fue provocación previa"',
+            relacional: [
+              'Diálogo militar mínimo',
+              'Memoria de sanciones',
+              'Instituciones débiles',
+              'Identidad postcolonial',
+              'Narrativa de agravio',
+              'Dependencia estratégica',
+              'Corredores energéticos',
+              'Temor al aislamiento'
+            ]
+          }
+        },
+        estructura: {
+          titulo: 'Inseguridad regional sistémica',
+          sub: 'Fronteras disputadas, asimetrías de poder y gobernanza internacional frágil'
+        },
+        leyendas: {
+          1: 'Nivel 1: se reacciona al incidente inmediato y a la escalada visible.',
+          2: 'Nivel 2: se entiende la red relacional de historia, seguridad y narrativas nacionales.',
+          3: 'Nivel 3: aparece la estructura internacional que mantiene el conflicto latente.'
+        }
+      }
+    };
+
+    function inicializarEjemplo(idEjemplo) {
+      const bloque = document.getElementById(idEjemplo);
+      const datos = datosEjemplos[idEjemplo];
+      const toggle = bloque.querySelector('.toggle-perspectiva');
+      const etiquetaNivelEj = bloque.querySelector('.etiqueta-nivel-ejemplo');
+      const nivelTextoEj = bloque.querySelector('.nivel-texto-ejemplo');
+      const leyendaEj = bloque.querySelector('.leyenda-ejemplo');
+      const zoomEj = bloque.querySelector('.zoom-ejemplo');
+
+      const capaEpisodioEj = bloque.querySelector('.capa-episodio-ejemplo');
+      const capaRelacionalEj = bloque.querySelector('.capa-relacional-ejemplo');
+      const capaEstructuralEj = bloque.querySelector('.sistema-ejemplo');
+
+      const episodioTitulo = bloque.querySelector('.episodio-titulo');
+      const episodioSub = bloque.querySelector('.episodio-sub');
+      const relEtiquetas = [...bloque.querySelectorAll('.rel-etiqueta')];
+      const estructuraTitulo = bloque.querySelector('.estructura-titulo');
+      const estructuraSub = bloque.querySelector('.estructura-sub');
+
+      let parteActiva = 'parte1';
+
+      const botonParte1 = document.createElement('button');
+      botonParte1.type = 'button';
+      botonParte1.className = 'boton-parte';
+      botonParte1.dataset.parte = 'parte1';
+      botonParte1.textContent = datos.partes.parte1.nombre;
+
+      const botonParte2 = document.createElement('button');
+      botonParte2.type = 'button';
+      botonParte2.className = 'boton-parte';
+      botonParte2.dataset.parte = 'parte2';
+      botonParte2.textContent = datos.partes.parte2.nombre;
+
+      toggle.appendChild(botonParte1);
+      toggle.appendChild(botonParte2);
+
+      function aplicarEjemplo() {
+        const nivel = Number(zoomEj.value);
+        const perspectiva = datos.partes[parteActiva];
+
+        episodioTitulo.textContent = perspectiva.episodioTitulo;
+        episodioSub.textContent = perspectiva.episodioSub;
+        relEtiquetas.forEach((nodoTexto, i) => {
+          nodoTexto.textContent = perspectiva.relacional[i] || '';
+        });
+        estructuraTitulo.textContent = datos.estructura.titulo;
+        estructuraSub.textContent = datos.estructura.sub;
+
+        if (nivel === 1) {
+          etiquetaNivelEj.textContent = 'Nivel 1 · Episodio';
+          nivelTextoEj.textContent = '1 de 3';
+          capaEpisodioEj.setAttribute('transform', 'translate(500,180) scale(1)');
+          capaEpisodioEj.setAttribute('opacity', '1');
+          capaRelacionalEj.setAttribute('transform', 'translate(500,180) scale(0.8)');
+          capaRelacionalEj.setAttribute('opacity', '0');
+          capaEstructuralEj.setAttribute('transform', 'translate(100,35) scale(0.95)');
+          capaEstructuralEj.setAttribute('opacity', '0');
+        }
+
+        if (nivel === 2) {
+          etiquetaNivelEj.textContent = 'Nivel 2 · Relacional';
+          nivelTextoEj.textContent = '2 de 3';
+          capaEpisodioEj.setAttribute('transform', 'translate(500,180) scale(0.48)');
+          capaEpisodioEj.setAttribute('opacity', '0.9');
+          capaRelacionalEj.setAttribute('transform', 'translate(500,180) scale(1)');
+          capaRelacionalEj.setAttribute('opacity', '1');
+          capaEstructuralEj.setAttribute('transform', 'translate(100,35) scale(0.95)');
+          capaEstructuralEj.setAttribute('opacity', '0');
+        }
+
+        if (nivel === 3) {
+          etiquetaNivelEj.textContent = 'Nivel 3 · Estructural';
+          nivelTextoEj.textContent = '3 de 3';
+          capaEpisodioEj.setAttribute('transform', 'translate(500,180) scale(0.22)');
+          capaEpisodioEj.setAttribute('opacity', '0.7');
+          capaRelacionalEj.setAttribute('transform', 'translate(500,180) scale(1.05)');
+          capaRelacionalEj.setAttribute('opacity', '1');
+          capaEstructuralEj.setAttribute('transform', 'translate(100,35) scale(1)');
+          capaEstructuralEj.setAttribute('opacity', '1');
+        }
+
+        leyendaEj.textContent = datos.leyendas[nivel];
+
+        [botonParte1, botonParte2].forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn.dataset.parte === parteActiva));
+        });
+      }
+
+      toggle.addEventListener('click', (evento) => {
+        const boton = evento.target.closest('.boton-parte');
+        if (!boton) {
+          return;
+        }
+        parteActiva = boton.dataset.parte;
+        aplicarEjemplo();
+      });
+
+      zoomEj.addEventListener('input', aplicarEjemplo);
+
+      aplicarEjemplo();
+    }
+
+    inicializarEjemplo('ejemplo-estudiantes');
+    inicializarEjemplo('ejemplo-politica');
+    inicializarEjemplo('ejemplo-paises');
+  </script>
+</body>
+</html>

@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día 1 · Actividad 7 · El Mediador Sistémico</title>
+  <style>
+    :root {
+      --bg: #0f121a;
+      --panel: #161b27;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --line-neutral: #6b7280;
+      --line-tension: #f43f5e;
+      --line-trust: #22c55e;
+      --accent: #38bdf8;
+      --warn: #facc15;
+      --trans: 0.3s;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px) 0 0 / 30px 30px,
+        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px) 0 0 / 30px 30px,
+        radial-gradient(circle at top, #1e293b 0%, var(--bg) 55%);
+      padding: 14px;
+    }
+
+    .app {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+      background: linear-gradient(165deg, rgba(22, 27, 39, 0.95), rgba(10, 15, 24, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 16px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+      padding: 12px;
+    }
+
+    h1 { margin: 0; font-size: clamp(1.2rem, 0.95rem + 1.2vw, 1.9rem); }
+    .sub { margin: 0; color: #cbd5e1; line-height: 1.42; font-size: 0.95rem; }
+
+    /* ── Termómetro ──────────────────────────────────── */
+    .termometro {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.75);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .termometro-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+    }
+
+    .clima-etiqueta { color: #e2e8f0; }
+
+    .barra {
+      position: relative;
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      background: rgba(51, 65, 85, 0.5);
+    }
+
+    .barra-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      background: linear-gradient(90deg, #f43f5e, #f59e0b, #22c55e);
+      transition: width var(--trans);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    /* ── Contador de movimientos ─────────────────────── */
+    .contador {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .fichas {
+      display: flex;
+      gap: 6px;
+    }
+
+    .ficha {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #38bdf8;
+      background: #38bdf8;
+      transition: background var(--trans), border-color var(--trans), opacity var(--trans);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+    }
+
+    .ficha.usada {
+      background: transparent;
+      border-color: rgba(148, 163, 184, 0.35);
+      box-shadow: none;
+      opacity: 0.45;
+    }
+
+    /* ── Layout ──────────────────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .panel {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.78);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .panel h2 { margin: 0; font-size: 1rem; }
+
+    /* ── SVG ─────────────────────────────────────────── */
+    .grafo-wrap {
+      border: 1px solid rgba(56, 189, 248, 0.24);
+      border-radius: 10px;
+      overflow: hidden;
+      background: radial-gradient(circle at center, rgba(30, 41, 59, 0.35), rgba(2, 6, 23, 0.95));
+    }
+
+    svg {
+      width: 100%;
+      height: 420px;
+      display: block;
+    }
+
+    .link {
+      fill: none;
+      stroke-width: 4;
+      transition: stroke var(--trans), opacity var(--trans), filter var(--trans);
+      stroke-linecap: round;
+    }
+
+    .link.neutral {
+      stroke: var(--line-neutral);
+      opacity: 0.9;
+    }
+
+    .link.tension {
+      stroke: var(--line-tension);
+      stroke-dasharray: 10 8;
+      animation: dashMove 1.1s linear infinite;
+      filter: drop-shadow(0 0 5px rgba(244, 63, 94, 0.85));
+    }
+
+    .link.confianza {
+      stroke: var(--line-trust);
+      filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.85));
+    }
+
+    .nodo { cursor: pointer; }
+    .nodo circle {
+      fill: #0f172a;
+      stroke: #93c5fd;
+      stroke-width: 2.4;
+      transition: stroke var(--trans), fill var(--trans), filter var(--trans), transform var(--trans);
+      transform-box: fill-box;
+      transform-origin: center;
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.55));
+    }
+
+    .nodo.activo circle {
+      stroke: #38bdf8;
+      fill: #0f2855;
+      filter: drop-shadow(0 0 16px rgba(56, 189, 248, 1));
+      transform: scale(1.06);
+    }
+
+    .nodo:hover circle {
+      stroke: #38bdf8;
+      fill: #13213d;
+      filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9));
+      transform: scale(1.04);
+    }
+
+    .nodo text {
+      fill: #f8fafc;
+      text-anchor: middle;
+      font-size: 13px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .nodo.activo text {
+      fill: #7dd3fc;
+    }
+
+    .pulse-rojo circle { animation: pulseRed 0.9s ease-in-out 2; }
+    .pulse-verde circle { animation: pulseGreen 0.9s ease-in-out 2; }
+    .pulse-amarillo circle { animation: pulseYellow 0.9s ease-in-out 2; }
+
+    /* ── Panel derecho ───────────────────────────────── */
+    .rol-header {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(99, 102, 241, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      color: #7dd3fc;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .instruccion-inicial {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      border: 1px dashed rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      margin: 0;
+    }
+
+    /* ── Nombre del nodo seleccionado ────────────────── */
+    .nodo-seleccionado-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nodo-seleccionado-nombre {
+      font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem);
+      font-weight: 800;
+      color: #38bdf8;
+      margin: 0;
+      line-height: 1.15;
+      text-shadow: 0 0 18px rgba(56, 189, 248, 0.55);
+      letter-spacing: -0.01em;
+    }
+
+    .nodo-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #0f172a;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      border-radius: 6px;
+      padding: 3px 8px;
+      white-space: nowrap;
+    }
+
+    /* ── Descripción del nodo ────────────────────────── */
+    .nodo-desc {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      border-left: 3px solid rgba(56, 189, 248, 0.45);
+      padding-left: 10px;
+    }
+
+    /* ── Impactos sistémicos ─────────────────────────── */
+    .impactos-titulo {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin: 0 0 4px;
+    }
+
+    .impactos {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 5px;
+    }
+
+    .impactos li {
+      display: flex;
+      gap: 7px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .impactos li::before {
+      content: "◆";
+      color: #38bdf8;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* ── Botones de acción ───────────────────────────── */
+    .acciones-titulo {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin: 2px 0 0;
+    }
+
+    .acciones {
+      display: grid;
+      gap: 7px;
+    }
+
+    .btn {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #f8fafc;
+      font-size: 0.85rem;
+      padding: 8px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: transform var(--trans), border-color var(--trans), background var(--trans), box-shadow var(--trans);
+      line-height: 1.3;
+    }
+
+    .btn:hover:not(:disabled),
+    .btn:focus-visible:not(:disabled) {
+      transform: scale(1.02);
+      outline: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
+    .btn.constructivo {
+      border-color: rgba(34, 197, 94, 0.55);
+      background: rgba(21, 128, 61, 0.18);
+    }
+
+    .btn.constructivo:hover:not(:disabled) {
+      border-color: rgba(34, 197, 94, 0.88);
+      background: rgba(21, 128, 61, 0.3);
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.25);
+    }
+
+    .btn.riesgo {
+      border-color: rgba(244, 63, 94, 0.55);
+      background: rgba(190, 24, 93, 0.16);
+    }
+
+    .btn.riesgo:hover:not(:disabled) {
+      border-color: rgba(244, 63, 94, 0.88);
+      background: rgba(190, 24, 93, 0.28);
+      box-shadow: 0 0 12px rgba(244, 63, 94, 0.25);
+    }
+
+    .btn.neutro {
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .btn.neutro:hover:not(:disabled) {
+      border-color: rgba(56, 189, 248, 0.7);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+
+    /* ── Feedback ────────────────────────────────────── */
+    .feedback-box {
+      margin: 0;
+      line-height: 1.5;
+      font-size: 0.87rem;
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 10px 12px;
+      min-height: 2.8em;
+    }
+
+    .feedback-box em {
+      color: #7dd3fc;
+      font-style: normal;
+    }
+
+    /* ── Panel de fin ─────────────────────────────────── */
+    .panel-fin {
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      display: grid;
+      gap: 8px;
+    }
+
+    .panel-fin.victoria {
+      border: 1px solid rgba(34, 197, 94, 0.55);
+      background: rgba(21, 128, 61, 0.15);
+    }
+
+    .panel-fin.derrota {
+      border: 1px solid rgba(244, 63, 94, 0.55);
+      background: rgba(190, 24, 93, 0.12);
+    }
+
+    .fin-icono { font-size: 2.2rem; line-height: 1; }
+
+    .fin-titulo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .panel-fin.victoria .fin-titulo { color: #4ade80; }
+    .panel-fin.derrota .fin-titulo  { color: #fb7185; }
+
+    .fin-desc {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ── Modal ───────────────────────────────────────── */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(2, 6, 23, 0.76);
+      padding: 12px;
+      z-index: 30;
+    }
+
+    .modal.activo { display: grid; }
+
+    .modal-box {
+      width: min(560px, 100%);
+      border-radius: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      background: #0f172a;
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .modal-box h3,
+    .modal-box p { margin: 0; line-height: 1.4; }
+    .modal-box p { color: #cbd5e1; }
+
+    /* ── Leyenda ─────────────────────────────────────── */
+    .leyenda {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .ley-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ley-linea {
+      width: 24px;
+      height: 4px;
+      border-radius: 2px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    @keyframes dashMove { to { stroke-dashoffset: -36; } }
+
+    @keyframes pulseRed {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.35)); }
+      50% { filter: drop-shadow(0 0 18px rgba(244, 63, 94, 0.95)); }
+    }
+
+    @keyframes pulseGreen {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.35)); }
+      50% { filter: drop-shadow(0 0 18px rgba(34, 197, 94, 0.95)); }
+    }
+
+    @keyframes pulseYellow {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.35)); }
+      50% { filter: drop-shadow(0 0 18px rgba(250, 204, 21, 0.95)); }
+    }
+
+    @keyframes waveFlow {
+      0% { stroke-dashoffset: 0; opacity: 0.2; }
+      15% { opacity: 1; }
+      100% { stroke-dashoffset: -180; opacity: 0; }
+    }
+
+    @media (min-width: 980px) {
+      .layout { grid-template-columns: 1.3fr 0.7fr; }
+      svg { height: 480px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>El Mediador Sistémico</h1>
+      <p class="sub">Tienes <strong>5 intervenciones</strong>. Selecciona un nodo, lee el contexto y elige tu acción. Objetivo: llevar el <em>Clima Universitario</em> a <strong>Armonía Sostenible (≥ 75%)</strong>.</p>
+    </header>
+
+    <section class="termometro" aria-label="Termómetro de clima universitario">
+      <div class="termometro-head">
+        <strong>Termómetro de Clima Universitario</strong>
+        <span class="clima-etiqueta" id="climaLabel">40% · Alta Tensión</span>
+      </div>
+      <div class="barra" aria-hidden="true"><div id="climaFill" class="barra-fill" style="width:40%"></div></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div class="contador">
+          <span>Intervenciones restantes:</span>
+          <div class="fichas" id="fichas" aria-label="Fichas de intervenciones disponibles"></div>
+        </div>
+        <div class="top-actions">
+          <button id="btnTeoria" class="btn neutro" type="button">Ver teoría sistémica</button>
+          <button id="btnReset" class="btn neutro" type="button">Reiniciar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Red de Relaciones — Universidad del Campus Central</h2>
+        <div class="leyenda">
+          <span class="ley-item"><span class="ley-linea" style="background:#22c55e;height:4px;display:inline-block;width:24px;border-radius:2px;"></span> Confianza</span>
+          <span class="ley-item"><span class="ley-linea" style="background:#6b7280;height:4px;display:inline-block;width:24px;border-radius:2px;"></span> Neutral</span>
+          <span class="ley-item"><span class="ley-linea" style="background:#f43f5e;height:4px;display:inline-block;width:24px;border-radius:2px;"></span> Tensión</span>
+        </div>
+        <div class="grafo-wrap">
+          <svg viewBox="0 0 860 480" role="img" aria-label="Red sistémica universitaria interactiva">
+            <g id="linksLayer"></g>
+            <g id="waveLayer"></g>
+            <g id="nodesLayer"></g>
+          </svg>
+        </div>
+      </article>
+
+      <aside class="panel" id="panelDerecho">
+        <div class="rol-header">🔵 Rol: Mediador/a Externo/a</div>
+
+        <div id="estadoInicial">
+          <p class="instruccion-inicial">Haz clic sobre un nodo del grafo para ver la descripción del actor, sus posibles impactos sistémicos y las acciones de mediación disponibles.</p>
+        </div>
+
+        <div id="infoNodo" hidden>
+          <div class="nodo-seleccionado-wrap">
+            <h2 class="nodo-seleccionado-nombre" id="nodoNombre">—</h2>
+            <span class="nodo-badge" id="nodoBadge">Actor</span>
+          </div>
+          <p class="nodo-desc" id="nodoDesc"></p>
+          <p class="impactos-titulo">Posibles impactos sistémicos si intervienes aquí:</p>
+          <ul class="impactos" id="nodoImpactos"></ul>
+          <p class="acciones-titulo">Elige una acción de mediación:</p>
+          <div class="acciones" id="accionesContainer"></div>
+        </div>
+
+        <p class="feedback-box" id="feedbackBox" hidden></p>
+        <div class="panel-fin" id="panelFin" hidden></div>
+      </aside>
+    </section>
+  </main>
+
+  <section class="modal" id="modalTeoria" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tituloTeoria">
+    <article class="modal-box">
+      <h3 id="tituloTeoria">Enfoque Sistémico de Lederach</h3>
+      <p>El sistema de un conflicto es una <strong>red de relaciones</strong>. Intervenir en un punto genera ondas que afectan nodos distantes — es el <em>efecto cascada</em>.</p>
+      <p>La mediación sistémica no busca "resolver" una sola relación, sino <strong>mejorar el clima general</strong> del sistema con la menor cantidad de intervenciones y el menor riesgo posible.</p>
+      <p>La legitimidad del mediador/a depende de actuar desde la escucha, la imparcialidad y la consciencia del efecto no lineal de cada decisión.</p>
+      <button id="cerrarTeoria" class="btn neutro" type="button">Cerrar</button>
+    </article>
+  </section>
+
+  <script>
+    /* ══════════════════════════════════════════════════
+      DATA: nodos, links, descripciones, acciones
+    ══════════════════════════════════════════════════ */
+
+    const nodes = {
+      estudiantes: { id:"estudiantes", label:"Estudiantes",    x:215, y:120, badge:"Movimiento"  },
+      decanatura:  { id:"decanatura",  label:"Decanatura",      x:645, y:120, badge:"Institución" },
+      seguridad:   { id:"seguridad",   label:"Seguridad",       x:215, y:390, badge:"Operativo"   },
+      profesores:  { id:"profesores",  label:"Profesores",      x:430, y:255, badge:"Puente"      },
+      servicios:   { id:"servicios",   label:"Servicios Gen.",  x:645, y:390, badge:"Soporte"     }
+    };
+
+    const initialLinks = [
+      { key:"estudiantes-profesores", a:"estudiantes", b:"profesores", status:"neutral"   },
+      { key:"decanatura-estudiantes", a:"decanatura",  b:"estudiantes",status:"tension"   },
+      { key:"decanatura-profesores",  a:"decanatura",  b:"profesores", status:"neutral"   },
+      { key:"seguridad-estudiantes",  a:"seguridad",   b:"estudiantes",status:"tension"   },
+      { key:"servicios-estudiantes",  a:"servicios",   b:"estudiantes",status:"confianza" }
+    ];
+
+    const nodeInfo = {
+      estudiantes: {
+        desc: "El movimiento estudiantil es el epicentro del conflicto. Sus demandas por horarios flexibles y criterios de evaluación generaron tensión con Decanatura y roces con Seguridad. Tienen alta capacidad de movilización y pueden ser el primer paso o el mayor obstáculo.",
+        impactos: [
+          "Una asamblea facilitada puede alinear a Estudiantes y Profesores, reduciendo la presión política hacia Decanatura.",
+          "Solicitar una reunión institucional desescala el conflicto directo y alivia la tensión con Seguridad.",
+          "Escalar la protesta genera cascada negativa: Seguridad endurece el control → ambiente tóxico → Decanatura cierra posiciones."
+        ]
+      },
+      decanatura: {
+        desc: "La Decanatura es el nudo institucional más influyente: sus decisiones tienen efecto dominó sobre la confianza de Profesores, la disposición de Estudiantes y la legitimidad del sistema. Es también la fuente del conflicto por falta histórica de escucha.",
+        impactos: [
+          "Una mesa de diálogo reconoce el conflicto y activa simultáneamente la confianza del claustro docente.",
+          "Un comunicado de escucha activa tiene alto impacto simbólico y refuerza la alianza con Profesores y Servicios.",
+          "Un decreto sin consulta 'quema' simultáneamente la relación con Estudiantes y Profesores: el efecto cascada es inmediato."
+        ]
+      },
+      seguridad: {
+        desc: "Seguridad no es protagonista del conflicto académico, pero actúa como termómetro del ambiente físico del campus. Su relación de tensión con Estudiantes amplifica o absorbe el conflicto dependiendo de la intervención elegida.",
+        impactos: [
+          "Un protocolo de desescalada libera la presión física y mejora la disposición de Estudiantes hacia el diálogo.",
+          "Un acercamiento proactivo puede transformar a Seguridad en aliado estratégico y desbloquear el canal académico.",
+          "Reforzar el control restrictivo escala la tensión y erosiona el único vínculo estable con Servicios Generales."
+        ]
+      },
+      profesores: {
+        desc: "Los Profesores son el eslabón de mediación más subutilizado: conectan al Estudiantado con la Decanatura y pueden actuar como puente legítimo. Su posición neutral actual es frágil y puede inclinarse hacia cualquier lado con facilidad.",
+        impactos: [
+          "Un comité mixto de evaluación construye confianza con Estudiantes y legitima a los docentes ante la Decanatura.",
+          "Actuar como puente mediador puede resolver la tensión central sin confrontación directa.",
+          "Un paro no coordinado rompe la coalición con Decanatura y puede generar tensión cruzada con el Estudiantado."
+        ]
+      },
+      servicios: {
+        desc: "Servicios Generales es el actor más invisible del sistema, pero su relación de confianza con Estudiantes es un recurso estratégico. Actúa como canal informal de información y puede usarse como ancla estabilizadora o ignorarse a riesgo del sistema.",
+        impactos: [
+          "Activar su red informal puede reducir silenciosamente la tensión con Seguridad desde las bases del campus.",
+          "Una mediación transversal puede mejorar la relación Profesores–Decanatura sin que ninguno lo inicie.",
+          "Ignorar sus demandas erosiona el único vínculo de confianza estable con Estudiantes y desata frustración sistémica."
+        ]
+      }
+    };
+
+    const nodeAcciones = {
+      estudiantes: [
+        {
+          key:"asamblea", tipo:"constructivo",
+          label:"📣 Convocar asamblea estudiantil facilitada",
+          feedbackImm:"La asamblea abre un canal horizontal de diálogo con los Profesores, construyendo una agenda académica común.",
+          feedbackCas:"↪ Cascada: El bloque académico unido reduce la presión política hacia la Decanatura.",
+          immediate:[{a:"estudiantes",b:"profesores",status:"confianza"}],
+          cascade:  [{a:"decanatura", b:"estudiantes",status:"neutral"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["estudiantes","profesores"],tipo:"verde"},
+          pulseCas:{ids:["decanatura","estudiantes"],tipo:"verde"}
+        },
+        {
+          key:"solicitud_reunion", tipo:"constructivo",
+          label:"🤝 Solicitar reunión con Decanatura",
+          feedbackImm:"Los Estudiantes toman la iniciativa: el gesto de acercamiento reduce la confrontación directa con la institución.",
+          feedbackCas:"↪ Cascada: El ambiente menos confrontacional permite que Seguridad relaje su postura restrictiva.",
+          immediate:[{a:"decanatura", b:"estudiantes",status:"neutral"}],
+          cascade:  [{a:"seguridad",  b:"estudiantes",status:"neutral"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["estudiantes","decanatura"],tipo:"verde"},
+          pulseCas:{ids:["seguridad","estudiantes"],tipo:"verde"}
+        },
+        {
+          key:"escalar", tipo:"riesgo",
+          label:"⚠️ Escalar la protesta (arriesgado)",
+          feedbackImm:"La protesta aumenta visibilidad pero polariza las posiciones y activa el control de Seguridad.",
+          feedbackCas:"↪ Cascada: La escalada física desborda el campus y endurece la posición de la Decanatura.",
+          immediate:[{a:"seguridad",  b:"estudiantes",status:"tension"}],
+          cascade:  [{a:"decanatura", b:"estudiantes",status:"tension"}],
+          ondaImm:"#f43f5e", ondaCas:"#f43f5e",
+          pulseImm:{ids:["seguridad","estudiantes"],tipo:"rojo"},
+          pulseCas:{ids:["decanatura","estudiantes"],tipo:"rojo"}
+        }
+      ],
+      decanatura: [
+        {
+          key:"mesa_dialogo", tipo:"constructivo",
+          label:"🏛️ Convocar mesa de diálogo abierta",
+          feedbackImm:"La Decanatura legitima el conflicto formalmente, rompiendo el bloqueo institucional histórico.",
+          feedbackCas:"↪ Cascada: El gesto de apertura institucional activa la confianza del claustro docente.",
+          immediate:[{a:"decanatura", b:"estudiantes",status:"confianza"}],
+          cascade:  [{a:"decanatura", b:"profesores", status:"confianza"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["decanatura","estudiantes"],tipo:"verde"},
+          pulseCas:{ids:["decanatura","profesores"], tipo:"verde"}
+        },
+        {
+          key:"comunicado", tipo:"constructivo",
+          label:"📄 Emitir comunicado de escucha activa",
+          feedbackImm:"Un comunicado público de escucha cambia el tono institucional y mejora la atmósfera con el claustro.",
+          feedbackCas:"↪ Cascada: La señal simbólica de apertura llega a Servicios y refuerza la estabilidad informal.",
+          immediate:[{a:"decanatura", b:"profesores", status:"confianza"}],
+          cascade:  [{a:"servicios",  b:"estudiantes",status:"confianza"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["decanatura","profesores"], tipo:"verde"},
+          pulseCas:{ids:["servicios","estudiantes"], tipo:"verde"}
+        },
+        {
+          key:"decreto", tipo:"riesgo",
+          label:"⚠️ Imponer decreto administrativo (arriesgado)",
+          feedbackImm:"Una resolución no consultada activa la percepción de poder unilateral y rompe la confianza estudiantil.",
+          feedbackCas:"↪ Cascada: Los Profesores, excluidos del proceso, quiebran la alianza institucional.",
+          immediate:[{a:"decanatura", b:"estudiantes",status:"tension"}],
+          cascade:  [{a:"decanatura", b:"profesores", status:"tension"}],
+          ondaImm:"#f43f5e", ondaCas:"#f43f5e",
+          pulseImm:{ids:["decanatura","estudiantes"],tipo:"rojo"},
+          pulseCas:{ids:["decanatura","profesores"], tipo:"rojo"}
+        }
+      ],
+      seguridad: [
+        {
+          key:"desescalada", tipo:"constructivo",
+          label:"🛑 Aplicar protocolo de desescalada",
+          feedbackImm:"Los protocolos de desescalada cambian la dinámica física del campus: Seguridad deja de ser percibida como amenaza.",
+          feedbackCas:"↪ Cascada: Un campus más calmado mejora la disposición de Estudiantes hacia el diálogo con Decanatura.",
+          immediate:[{a:"seguridad",  b:"estudiantes",status:"neutral"}],
+          cascade:  [{a:"decanatura", b:"estudiantes",status:"neutral"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["seguridad","estudiantes"], tipo:"verde"},
+          pulseCas:{ids:["decanatura","estudiantes"],tipo:"verde"}
+        },
+        {
+          key:"acercamiento", tipo:"constructivo",
+          label:"🤜 Facilitar acercamiento directo con Estudiantes",
+          feedbackImm:"Seguridad se acerca proactivamente: la relación de control se transforma en acompañamiento. Alto impacto.",
+          feedbackCas:"↪ Cascada: La distensión física abre espacio para que Profesores actúen como puente académico.",
+          immediate:[{a:"seguridad",  b:"estudiantes",status:"confianza"}],
+          cascade:  [{a:"estudiantes",b:"profesores",status:"confianza"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["seguridad","estudiantes"], tipo:"verde"},
+          pulseCas:{ids:["estudiantes","profesores"],tipo:"verde"}
+        },
+        {
+          key:"refuerzo", tipo:"riesgo",
+          label:"⚠️ Reforzar presencia restrictiva (arriesgado)",
+          feedbackImm:"Mayor restricción exacerba la confrontación estudiantil y radicaliza las posiciones en el campus.",
+          feedbackCas:"↪ Cascada: El clima represivo erosiona la confianza de Servicios Generales con los Estudiantes.",
+          immediate:[{a:"seguridad", b:"estudiantes",status:"tension"}],
+          cascade:  [{a:"servicios", b:"estudiantes",status:"neutral"}],
+          ondaImm:"#f43f5e", ondaCas:"#facc15",
+          pulseImm:{ids:["seguridad","estudiantes"], tipo:"rojo"    },
+          pulseCas:{ids:["servicios","estudiantes"], tipo:"amarillo"}
+        }
+      ],
+      profesores: [
+        {
+          key:"comite_mixto", tipo:"constructivo",
+          label:"📚 Proponer comité mixto de evaluación",
+          feedbackImm:"El comité mixto construye confianza académica directa con los Estudiantes sobre el eje del conflicto.",
+          feedbackCas:"↪ Cascada: La iniciativa docente legitima el proceso y refuerza la relación con la Decanatura.",
+          immediate:[{a:"estudiantes",b:"profesores", status:"confianza"}],
+          cascade:  [{a:"decanatura", b:"profesores", status:"confianza"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["profesores","estudiantes"],tipo:"verde"},
+          pulseCas:{ids:["profesores","decanatura"], tipo:"verde"}
+        },
+        {
+          key:"puente_mediador", tipo:"constructivo",
+          label:"🌉 Actuar como puente mediador institucional",
+          feedbackImm:"Los Profesores interceden formalmente ante la Decanatura aprovechando su posición neutral como puente legítimo.",
+          feedbackCas:"↪ Cascada: La mediación docente transforma la relación entre Estudiantes y Decanatura.",
+          immediate:[{a:"decanatura", b:"profesores", status:"confianza"}],
+          cascade:  [{a:"decanatura", b:"estudiantes",status:"neutral"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["profesores","decanatura"], tipo:"verde"},
+          pulseCas:{ids:["decanatura","estudiantes"],tipo:"verde"}
+        },
+        {
+          key:"paro", tipo:"riesgo",
+          label:"⚠️ Declarar paro académico (arriesgado)",
+          feedbackImm:"Un paro no coordinado expone la fractura institucional y rompe la alianza con Decanatura.",
+          feedbackCas:"↪ Cascada: El Estudiantado, sin canal académico activo, radicaliza su posición.",
+          immediate:[{a:"decanatura", b:"profesores", status:"tension"}],
+          cascade:  [{a:"estudiantes",b:"profesores", status:"tension"}],
+          ondaImm:"#f43f5e", ondaCas:"#f43f5e",
+          pulseImm:{ids:["profesores","decanatura"], tipo:"rojo"},
+          pulseCas:{ids:["estudiantes","profesores"],tipo:"rojo"}
+        }
+      ],
+      servicios: [
+        {
+          key:"red_informal", tipo:"constructivo",
+          label:"📡 Activar red informal de comunicación",
+          feedbackImm:"Servicios activa sus canales de confianza informal, reduciendo la presión cotidiana en el campus.",
+          feedbackCas:"↪ Cascada: La red informal incide en la dinámica de Seguridad, suavizando su relación con Estudiantes.",
+          immediate:[{a:"servicios",  b:"estudiantes",status:"confianza"}],
+          cascade:  [{a:"seguridad",  b:"estudiantes",status:"neutral"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["servicios","estudiantes"], tipo:"verde"},
+          pulseCas:{ids:["seguridad","estudiantes"],  tipo:"verde"}
+        },
+        {
+          key:"mediacion_transversal", tipo:"constructivo",
+          label:"🔗 Proponer mediación transversal discreta",
+          feedbackImm:"Servicios ofrece su espacio cotidiano como lugar de encuentro informal sin levantar barreras institucionales.",
+          feedbackCas:"↪ Cascada: La intervención transversal mejora silenciosamente la relación Profesores–Decanatura.",
+          immediate:[{a:"servicios",  b:"estudiantes",status:"confianza"}],
+          cascade:  [{a:"decanatura", b:"profesores", status:"neutral"}],
+          ondaImm:"#22c55e", ondaCas:"#22c55e",
+          pulseImm:{ids:["servicios","estudiantes"], tipo:"verde"},
+          pulseCas:{ids:["decanatura","profesores"],  tipo:"verde"}
+        },
+        {
+          key:"aislamiento", tipo:"riesgo",
+          label:"⚠️ Invisibilizar sus demandas (arriesgado)",
+          feedbackImm:"Ignorar a Servicios erosiona el único vínculo de confianza estable con los Estudiantes.",
+          feedbackCas:"↪ Cascada: La frustración sistémica en la base del campus escala el conflicto con la Decanatura.",
+          immediate:[{a:"servicios",  b:"estudiantes",status:"neutral"}],
+          cascade:  [{a:"decanatura", b:"estudiantes",status:"tension"}],
+          ondaImm:"#facc15", ondaCas:"#f43f5e",
+          pulseImm:{ids:["servicios","estudiantes"], tipo:"amarillo"},
+          pulseCas:{ids:["decanatura","estudiantes"],tipo:"rojo"    }
+        }
+      ]
+    };
+
+    /* ══════════════════════════════════════════════════
+      ENGINE
+    ══════════════════════════════════════════════════ */
+    const linksMap = new Map();
+    const linkEls  = new Map();
+    const nodeEls  = new Map();
+
+    const linksLayer = document.getElementById("linksLayer");
+    const waveLayer  = document.getElementById("waveLayer");
+    const nodesLayer = document.getElementById("nodesLayer");
+    const climaFill  = document.getElementById("climaFill");
+    const climaLabel = document.getElementById("climaLabel");
+    const fichasEl   = document.getElementById("fichas");
+
+    const estadoInicial     = document.getElementById("estadoInicial");
+    const infoNodo          = document.getElementById("infoNodo");
+    const nodoNombre        = document.getElementById("nodoNombre");
+    const nodoBadge         = document.getElementById("nodoBadge");
+    const nodoDesc          = document.getElementById("nodoDesc");
+    const nodoImpactos      = document.getElementById("nodoImpactos");
+    const accionesContainer = document.getElementById("accionesContainer");
+    const feedbackBox       = document.getElementById("feedbackBox");
+    const panelFin          = document.getElementById("panelFin");
+
+    const modal        = document.getElementById("modalTeoria");
+    const btnTeoria    = document.getElementById("btnTeoria");
+    const cerrarTeoria = document.getElementById("cerrarTeoria");
+    const btnReset     = document.getElementById("btnReset");
+
+    const MAX_MOVES = 5;
+    let movesLeft   = MAX_MOVES;
+    let selectedNode = null;
+    let gameOver    = false;
+    let cascading   = false;
+
+    /* ── Utilidades ──────────────────────────────────── */
+    function lkey(a, b) { return [a, b].sort().join("-"); }
+
+    function statusScore(s) {
+      if (s === "confianza") return 100;
+      if (s === "neutral")   return 50;
+      return 0;
+    }
+
+    function climaTexto(p) {
+      if (p < 25) return "⛔ Crisis Total";
+      if (p < 45) return "🔴 Alta Tensión";
+      if (p < 60) return "🟡 Sistema inestable";
+      if (p < 75) return "🟢 Transición positiva";
+      return "✅ Armonía Sostenible";
+    }
+
+    function updateClima() {
+      const vals = Array.from(linksMap.values()).map((l) => statusScore(l.status));
+      const avg  = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+      climaFill.style.width = `${avg}%`;
+      climaLabel.textContent = `${avg}% · ${climaTexto(avg)}`;
+      return avg;
+    }
+
+    function updateFichas() {
+      fichasEl.innerHTML = "";
+      for (let i = 0; i < MAX_MOVES; i++) {
+        const c = document.createElement("span");
+        c.className = "ficha" + (i >= movesLeft ? " usada" : "");
+        c.setAttribute("aria-hidden", "true");
+        fichasEl.appendChild(c);
+      }
+    }
+
+    function resetData() {
+      linksMap.clear();
+      initialLinks.forEach((l) => linksMap.set(l.key, { ...l }));
+    }
+
+    /* ── Grafo SVG ───────────────────────────────────── */
+    function createLine(link) {
+      const na = nodes[link.a];
+      const nb = nodes[link.b];
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", String(na.x)); line.setAttribute("y1", String(na.y));
+      line.setAttribute("x2", String(nb.x)); line.setAttribute("y2", String(nb.y));
+      line.setAttribute("class", `link ${link.status}`);
+      line.dataset.key = link.key;
+      linksLayer.appendChild(line);
+      linkEls.set(link.key, line);
+    }
+
+    function createNode(node) {
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.classList.add("nodo");
+      g.dataset.id = node.id;
+
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", String(node.x));
+      circle.setAttribute("cy", String(node.y));
+      circle.setAttribute("r", "44");
+      g.appendChild(circle);
+
+      const words = node.label.split(" ");
+      if (words.length === 1) {
+        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.setAttribute("x", String(node.x)); t.setAttribute("y", String(node.y + 6));
+        t.textContent = node.label;
+        g.appendChild(t);
+      } else {
+        const mid = Math.ceil(words.length / 2);
+        [words.slice(0, mid).join(" "), words.slice(mid).join(" ")].forEach((txt, i) => {
+          const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          t.setAttribute("x", String(node.x)); t.setAttribute("y", String(node.y - 5 + i * 18));
+          t.textContent = txt;
+          g.appendChild(t);
+        });
+      }
+
+      g.addEventListener("click", () => { if (!gameOver && !cascading) selectNode(node.id); });
+      nodesLayer.appendChild(g);
+      nodeEls.set(node.id, g);
+    }
+
+    function renderGraph() {
+      linksLayer.innerHTML = ""; nodesLayer.innerHTML = ""; waveLayer.innerHTML = "";
+      linkEls.clear(); nodeEls.clear();
+      Array.from(linksMap.values()).forEach(createLine);
+      Object.values(nodes).forEach(createNode);
+    }
+
+    function setLinkStatus(a, b, status) {
+      const link = linksMap.get(lkey(a, b));
+      if (!link) return;
+      link.status = status;
+      const el = linkEls.get(link.key);
+      if (el) el.setAttribute("class", `link ${status}`);
+    }
+
+    function pulse(ids, tipo) {
+      ids.forEach((id) => {
+        const el = nodeEls.get(id);
+        if (!el) return;
+        el.classList.remove("pulse-rojo", "pulse-verde", "pulse-amarillo");
+        void el.getBBox();
+        if (tipo === "rojo")     el.classList.add("pulse-rojo");
+        if (tipo === "verde")    el.classList.add("pulse-verde");
+        if (tipo === "amarillo") el.classList.add("pulse-amarillo");
+        setTimeout(() => el.classList.remove("pulse-rojo","pulse-verde","pulse-amarillo"), 1900);
+      });
+    }
+
+    function onda(a, b, color) {
+      const na = nodes[a]; const nb = nodes[b];
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", String(na.x)); line.setAttribute("y1", String(na.y));
+      line.setAttribute("x2", String(nb.x)); line.setAttribute("y2", String(nb.y));
+      line.setAttribute("stroke", color);
+      line.setAttribute("stroke-width", "8");
+      line.setAttribute("stroke-dasharray", "14 10");
+      line.setAttribute("stroke-linecap", "round");
+      line.style.opacity = "0";
+      line.style.filter = `drop-shadow(0 0 8px ${color})`;
+      line.style.animation = "waveFlow 900ms linear forwards";
+      waveLayer.appendChild(line);
+      setTimeout(() => line.remove(), 980);
+    }
+
+    /* ── Selección de nodo ───────────────────────────── */
+    function selectNode(id) {
+      selectedNode = id;
+      Array.from(nodeEls.values()).forEach((n) => n.classList.remove("activo"));
+      const el = nodeEls.get(id);
+      if (el) el.classList.add("activo");
+
+      const info = nodeInfo[id];
+      const nd   = nodes[id];
+
+      nodoNombre.textContent = nd.label;
+      nodoBadge.textContent  = nd.badge;
+      nodoDesc.textContent   = info.desc;
+
+      nodoImpactos.innerHTML = "";
+      info.impactos.forEach((txt) => {
+        const li = document.createElement("li");
+        li.textContent = txt;
+        nodoImpactos.appendChild(li);
+      });
+
+      accionesContainer.innerHTML = "";
+      nodeAcciones[id].forEach((accion) => {
+        const btn = document.createElement("button");
+        btn.className = `btn ${accion.tipo}`;
+        btn.type      = "button";
+        btn.textContent = accion.label;
+        if (movesLeft <= 0 || gameOver || cascading) btn.disabled = true;
+        btn.addEventListener("click", () => applyAccion(accion));
+        accionesContainer.appendChild(btn);
+      });
+
+      estadoInicial.hidden = true;
+      infoNodo.hidden      = false;
+    }
+
+    /* ── Motor de acciones ───────────────────────────── */
+    function disableAllActions() {
+      accionesContainer.querySelectorAll("button").forEach((b) => (b.disabled = true));
+    }
+
+    function showFeedback(txt) {
+      feedbackBox.hidden    = false;
+      feedbackBox.innerHTML = txt.replace(/\n/g, "<br>");
+    }
+
+    function applyAccion(accion) {
+      if (movesLeft <= 0 || gameOver || cascading) return;
+      cascading = true;
+      movesLeft--;
+      updateFichas();
+      disableAllActions();
+
+      accion.immediate.forEach((e) => setLinkStatus(e.a, e.b, e.status));
+      if (accion.pulseImm) pulse(accion.pulseImm.ids, accion.pulseImm.tipo);
+      accion.immediate.forEach((e) => onda(e.a, e.b, accion.ondaImm));
+      updateClima();
+      showFeedback(accion.feedbackImm);
+
+      if (accion.cascade && accion.cascade.length > 0) {
+        setTimeout(() => {
+          accion.cascade.forEach((e) => setLinkStatus(e.a, e.b, e.status));
+          if (accion.pulseCas) pulse(accion.pulseCas.ids, accion.pulseCas.tipo);
+          accion.cascade.forEach((e) => onda(e.a, e.b, accion.ondaCas));
+          const avg = updateClima();
+          showFeedback(`${accion.feedbackImm}\n\n${accion.feedbackCas}`);
+          cascading = false;
+          checkGameState(avg);
+        }, 1500);
+      } else {
+        const avg = updateClima();
+        cascading = false;
+        checkGameState(avg);
+      }
+    }
+
+    /* ── Estado del juego ────────────────────────────── */
+    function checkGameState(avg) {
+      if (avg >= 75) {
+        endGame(true, avg);
+      } else if (avg <= 20) {
+        endGame(false, avg);
+      } else if (movesLeft === 0) {
+        endGame(false, avg);
+      } else if (selectedNode) {
+        accionesContainer.querySelectorAll("button").forEach((b) => (b.disabled = false));
+      }
+    }
+
+    function endGame(victoria, avg) {
+      gameOver = true;
+      disableAllActions();
+      Array.from(nodeEls.values()).forEach((n) => n.classList.remove("activo"));
+      panelFin.hidden = false;
+      if (victoria) {
+        panelFin.className = "panel-fin victoria";
+        panelFin.innerHTML = `<div class="fin-icono">🕊️</div>
+<p class="fin-titulo">¡Armonía Sostenible alcanzada!</p>
+<p class="fin-desc">Lograste llevar el clima universitario a <strong>${avg}%</strong>. Tu intervención sistémica generó cascadas positivas que mejoraron varias relaciones clave simultáneamente. Eso es mediación sistémica en acción.</p>
+<button class="btn neutro" onclick="resetGame()" type="button">Intentar otra estrategia</button>`;
+      } else if (avg <= 20) {
+        panelFin.className = "panel-fin derrota";
+        panelFin.innerHTML = `<div class="fin-icono">💥</div>
+<p class="fin-titulo">Crisis Total — sistema colapsado</p>
+<p class="fin-desc">El clima cayó a <strong>${avg}%</strong>. Las intervenciones riesgosas generaron cascadas negativas que deterioraron múltiples relaciones. En mediación, la legitimidad es frágil e irreversible.</p>
+<button class="btn neutro" onclick="resetGame()" type="button">Reintentar</button>`;
+      } else {
+        panelFin.className = "panel-fin derrota";
+        panelFin.innerHTML = `<div class="fin-icono">⏱️</div>
+<p class="fin-titulo">Se agotaron las intervenciones</p>
+<p class="fin-desc">Usaste las 5 intervenciones pero el clima quedó en <strong>${avg}%</strong> (necesitas ≥ 75%). Intenta priorizar las acciones de mayor impacto sistémico y encadenarlas estratégicamente.</p>
+<button class="btn neutro" onclick="resetGame()" type="button">Reintentar</button>`;
+      }
+    }
+
+    /* ── Reset ───────────────────────────────────────── */
+    function resetGame() {
+      gameOver = false; cascading = false;
+      movesLeft = MAX_MOVES; selectedNode = null;
+      resetData(); renderGraph(); updateClima(); updateFichas();
+      estadoInicial.hidden        = false;
+      infoNodo.hidden             = true;
+      feedbackBox.hidden          = true;
+      panelFin.hidden             = true;
+      panelFin.className          = "panel-fin";
+      feedbackBox.innerHTML       = "";
+      accionesContainer.innerHTML = "";
+    }
+
+    /* ── Modal ───────────────────────────────────────── */
+    btnTeoria.addEventListener("click", () => {
+      modal.classList.add("activo"); modal.setAttribute("aria-hidden","false");
+    });
+    cerrarTeoria.addEventListener("click", () => {
+      modal.classList.remove("activo"); modal.setAttribute("aria-hidden","true");
+    });
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) { modal.classList.remove("activo"); modal.setAttribute("aria-hidden","true"); }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { modal.classList.remove("activo"); modal.setAttribute("aria-hidden","true"); }
+    });
+    btnReset.addEventListener("click", resetGame);
+
+    /* ── Init ────────────────────────────────────────── */
+    resetGame();
+  </script>
+</body>
+</html>

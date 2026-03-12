@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día 1 · Actividad 4 · Simulador de Red Sistémica</title>
+  <style>
+    :root {
+      --fondo: #121212;
+      --panel: #171a24;
+      --texto: #f8fafc;
+      --muted: #94a3b8;
+      --neutral: #6b7280;
+      --tension: #f43f5e;
+      --confianza: #22c55e;
+      --acento: #38bdf8;
+      --trans: 0.3s;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--texto);
+      background:
+        linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px) 0 0 / 28px 28px,
+        linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px) 0 0 / 28px 28px,
+        radial-gradient(circle at top, #1f2937 0%, var(--fondo) 55%);
+      padding: 14px;
+    }
+
+    .app {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+      background: linear-gradient(165deg, rgba(23, 26, 36, 0.92), rgba(13, 18, 27, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      padding: 12px;
+    }
+
+    .encabezado {
+      display: grid;
+      gap: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.2rem, 0.95rem + 1.2vw, 1.9rem);
+    }
+
+    .sub {
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.4;
+      font-size: 0.95rem;
+    }
+
+    .topbar {
+      display: grid;
+      gap: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.75);
+      padding: 10px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f8fafc;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: transform var(--trans), border-color var(--trans), background var(--trans);
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: scale(1.03);
+      border-color: rgba(56, 189, 248, 0.9);
+      background: rgba(30, 41, 59, 0.95);
+      outline: none;
+    }
+
+    .clima-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+    }
+
+    .barra {
+      position: relative;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(51, 65, 85, 0.45);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .seg {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      transition: width var(--trans);
+    }
+
+    .seg.confianza {
+      left: 0;
+      background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(74, 222, 128, 0.8));
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.65);
+    }
+
+    .seg.tension {
+      right: 0;
+      background: linear-gradient(90deg, rgba(244, 63, 94, 0.8), rgba(251, 113, 133, 0.95));
+      box-shadow: 0 0 10px rgba(244, 63, 94, 0.6);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .panel-grafo,
+    .panel-control {
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.78);
+      padding: 10px;
+    }
+
+    .panel-control {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .panel-control h2,
+    .panel-grafo h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .feedback {
+      margin: 0;
+      min-height: 3.2em;
+      line-height: 1.4;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .red-wrap {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      background: radial-gradient(circle at center, rgba(30, 41, 59, 0.4), rgba(2, 6, 23, 0.95));
+    }
+
+    svg {
+      width: 100%;
+      height: 560px;
+      display: block;
+    }
+
+    .link {
+      fill: none;
+      stroke-width: 4;
+      transition: stroke var(--trans), stroke-width var(--trans), opacity var(--trans), filter var(--trans);
+    }
+
+    .link.neutral {
+      stroke: var(--neutral);
+      opacity: 0.9;
+    }
+
+    .link.tension {
+      stroke: var(--tension);
+      stroke-dasharray: 10 8;
+      animation: dashMove 1.1s linear infinite;
+      filter: drop-shadow(0 0 4px rgba(244, 63, 94, 0.85));
+    }
+
+    .link.confianza {
+      stroke: var(--confianza);
+      filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.85));
+    }
+
+    .nodo {
+      cursor: pointer;
+      transition: transform var(--trans), filter var(--trans), stroke var(--trans);
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .nodo circle {
+      fill: #0f172a;
+      stroke: #93c5fd;
+      stroke-width: 2.5;
+      transition: stroke var(--trans), fill var(--trans), filter var(--trans);
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+    }
+
+    .nodo:hover circle,
+    .nodo.activo circle {
+      stroke: #38bdf8;
+      fill: #13213d;
+      filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.85));
+    }
+
+    .nodo text {
+      fill: #f8fafc;
+      font-size: 14px;
+      font-weight: 600;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    .pulse-rojo circle {
+      animation: pulseRed 0.9s ease-in-out 2;
+    }
+
+    .pulse-verde circle {
+      animation: pulseGreen 0.9s ease-in-out 2;
+    }
+
+    .acciones {
+      display: grid;
+      gap: 8px;
+    }
+
+    .ayuda {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .fila-rel {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px;
+      padding: 8px;
+      display: grid;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.76);
+    }
+
+    .fila-rel strong {
+      font-size: 0.9rem;
+    }
+
+    .mini-btns {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .mini-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(30, 41, 59, 0.8);
+      color: #f8fafc;
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: transform var(--trans), border-color var(--trans), background var(--trans);
+    }
+
+    .mini-btn:hover,
+    .mini-btn:focus-visible {
+      transform: scale(1.02);
+      border-color: rgba(56, 189, 248, 0.8);
+      outline: none;
+    }
+
+    .mini-btn.dialogar {
+      border-color: rgba(34, 197, 94, 0.55);
+      background: rgba(21, 128, 61, 0.25);
+    }
+
+    .mini-btn.atacar {
+      border-color: rgba(244, 63, 94, 0.6);
+      background: rgba(190, 24, 93, 0.2);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(2, 6, 23, 0.76);
+      padding: 12px;
+      z-index: 30;
+    }
+
+    .modal.activo {
+      display: grid;
+    }
+
+    .modal-box {
+      width: min(560px, 100%);
+      border-radius: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      background: #0f172a;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .modal-box h3,
+    .modal-box p {
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .modal-box p {
+      color: #cbd5e1;
+    }
+
+    .modal-box button {
+      justify-self: end;
+    }
+
+    @keyframes dashMove {
+      to { stroke-dashoffset: -36; }
+    }
+
+    @keyframes pulseRed {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.35)); }
+      50% { filter: drop-shadow(0 0 18px rgba(244, 63, 94, 0.95)); }
+    }
+
+    @keyframes pulseGreen {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.35)); }
+      50% { filter: drop-shadow(0 0 18px rgba(34, 197, 94, 0.95)); }
+    }
+
+    @media (min-width: 980px) {
+      .layout {
+        grid-template-columns: 1.4fr 0.6fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="encabezado">
+      <h1>Simulador de Red Sistémica: El Efecto Cascada</h1>
+      <p class="sub">
+        Haz clic o toca un actor para intervenir en sus relaciones. Verás cómo una acción local produce efectos en toda la red del campus.
+      </p>
+    </header>
+
+    <section class="topbar" aria-label="Estado sistémico">
+      <div class="clima-head">
+        <strong>Clima del Sistema</strong>
+        <span id="climaTexto">Confianza 20% · Tensión 40%</span>
+      </div>
+      <div class="barra" aria-hidden="true">
+        <div class="seg confianza" id="segConfianza" style="width:20%"></div>
+        <div class="seg tension" id="segTension" style="width:40%"></div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" id="btnTeoria" type="button">Ver teoría de Lederach</button>
+        <button class="btn" id="btnReset" type="button">Reiniciar Sistema</button>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="panel-grafo">
+        <h2>Red del campus</h2>
+        <div class="red-wrap">
+          <svg viewBox="0 0 900 560" role="img" aria-label="Grafo sistémico de actores universitarios">
+            <g id="linksLayer"></g>
+            <g id="nodesLayer"></g>
+          </svg>
+        </div>
+      </article>
+
+      <aside class="panel-control">
+        <h2>Menú de intervención</h2>
+        <p class="ayuda" id="ayudaIntervencion">Selecciona un actor en la red para habilitar acciones de intervención.</p>
+        <div class="acciones" id="acciones"></div>
+        <p class="feedback" id="feedback">
+          Estado inicial cargado. Prueba una acción de diálogo o ataque y observa si aparece un efecto cascada.
+        </p>
+      </aside>
+    </section>
+  </main>
+
+  <section class="modal" id="modalTeoria" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tituloTeoria">
+    <article class="modal-box">
+      <h3 id="tituloTeoria">Enfoque sistémico (Lederach)</h3>
+      <p>
+        El sistema es una red de relaciones; si mueves una cuerda, toda la red vibra.
+        Intervenir en una relación modifica percepciones, alianzas y tensiones en otros puntos.
+      </p>
+      <button class="btn" id="cerrarTeoria" type="button">Cerrar</button>
+    </article>
+  </section>
+
+  <script>
+    const nodes = {
+      estudiantes: { id: "estudiantes", label: "Estudiantes", x: 220, y: 120 },
+      decanatura: { id: "decanatura", label: "Decanatura", x: 680, y: 120 },
+      seguridad: { id: "seguridad", label: "Seguridad", x: 220, y: 470 },
+      profesores: { id: "profesores", label: "Profesores", x: 450, y: 280 },
+      servicios: { id: "servicios", label: "Servicios Generales", x: 680, y: 470 }
+    };
+
+    const linksInitial = [
+      { key: "estudiantes-profesores", a: "estudiantes", b: "profesores", status: "neutral" },
+      { key: "estudiantes-decanatura", a: "estudiantes", b: "decanatura", status: "tension" },
+      { key: "profesores-decanatura", a: "profesores", b: "decanatura", status: "neutral" },
+      { key: "seguridad-estudiantes", a: "seguridad", b: "estudiantes", status: "tension" },
+      { key: "servicios-estudiantes", a: "servicios", b: "estudiantes", status: "confianza" }
+    ];
+
+    const linksMap = new Map();
+    const nodeElements = new Map();
+    const linkElements = new Map();
+
+    const linksLayer = document.getElementById("linksLayer");
+    const nodesLayer = document.getElementById("nodesLayer");
+    const acciones = document.getElementById("acciones");
+    const ayudaIntervencion = document.getElementById("ayudaIntervencion");
+    const feedback = document.getElementById("feedback");
+    const climaTexto = document.getElementById("climaTexto");
+    const segConfianza = document.getElementById("segConfianza");
+    const segTension = document.getElementById("segTension");
+
+    let currentNodeId = null;
+
+    function linkKey(a, b) {
+      return [a, b].sort().join("-");
+    }
+
+    function cloneInitialLinks() {
+      linksMap.clear();
+      linksInitial.forEach((item) => {
+        linksMap.set(item.key, { ...item });
+      });
+    }
+
+    function crearLinea(link) {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      const na = nodes[link.a];
+      const nb = nodes[link.b];
+      line.setAttribute("x1", String(na.x));
+      line.setAttribute("y1", String(na.y));
+      line.setAttribute("x2", String(nb.x));
+      line.setAttribute("y2", String(nb.y));
+      line.setAttribute("class", `link ${link.status}`);
+      line.dataset.key = link.key;
+      linkElements.set(link.key, line);
+      linksLayer.appendChild(line);
+    }
+
+    function crearNodo(node) {
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute("class", "nodo");
+      g.dataset.id = node.id;
+
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", String(node.x));
+      circle.setAttribute("cy", String(node.y));
+      circle.setAttribute("r", "42");
+
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", String(node.x));
+      text.setAttribute("y", String(node.y + 6));
+      text.textContent = node.label;
+
+      g.appendChild(circle);
+      g.appendChild(text);
+
+      g.addEventListener("click", () => {
+        selectNode(node.id);
+      });
+
+      nodeElements.set(node.id, g);
+      nodesLayer.appendChild(g);
+    }
+
+    function renderGraph() {
+      linksLayer.innerHTML = "";
+      nodesLayer.innerHTML = "";
+      linkElements.clear();
+      nodeElements.clear();
+
+      Array.from(linksMap.values()).forEach(crearLinea);
+      Object.values(nodes).forEach(crearNodo);
+    }
+
+    function updateLinkStyle(link) {
+      const el = linkElements.get(link.key);
+      if (!el) {
+        return;
+      }
+      el.setAttribute("class", `link ${link.status}`);
+    }
+
+    function getConnectedLinks(nodeId) {
+      return Array.from(linksMap.values()).filter((l) => l.a === nodeId || l.b === nodeId);
+    }
+
+    function otherNode(link, nodeId) {
+      return link.a === nodeId ? link.b : link.a;
+    }
+
+    function setFeedback(msg) {
+      feedback.textContent = msg;
+    }
+
+    function updateClima() {
+      const links = Array.from(linksMap.values());
+      const total = links.length;
+      const confianza = links.filter((l) => l.status === "confianza").length;
+      const tension = links.filter((l) => l.status === "tension").length;
+
+      const pConf = Math.round((confianza / total) * 100);
+      const pTens = Math.round((tension / total) * 100);
+
+      climaTexto.textContent = `Confianza ${pConf}% · Tensión ${pTens}%`;
+      segConfianza.style.width = `${pConf}%`;
+      segTension.style.width = `${pTens}%`;
+    }
+
+    function pulseNodes(nodeIds, tipo) {
+      nodeIds.forEach((id) => {
+        const el = nodeElements.get(id);
+        if (!el) return;
+        const cls = tipo === "tension" ? "pulse-rojo" : "pulse-verde";
+        el.classList.remove("pulse-rojo", "pulse-verde");
+        void el.getBBox();
+        el.classList.add(cls);
+        setTimeout(() => {
+          el.classList.remove(cls);
+        }, 1900);
+      });
+    }
+
+    function applyStatus(a, b, status) {
+      const key = linkKey(a, b);
+      const link = linksMap.get(key);
+      if (!link) return;
+      link.status = status;
+      updateLinkStyle(link);
+      updateClima();
+    }
+
+    function runCascadeIfNeeded(source, target, actionType) {
+      const pair = linkKey(source, target);
+
+      if (actionType === "atacar" && pair === linkKey("estudiantes", "profesores")) {
+        setTimeout(() => {
+          applyStatus("profesores", "decanatura", "tension");
+          pulseNodes(["profesores", "decanatura"], "tension");
+          setFeedback("La tensión escaló: La Decanatura ahora desconfía de los procesos académicos.");
+        }, 1500);
+      }
+
+      if (actionType === "dialogar" && pair === linkKey("estudiantes", "decanatura")) {
+        setTimeout(() => {
+          applyStatus("seguridad", "estudiantes", "neutral");
+          pulseNodes(["seguridad", "estudiantes"], "confianza");
+          setFeedback("Efecto Cascada: Al mejorar el diálogo político, la presión de seguridad en el campus disminuye.");
+        }, 1500);
+      }
+    }
+
+    function performAction(source, target, actionType) {
+      if (actionType === "dialogar") {
+        applyStatus(source, target, "confianza");
+        pulseNodes([source, target], "confianza");
+        setFeedback(`Intervención positiva entre ${nodes[source].label} y ${nodes[target].label}. La relación pasa a Confianza.`);
+      } else {
+        applyStatus(source, target, "tension");
+        pulseNodes([source, target], "tension");
+        setFeedback(`Intervención conflictiva entre ${nodes[source].label} y ${nodes[target].label}. La relación pasa a Tensión.`);
+      }
+
+      runCascadeIfNeeded(source, target, actionType);
+      renderActionsForNode(source);
+    }
+
+    function renderActionsForNode(nodeId) {
+      const links = getConnectedLinks(nodeId);
+      acciones.innerHTML = "";
+
+      if (!links.length) {
+        ayudaIntervencion.textContent = "Este actor no tiene conexiones disponibles para intervenir.";
+        return;
+      }
+
+      ayudaIntervencion.textContent = `Actor seleccionado: ${nodes[nodeId].label}. Elige una intervención por relación.`;
+
+      links.forEach((link) => {
+        const actor2 = otherNode(link, nodeId);
+        const row = document.createElement("div");
+        row.className = "fila-rel";
+
+        const title = document.createElement("strong");
+        title.textContent = `${nodes[nodeId].label} ↔ ${nodes[actor2].label}`;
+
+        const estado = document.createElement("span");
+        estado.className = "ayuda";
+        estado.textContent = `Estado actual: ${link.status === "confianza" ? "Confianza" : link.status === "tension" ? "Tensión" : "Neutral"}`;
+
+        const buttons = document.createElement("div");
+        buttons.className = "mini-btns";
+
+        const btnDialogar = document.createElement("button");
+        btnDialogar.type = "button";
+        btnDialogar.className = "mini-btn dialogar";
+        btnDialogar.textContent = "Dialogar / Construir";
+        btnDialogar.addEventListener("click", () => performAction(nodeId, actor2, "dialogar"));
+
+        const btnAtacar = document.createElement("button");
+        btnAtacar.type = "button";
+        btnAtacar.className = "mini-btn atacar";
+        btnAtacar.textContent = "Criticar / Atacar";
+        btnAtacar.addEventListener("click", () => performAction(nodeId, actor2, "atacar"));
+
+        buttons.appendChild(btnDialogar);
+        buttons.appendChild(btnAtacar);
+
+        row.appendChild(title);
+        row.appendChild(estado);
+        row.appendChild(buttons);
+        acciones.appendChild(row);
+      });
+    }
+
+    function selectNode(nodeId) {
+      currentNodeId = nodeId;
+      Array.from(nodeElements.values()).forEach((el) => el.classList.remove("activo"));
+      const selected = nodeElements.get(nodeId);
+      if (selected) selected.classList.add("activo");
+      renderActionsForNode(nodeId);
+    }
+
+    function resetSystem() {
+      cloneInitialLinks();
+      renderGraph();
+      updateClima();
+      acciones.innerHTML = "";
+      currentNodeId = null;
+      ayudaIntervencion.textContent = "Selecciona un actor en la red para habilitar acciones de intervención.";
+      setFeedback("Sistema reiniciado. Vuelve a intervenir para observar nuevas cascadas.");
+    }
+
+    const modal = document.getElementById("modalTeoria");
+    const btnTeoria = document.getElementById("btnTeoria");
+    const cerrarTeoria = document.getElementById("cerrarTeoria");
+    const btnReset = document.getElementById("btnReset");
+
+    btnTeoria.addEventListener("click", () => {
+      modal.classList.add("activo");
+      modal.setAttribute("aria-hidden", "false");
+    });
+
+    cerrarTeoria.addEventListener("click", () => {
+      modal.classList.remove("activo");
+      modal.setAttribute("aria-hidden", "true");
+    });
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.classList.remove("activo");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        modal.classList.remove("activo");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    btnReset.addEventListener("click", resetSystem);
+
+    cloneInitialLinks();
+    renderGraph();
+    updateClima();
+  </script>
+</body>
+</html>

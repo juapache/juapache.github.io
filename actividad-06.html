@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día 1 · Actividad 6 · La Arena de Negociación</title>
+  <style>
+    :root {
+      --bg: #0f1220;
+      --panel: #161b2d;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --line: #334155;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --bad: #f43f5e;
+      --accent: #38bdf8;
+      --trans: 0.3s;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0%, var(--bg) 58%);
+      color: var(--text);
+      padding: 14px;
+    }
+    .app {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+      background: linear-gradient(165deg, rgba(22, 27, 45, 0.96), rgba(10, 14, 23, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+    }
+    h1 { margin: 0; font-size: clamp(1.15rem, 0.95rem + 1.2vw, 1.9rem); }
+    .sub { margin: 0; color: #cbd5e1; line-height: 1.42; font-size: 0.95rem; }
+
+    .caso {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.78);
+      padding: 10px;
+      color: #dbeafe;
+      line-height: 1.4;
+      font-size: 0.93rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .panel {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.76);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+    .panel h2 { margin: 0; font-size: 1rem; }
+
+    .avatares {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .avatar {
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 0.88rem;
+      line-height: 1.35;
+    }
+
+    .stack,
+    .mesa {
+      min-height: 190px;
+      border: 1px dashed rgba(148, 163, 184, 0.35);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.56);
+      padding: 8px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .opcion {
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      border-radius: 10px;
+      background: rgba(30, 41, 59, 0.82);
+      color: #f8fafc;
+      padding: 8px;
+      line-height: 1.3;
+      font-size: 0.88rem;
+      cursor: grab;
+      user-select: none;
+      transition: transform var(--trans), border-color var(--trans), box-shadow var(--trans);
+      touch-action: none;
+    }
+    .opcion:hover,
+    .opcion:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(56, 189, 248, 0.85);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
+      outline: none;
+    }
+    .opcion.dragging { opacity: 0.58; }
+    .opcion.seleccionada {
+      border-color: rgba(56, 189, 248, 0.95);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+    }
+
+    .opcion .tag {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 3px 7px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #cbd5e1;
+    }
+    .tag.win { border-color: rgba(34, 197, 94, 0.5); color: #bbf7d0; }
+    .tag.zero { border-color: rgba(244, 63, 94, 0.55); color: #fecdd3; }
+
+    .indice {
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .filas {
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+    }
+
+    .barra {
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      overflow: hidden;
+      background: rgba(51, 65, 85, 0.45);
+      position: relative;
+    }
+    .fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      transition: width var(--trans);
+    }
+    .fill.a { background: linear-gradient(90deg, #38bdf8, #60a5fa); }
+    .fill.b { background: linear-gradient(90deg, #a78bfa, #c084fc); }
+
+    .legit {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    .legit-box {
+      display: none;
+      color: #cbd5e1;
+      line-height: 1.35;
+      font-size: 0.86rem;
+      border: 1px dashed rgba(56, 189, 248, 0.35);
+      border-radius: 8px;
+      padding: 8px;
+      background: rgba(2, 6, 23, 0.65);
+    }
+    .legit-box.activo { display: block; }
+
+    .feedback {
+      margin: 0;
+      min-height: 3.1em;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.82);
+      padding: 10px;
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #f8fafc;
+      padding: 7px 12px;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: transform var(--trans), border-color var(--trans);
+    }
+    .btn:hover,
+    .btn:focus-visible {
+      transform: scale(1.03);
+      border-color: rgba(56, 189, 248, 0.85);
+      outline: none;
+    }
+
+    .drop-hover {
+      border-color: rgba(56, 189, 248, 0.95);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+    }
+
+    @media (min-width: 1020px) {
+      .layout { grid-template-columns: 0.9fr 1.1fr 0.8fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1>La Arena de Negociación (Método Harvard)</h1>
+    <p class="sub">Distingue posiciones e intereses, construye opciones y valida el acuerdo con criterios de legitimidad.</p>
+
+    <section class="caso">
+      <strong>Caso:</strong> Dos grupos estudiantiles quieren usar el mismo auditorio el viernes a las 5:00 PM.
+      El objetivo es construir un acuerdo con beneficio mutuo y base legítima.
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Opciones disponibles</h2>
+        <div class="stack" id="stack"></div>
+      </article>
+
+      <article class="panel">
+        <h2>La Mesa de Opciones</h2>
+        <div class="avatares">
+          <div class="avatar"><strong>Parte A</strong><br />Colectivo Cultural</div>
+          <div class="avatar"><strong>Parte B</strong><br />Semillero de Debate</div>
+        </div>
+        <div class="mesa" id="mesa"></div>
+      </article>
+
+      <aside class="panel">
+        <h2>Índice de Acuerdo</h2>
+        <div class="indice">
+          <div class="filas">
+            <span id="valA">Satisfacción Parte A: 50%</span>
+            <div class="barra"><div id="fillA" class="fill a" style="width:50%"></div></div>
+            <span id="valB">Satisfacción Parte B: 50%</span>
+            <div class="barra"><div id="fillB" class="fill b" style="width:50%"></div></div>
+            <span id="estadoAcuerdo">Estado: Negociación en curso</span>
+          </div>
+        </div>
+
+        <div class="legit">
+          <h2>Criterios de Legitimidad</h2>
+          <button id="btnLegit" type="button" class="btn">Ver criterios</button>
+          <div id="legitBox" class="legit-box">
+            1) Manual de convivencia: prioridad a actividades académicas programadas.
+            <br />2) Reglamento de espacios: uso compartido con equivalencia técnica.
+            <br />3) Transparencia: acuerdos por escrito y aviso previo a bienestar universitario.
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <p id="feedback" class="feedback">Mueve opciones a la mesa. El acuerdo es válido solo si A y B ≥ 70% y existe criterio de legitimidad.</p>
+
+    <div class="acciones">
+      <button id="btnReset" class="btn" type="button">Reiniciar arena</button>
+    </div>
+  </main>
+
+  <script>
+    const opcionesData = [
+      {
+        id: "o1",
+        texto: "Asignar el auditorio completo al Colectivo Cultural y mover al Semillero al lunes.",
+        tipo: "suma-cero",
+        valorA: 32,
+        valorB: -28,
+        legit: false
+      },
+      {
+        id: "o2",
+        texto: "Asignar el auditorio completo al Semillero y cancelar la muestra cultural.",
+        tipo: "suma-cero",
+        valorA: -30,
+        valorB: 34,
+        legit: false
+      },
+      {
+        id: "o3",
+        texto: "Dividir horario: Cultural 5:00-6:20 PM y Debate 6:30-8:00 PM con acta firmada.",
+        tipo: "ganar-ganar",
+        valorA: 18,
+        valorB: 18,
+        legit: true
+      },
+      {
+        id: "o4",
+        texto: "Cultural usa auditorio; Debate usa polideportivo con apoyo técnico de sonido.",
+        tipo: "ganar-ganar",
+        valorA: 20,
+        valorB: 16,
+        legit: true
+      },
+      {
+        id: "o5",
+        texto: "Sorteo inmediato sin considerar programación previa.",
+        tipo: "suma-cero",
+        valorA: 5,
+        valorB: 5,
+        legit: false
+      },
+      {
+        id: "o6",
+        texto: "Crear evento conjunto + transmisión híbrida para ampliar aforo y visibilidad.",
+        tipo: "ganar-ganar",
+        valorA: 14,
+        valorB: 15,
+        legit: true
+      }
+    ];
+
+    const estado = {
+      seleccion: null,
+      enMesa: new Set()
+    };
+
+    const stack = document.getElementById("stack");
+    const mesa = document.getElementById("mesa");
+    const valA = document.getElementById("valA");
+    const valB = document.getElementById("valB");
+    const fillA = document.getElementById("fillA");
+    const fillB = document.getElementById("fillB");
+    const estadoAcuerdo = document.getElementById("estadoAcuerdo");
+    const feedback = document.getElementById("feedback");
+
+    const btnLegit = document.getElementById("btnLegit");
+    const legitBox = document.getElementById("legitBox");
+    const btnReset = document.getElementById("btnReset");
+
+    const esTactil = window.matchMedia("(pointer: coarse)").matches;
+
+    function byId(id) {
+      return document.querySelector(`.opcion[data-id="${id}"]`);
+    }
+
+    function crearOpcion(item) {
+      const card = document.createElement("div");
+      card.className = "opcion";
+      card.draggable = true;
+      card.dataset.id = item.id;
+      card.setAttribute("tabindex", "0");
+      card.innerHTML = `${item.texto}<span class="tag ${item.tipo === "ganar-ganar" ? "win" : "zero"}">${item.tipo === "ganar-ganar" ? "Ganar-Ganar" : "Suma Cero"}</span>`;
+
+      card.addEventListener("dragstart", (event) => {
+        card.classList.add("dragging");
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", item.id);
+      });
+
+      card.addEventListener("dragend", () => {
+        card.classList.remove("dragging");
+        stack.classList.remove("drop-hover");
+        mesa.classList.remove("drop-hover");
+      });
+
+      card.addEventListener("click", () => {
+        if (!esTactil) return;
+        const ya = estado.seleccion === item.id;
+        document.querySelectorAll(".opcion.seleccionada").forEach((el) => el.classList.remove("seleccionada"));
+        if (ya) {
+          estado.seleccion = null;
+          feedback.textContent = "Selección cancelada.";
+          return;
+        }
+        estado.seleccion = item.id;
+        card.classList.add("seleccionada");
+        feedback.textContent = "Tarjeta seleccionada. Toca " + (estado.enMesa.has(item.id) ? "Opciones disponibles" : "La Mesa de Opciones") + " para moverla.";
+      });
+
+      return card;
+    }
+
+    function setFeedback(msg, tipo = "") {
+      feedback.textContent = msg;
+      feedback.style.color = tipo === "ok" ? "#bbf7d0" : tipo === "bad" ? "#fecdd3" : "#cbd5e1";
+    }
+
+    function calcularIndice() {
+      let puntA = 50;
+      let puntB = 50;
+      let hayLegit = false;
+
+      estado.enMesa.forEach((id) => {
+        const op = opcionesData.find((x) => x.id === id);
+        if (!op) return;
+        puntA += op.valorA;
+        puntB += op.valorB;
+        if (op.legit) hayLegit = true;
+      });
+
+      puntA = Math.max(0, Math.min(100, puntA));
+      puntB = Math.max(0, Math.min(100, puntB));
+
+      valA.textContent = `Satisfacción Parte A: ${puntA}%`;
+      valB.textContent = `Satisfacción Parte B: ${puntB}%`;
+      fillA.style.width = `${puntA}%`;
+      fillB.style.width = `${puntB}%`;
+
+      if (puntA >= 70 && puntB >= 70 && hayLegit) {
+        estadoAcuerdo.textContent = "Estado: Acuerdo válido (mutuo beneficio + legitimidad)";
+        estadoAcuerdo.style.color = "#86efac";
+        setFeedback("Acuerdo Harvard alcanzado: ambas partes superan 70% y la solución se basa en criterios legítimos.", "ok");
+      } else if (puntA >= 70 && puntB >= 70 && !hayLegit) {
+        estadoAcuerdo.textContent = "Estado: Falta legitimidad";
+        estadoAcuerdo.style.color = "#fcd34d";
+        setFeedback("Hay beneficio mutuo, pero falta sustento de legitimidad (reglamento/manual).", "");
+      } else {
+        estadoAcuerdo.textContent = "Estado: Negociación en curso";
+        estadoAcuerdo.style.color = "#fda4af";
+        setFeedback("Aún no hay equilibrio suficiente. Busca opciones que no sean de suma cero.", "bad");
+      }
+    }
+
+    function mover(id, aMesa) {
+      const el = byId(id);
+      if (!el) return;
+      if (aMesa) {
+        mesa.appendChild(el);
+        estado.enMesa.add(id);
+      } else {
+        stack.appendChild(el);
+        estado.enMesa.delete(id);
+      }
+      el.classList.remove("seleccionada");
+      estado.seleccion = null;
+      calcularIndice();
+    }
+
+    function setupZona(zonaEl, aMesa) {
+      zonaEl.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        zonaEl.classList.add("drop-hover");
+      });
+      zonaEl.addEventListener("dragleave", () => {
+        zonaEl.classList.remove("drop-hover");
+      });
+      zonaEl.addEventListener("drop", (event) => {
+        event.preventDefault();
+        zonaEl.classList.remove("drop-hover");
+        const id = event.dataTransfer.getData("text/plain");
+        if (!id) return;
+        if (aMesa && !estado.enMesa.has(id)) mover(id, true);
+        if (!aMesa && estado.enMesa.has(id)) mover(id, false);
+      });
+
+      zonaEl.addEventListener("click", () => {
+        if (!esTactil || !estado.seleccion) return;
+        if (aMesa && !estado.enMesa.has(estado.seleccion)) mover(estado.seleccion, true);
+        if (!aMesa && estado.enMesa.has(estado.seleccion)) mover(estado.seleccion, false);
+      });
+    }
+
+    function reset() {
+      estado.enMesa.clear();
+      estado.seleccion = null;
+      stack.innerHTML = "";
+      mesa.innerHTML = "";
+      opcionesData.forEach((item) => stack.appendChild(crearOpcion(item)));
+      calcularIndice();
+      setFeedback("Mueve opciones a la mesa. El acuerdo es válido solo si A y B ≥ 70% y existe criterio de legitimidad.");
+    }
+
+    btnLegit.addEventListener("click", () => {
+      legitBox.classList.toggle("activo");
+      btnLegit.textContent = legitBox.classList.contains("activo") ? "Ocultar criterios" : "Ver criterios";
+    });
+
+    btnReset.addEventListener("click", reset);
+
+    setupZona(stack, false);
+    setupZona(mesa, true);
+    reset();
+  </script>
+</body>
+</html>

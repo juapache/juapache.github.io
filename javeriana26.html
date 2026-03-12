@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resolución de Conflictos · Javeriana 2026 | Juan José Vásquez-Pacheco</title>
+  <meta name="description" content="Índice del seminario Resolución de Conflictos (Javeriana 2026) — actividades interactivas del Día 1: Diagnóstico de Conflictos." />
+  <link rel="canonical" href="https://juapache.github.io/javeriana26.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Page-specific overrides ──────────────────────────────── */
+    .course-hero {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    .course-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 6px;
+    }
+
+    .course-hero h1 {
+      font-size: clamp(26px, 3.5vw, 40px);
+      line-height: 1.2;
+      margin-top: 12px;
+    }
+
+    .course-hero p.subtitle {
+      margin-top: 12px;
+      max-width: 680px;
+    }
+
+    .unit-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0 6px;
+    }
+
+    .unit-header h2 {
+      font-size: clamp(18px, 2vw, 24px);
+    }
+
+    .unit-divider {
+      flex: 1;
+      height: 1px;
+      background: var(--stroke);
+    }
+
+    .activity-card {
+      position: relative;
+    }
+
+    .activity-card .activity-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .activity-card h3 {
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .activity-card .icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .activity-card .tool-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      opacity: 0.8;
+    }
+
+    .wip-banner {
+      background: linear-gradient(90deg, rgba(196,123,54,0.15), rgba(196,123,54,0.06));
+      border: 1px solid rgba(196,123,54,0.35);
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: #f2c87a;
+      font-size: 14px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .wip-banner svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .objectives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .objective-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--stroke);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .objective-item .obj-num {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-2);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .objective-item p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <nav>
+        <ul>
+          <li><a href="index-es.html">Inicio</a></li>
+          <li><a href="about-es.html">Sobre mí</a></li>
+          <li><a href="research-es.html">Investigación</a></li>
+          <li><a href="teaching-es.html" class="active">Docencia</a></li>
+          <li><a href="contact-es.html">Contacto</a></li>
+          <li><a href="data-lab-es.html">Data Lab</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Course hero ──────────────────────────────────────────── -->
+    <section class="course-hero">
+      <div class="container">
+        <div class="course-meta">
+          <span class="tag small">Pontificia Universidad Javeriana</span>
+          <span class="tag small">2026</span>
+          <span class="tag small">Estudios de Paz y Conflicto</span>
+          <span class="tag small wip-tag" style="border-color:rgba(196,123,54,0.5);color:#f2c87a;">🚧 En construcción</span>
+        </div>
+        <h1>Resolución de Conflictos</h1>
+        <p class="subtitle">
+          Seminario interactivo de diagnóstico, herramientas y mediación de conflictos.
+          Las actividades combinan marcos teóricos clásicos con visualizaciones
+          y simulaciones participativas.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── WIP notice ───────────────────────────────────────────── -->
+    <section style="padding: 32px 0 0;">
+      <div class="container">
+        <div class="wip-banner" role="status">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span>
+            <strong>Página en construcción.</strong> Este índice es un marcador de posición (placeholder).
+            Las actividades están alojadas en el repositorio Class-Portfolio y se irán integrando a medida que el curso avance.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Course objectives ────────────────────────────────────── -->
+    <section style="padding: 36px 0 0;">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Objetivos del curso</h2>
+            <p>Competencias centrales que se desarrollan a lo largo del seminario.</p>
+          </div>
+        </div>
+        <div class="objectives-grid">
+          <div class="objective-item">
+            <span class="obj-num">01</span>
+            <p>Diagnosticar conflictos distinguiendo episodio, red relacional y estructura sistémica.</p>
+          </div>
+          <div class="objective-item">
+            <span class="obj-num">02</span>
+            <p>Aplicar marcos analíticos (Lederach, Galtung, P.I.N., método Harvard) a casos concretos.</p>
+          </div>
+          <div class="objective-item">
+            <span class="obj-num">03</span>
+            <p>Diseñar intervenciones de mediación con criterios de legitimidad y beneficio mutuo.</p>
+          </div>
+          <div class="objective-item">
+            <span class="obj-num">04</span>
+            <p>Usar pensamiento sistémico para anticipar efectos cascada en redes relacionales complejas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Día 1: Diagnóstico de Conflictos ─────────────────────── -->
+    <section style="padding: 48px 0 64px;">
+      <div class="container">
+
+        <div class="unit-header">
+          <span class="pill">Día 1</span>
+          <h2>Diagnóstico de Conflictos</h2>
+          <div class="unit-divider" aria-hidden="true"></div>
+          <span class="tag small">7 actividades</span>
+        </div>
+        <p style="color:var(--muted); margin-bottom:28px; font-size:15px;">
+          Sesión introductoria de diagnóstico. Se trabajan las capas del conflicto desde el evento visible
+          hasta la estructura sistémica, usando herramientas de análisis interactivas.
+        </p>
+
+        <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));">
+
+          <!-- Actividad 01 -->
+          <article class="card activity-card">
+            <div class="icon" aria-hidden="true">🔍</div>
+            <div>
+              <p class="activity-num">Actividad 01</p>
+              <h3>Zoom de Lederach</h3>
+            </div>
+            <p>Visualiza la diferencia entre el <strong>episodio</strong> visible de un conflicto y su <strong>epicentro</strong> relacional-estructural. Controla el nivel de análisis con un deslizador de zoom.</p>
+            <div class="badge-stack">
+              <span class="tag small">#Lederach</span>
+              <span class="tag small">#Transformación</span>
+            </div>
+            <p class="tool-label">Herramienta interactiva · Slider</p>
+            <div class="badge-stack">
+              <a class="deep-link"
+                 href="https://juapache.github.io/actividad-01.html"
+                 target="_blank" rel="noopener">
+                ▶ Abrir actividad
+              </a>
+              <a class="deep-link"
+                 href="https://github.com/juapache/Class-Portfolio/blob/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos/actividad-01.html"
+                 target="_blank" rel="noopener">
+                📂 Ver fuente
+              </a>
+            </div>
+          </article>
+
+          <!-- Actividad 02 -->
+          <article class="card activity-card">
+            <div class="icon" aria-hidden="true">🌊</div>
+            <div>
+              <p class="activity-num">Actividad 02</p>
+              <h3>El Flujo de la Violencia</h3>
+            </div>
+            <p>Visualización dinámica inspirada en el <strong>triángulo de Galtung</strong> para observar cómo la violencia directa, estructural y cultural se refuerzan mutuamente en circuito.</p>
+            <div class="badge-stack">
+              <span class="tag small">#Galtung</span>
+              <span class="tag small">#Violencia estructural</span>
+            </div>
+            <p class="tool-label">Herramienta interactiva · Diagrama</p>
+            <div class="badge-stack">
+              <a class="deep-link"
+                 href="https://juapache.github.io/actividad-02.html"
+                 target="_blank" rel="noopener">
+                ▶ Abrir actividad
+              </a>
+              <a class="deep-link"
+                 href="https://github.com/juapache/Class-Portfolio/blob/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos/actividad-02.html"
+                 target="_blank" rel="noopener">
+                📂 Ver fuente
+              </a>
+            </div>
+          </article>
+
+          <!-- Actividad 03 -->
+          <article class="card activity-card">
+            <div class="icon" aria-hidden="true">🧅</div>
+            <div>
+              <p class="activity-num">Actividad 03</p>
+              <h3>El Pelador de la Cebolla</h3>
+            </div>
+            <p>Clasifica declaraciones de un conflicto real en capas <strong>P.I.N.</strong> (Posiciones, Intereses, Necesidades). Práctica de lectura analítica de lo visible a lo vital.</p>
+            <div class="badge-stack">
+              <span class="tag small">#P.I.N.</span>
+              <span class="tag small">#Fisas</span>
+              <span class="tag small">#Clasificación</span>
+            </div>
+            <p class="tool-label">Juego · Clasificación</p>
+            <div class="badge-stack">
+              <a class="deep-link"
+                 href="https://juapache.github.io/actividad-03.html"
+                 target="_blank" rel="noopener">
+                ▶ Abrir actividad
+              </a>
+              <a class="deep-link"
+                 href="https://github.com/juapache/Class-Portfolio/blob/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos/actividad-03.html"
+                 target="_blank" rel="noopener">
+                📂 Ver fuente
+              </a>
+            </div>
+          </article>
+
+          <!-- Actividad 04 -->
+          <article class="card activity-card">
+            <div class="icon" aria-hidden="true">🕸️</div>
+            <div>
+              <p class="activity-num">Actividad 04</p>
+              <h3>Simulador de Red Sistémica</h3>
+            </div>
+            <p>Explora el <strong>efecto cascada</strong>: intervenir en un nodo relacional modifica percepciones, alianzas y tensiones en toda la red. El sistema vibra cuando mueves una sola cuerda.</p>
+            <div class="badge-stack">
+              <span class="tag small">#Pensamiento sistémico</span>
+              <span class="tag small">#Redes</span>
+            </div>
+            <p class="tool-label">Simulador · Grafo interactivo</p>
+            <div class="badge-stack">
+              <a class="deep-link"
+                 href="https://juapache.github.io/actividad-04.html"
+                 target="_blank" rel="noopener">
+                ▶ Abrir actividad
+              </a>
+              <a class="deep-link"
+                 href="https://github.com/juapache/Class-Portfolio/blob/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos/actividad-04.html"
+                 target="_blank" rel="noopener">
+                📂 Ver fuente
+              </a>
+            </div>
+          </article>
+
+          <!-- Actividad 05 -->
+          <article class="card activity-card">
+            <div class="icon" aria-hidden="true">🕊️</div>
+            <div>
+              <p class="activity-num">Actividad 05</p>
+              <h3>El Traductor de Paz</h3>
+            </div>
+            <p>Duelo de <em>reframing</em>: convierte lenguaje reactivo en lenguaje de necesidades. El objetivo es bajar la tensión del diálogo y subir la calidad del intercambio comunicativo.</p>
+            <div class="badge-stack">
+              <span class="tag small">#Comunicación</span>
+              <span class="tag small">#Reframing</span>
+            </div>
+            <p class="tool-label">Juego · Duelo de reencuadre</p>
+            <div class="badge-stack">
+              <a class="deep-link"
+                 href="https://juapache.github.io/actividad-05.html"
+                 target="_blank" rel="noopener">
+                ▶ Abrir actividad
+              </a>
+              <a class="deep-link"
+                 href="https://github.com/juapache/Class-Portfolio/blob/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos/actividad-05.html"
+                 target="_blank" rel="noopener">
+                📂 Ver fuente
+              </a>
+            </div>
+          </article>
+
+          <!-- Actividad 06 -->
+          <article class="card activity-card">
+            <div class="icon" aria-hidden="true">⚖️</div>
+            <div>
+              <p class="activity-num">Actividad 06</p>
+              <h3>La Arena de Negociación</h3>
+            </div>
+            <p>Aplica el <strong>Método Harvard</strong>: distingue posiciones e intereses, construye opciones creativas y valida el acuerdo con criterios objetivos de legitimidad compartida.</p>
+            <div class="badge-stack">
+              <span class="tag small">#Harvard</span>
+              <span class="tag small">#Negociación</span>
+              <span class="tag small">#Acuerdo</span>
+            </div>
+            <p class="tool-label">Simulación · Negociación por pasos</p>
+            <div class="badge-stack">
+              <a class="deep-link"
+                 href="https://juapache.github.io/actividad-06.html"
+                 target="_blank" rel="noopener">
+                ▶ Abrir actividad
+              </a>
+              <a class="deep-link"
+                 href="https://github.com/juapache/Class-Portfolio/blob/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos/actividad-06.html"
+                 target="_blank" rel="noopener">
+                📂 Ver fuente
+              </a>
+            </div>
+          </article>
+
+          <!-- Actividad 07 -->
+          <article class="card activity-card">
+            <div class="icon" aria-hidden="true">🎯</div>
+            <div>
+              <p class="activity-num">Actividad 07</p>
+              <h3>El Mediador Sistémico</h3>
+            </div>
+            <p>Tienes <strong>5 intervenciones</strong> para llevar el <em>Clima Universitario</em> a Armonía Sostenible (≥ 75%). Selecciona actores clave en el grafo y elige acciones de mediación estratégica.</p>
+            <div class="badge-stack">
+              <span class="tag small">#Mediación</span>
+              <span class="tag small">#Estrategia</span>
+              <span class="tag small">#Grafo</span>
+            </div>
+            <p class="tool-label">Simulación · Mediación en red</p>
+            <div class="badge-stack">
+              <a class="deep-link"
+                 href="https://juapache.github.io/actividad-07.html"
+                 target="_blank" rel="noopener">
+                ▶ Abrir actividad
+              </a>
+              <a class="deep-link"
+                 href="https://github.com/juapache/Class-Portfolio/blob/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos/actividad-07.html"
+                 target="_blank" rel="noopener">
+                📂 Ver fuente
+              </a>
+            </div>
+          </article>
+
+        </div><!-- /card-grid -->
+
+        <!-- Repo link -->
+        <div style="margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+          <a class="btn ghost"
+             href="https://github.com/juapache/Class-Portfolio/tree/main/02-resolucion-de-conflictos26/01-diagnostico-de-conflictos"
+             target="_blank" rel="noopener">
+            📚 Ver todo el material en GitHub
+          </a>
+          <a class="btn ghost" href="teaching-es.html">← Volver a Docencia</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer" style="display:flex; justify-content:space-between; align-items:center; padding:24px 24px; flex-wrap:wrap; gap:12px;">
+      <p style="color:var(--muted); font-size:14px;">&copy; 2026 Juan José Vásquez-Pacheco.</p>
+      <div style="display:flex; gap:18px; flex-wrap:wrap;">
+        <a class="deep-link" href="teaching-es.html">← Docencia</a>
+        <a class="deep-link" href="index-es.html">Inicio →</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const currentPage = window.location.pathname.split('/').pop() || 'index-es.html';
+      document.querySelectorAll('nav ul li a').forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

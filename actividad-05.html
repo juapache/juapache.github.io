@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Día 1 · Actividad 5 · El Traductor de Paz</title>
+  <style>
+    :root {
+      --bg: #101318;
+      --panel: #181d26;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --danger: #f43f5e;
+      --ok: #22c55e;
+      --line: #334155;
+      --accent: #38bdf8;
+      --trans: 0.3s;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0%, var(--bg) 55%);
+      color: var(--text);
+      padding: 14px;
+    }
+    .app {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      background: linear-gradient(165deg, rgba(24, 29, 38, 0.96), rgba(12, 16, 24, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 16px;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+    h1 { margin: 0; font-size: clamp(1.15rem, 0.95rem + 1.2vw, 1.8rem); }
+    .sub { margin: 0; color: #cbd5e1; line-height: 1.4; font-size: 0.95rem; }
+
+    .clima {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(2, 6, 23, 0.78);
+      border-radius: 12px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    .clima-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      flex-wrap: wrap;
+    }
+    .barra {
+      height: 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      overflow: hidden;
+      background: rgba(51, 65, 85, 0.45);
+      position: relative;
+    }
+    .progreso {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      background: linear-gradient(90deg, #f43f5e, #f59e0b, #22c55e);
+      transition: width var(--trans);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .panel {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.76);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    .panel h2 { margin: 0; font-size: 1rem; }
+
+    .burbuja {
+      border-radius: 16px;
+      padding: 14px;
+      line-height: 1.45;
+      font-size: 0.97rem;
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      background: rgba(127, 29, 29, 0.25);
+      box-shadow: 0 0 18px rgba(244, 63, 94, 0.28);
+      transition: background var(--trans), border-color var(--trans), box-shadow var(--trans), transform var(--trans);
+    }
+    .burbuja.toxica {
+      animation: vibrar 700ms ease-in-out infinite;
+    }
+    .burbuja.calma {
+      border-color: rgba(34, 197, 94, 0.6);
+      background: rgba(21, 128, 61, 0.24);
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.45);
+      animation: none;
+      transform: scale(1.01);
+    }
+
+    .opciones {
+      display: grid;
+      gap: 8px;
+    }
+    .opcion {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 10px;
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.82);
+      color: #f8fafc;
+      text-align: left;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      cursor: pointer;
+      transition: border-color var(--trans), transform var(--trans), background var(--trans);
+    }
+    .opcion:hover,
+    .opcion:focus-visible {
+      border-color: rgba(56, 189, 248, 0.85);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .feedback {
+      margin: 0;
+      min-height: 3em;
+      color: #cbd5e1;
+      line-height: 1.4;
+      font-size: 0.92rem;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.82);
+      padding: 10px;
+    }
+    .feedback.ok { color: #bbf7d0; }
+    .feedback.error { color: #fecdd3; }
+
+    .acciones {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #f8fafc;
+      padding: 7px 12px;
+      cursor: pointer;
+      font-size: 0.86rem;
+      transition: transform var(--trans), border-color var(--trans);
+    }
+    .btn:hover,
+    .btn:focus-visible {
+      transform: scale(1.03);
+      border-color: rgba(56, 189, 248, 0.85);
+      outline: none;
+    }
+
+    .resumen {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @keyframes vibrar {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(1px, -1px); }
+      50% { transform: translate(-1px, 1px); }
+      75% { transform: translate(1px, 1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @media (min-width: 920px) {
+      .layout { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1>El Traductor de Paz (Reframing Duel)</h1>
+    <p class="sub">Convierte lenguaje reactivo en lenguaje de necesidades. Tu meta es bajar tensión y subir diálogo.</p>
+
+    <section class="clima" aria-label="Medidor de clima del diálogo">
+      <div class="clima-head">
+        <strong>Clima del Diálogo</strong>
+        <span id="estadisticas">Diálogo: 50% · Tensión: 50%</span>
+      </div>
+      <div class="barra" aria-hidden="true">
+        <div id="progreso" class="progreso"></div>
+      </div>
+      <p class="resumen" id="contador">Caso 1 de 5</p>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Ataque (lenguaje reactivo)</h2>
+        <div id="ataque" class="burbuja toxica"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Traducción (lenguaje proactivo)</h2>
+        <div id="opciones" class="opciones"></div>
+      </article>
+    </section>
+
+    <p id="feedback" class="feedback">Selecciona la traducción que reconozca una necesidad de fondo.</p>
+
+    <div class="acciones">
+      <button id="btnSiguiente" class="btn" type="button" disabled>Siguiente caso</button>
+      <button id="btnReiniciar" class="btn" type="button">Reiniciar</button>
+    </div>
+  </main>
+
+  <script>
+    const casos = [
+      {
+        ataque: "¡La oficina de registro es un desastre, son unos incompetentes!",
+        opciones: [
+          { texto: "Necesitas claridad sobre los tiempos y pasos del trámite para sentir tranquilidad, ¿verdad?", correcta: true },
+          { texto: "Bueno, si no te gusta, haz la fila otra vez y deja de quejarte.", correcta: false },
+          { texto: "La verdad sí son un desastre, toca gritar más duro.", correcta: false }
+        ]
+      },
+      {
+        ataque: "¡En la biblioteca nadie respeta el silencio, esto es imposible!",
+        opciones: [
+          { texto: "Parece que necesitas un ambiente de estudio más tranquilo para concentrarte.", correcta: true },
+          { texto: "Relájate, en la U siempre hay ruido, acostúmbrate.", correcta: false },
+          { texto: "Pues vete a otra sede si no te gusta.", correcta: false }
+        ]
+      },
+      {
+        ataque: "¡Mi grupo no sirve para nada, me dejaron todo el trabajo!",
+        opciones: [
+          { texto: "Necesitas corresponsabilidad y acuerdos claros para que el trabajo sea justo.", correcta: true },
+          { texto: "Hazlo tú y ya, así sacas mejor nota.", correcta: false },
+          { texto: "Diles flojos en el chat del curso para que reaccionen.", correcta: false }
+        ]
+      },
+      {
+        ataque: "¡Servicios generales nunca limpia bien, todo está asqueroso!",
+        opciones: [
+          { texto: "Necesitas condiciones de higiene y cuidado para sentir bienestar en el campus.", correcta: true },
+          { texto: "Eso pasa por estudiar en una universidad pública, aguanta.", correcta: false },
+          { texto: "Toca insultarlos hasta que hagan caso.", correcta: false }
+        ]
+      },
+      {
+        ataque: "¡Decanatura siempre decide sin escuchar a los estudiantes!",
+        opciones: [
+          { texto: "Necesitas participación real y sentir que tu voz cuenta en las decisiones.", correcta: true },
+          { texto: "Es obvio que no escuchan, mejor bloquearles todo.", correcta: false },
+          { texto: "No se puede hacer nada, así son las directivas.", correcta: false }
+        ]
+      }
+    ];
+
+    let idx = 0;
+    let yaRespondido = false;
+    let dialogo = 50;
+
+    const ataqueEl = document.getElementById("ataque");
+    const opcionesEl = document.getElementById("opciones");
+    const feedbackEl = document.getElementById("feedback");
+    const progresoEl = document.getElementById("progreso");
+    const estadisticasEl = document.getElementById("estadisticas");
+    const contadorEl = document.getElementById("contador");
+    const btnSiguiente = document.getElementById("btnSiguiente");
+    const btnReiniciar = document.getElementById("btnReiniciar");
+
+    function actualizarMedidor() {
+      dialogo = Math.max(0, Math.min(100, dialogo));
+      const tension = 100 - dialogo;
+      progresoEl.style.width = `${dialogo}%`;
+      estadisticasEl.textContent = `Diálogo: ${dialogo}% · Tensión: ${tension}%`;
+    }
+
+    function setFeedback(msg, tipo = "") {
+      feedbackEl.textContent = msg;
+      feedbackEl.classList.remove("ok", "error");
+      if (tipo) feedbackEl.classList.add(tipo);
+    }
+
+    function cargarCaso() {
+      const caso = casos[idx];
+      yaRespondido = false;
+      btnSiguiente.disabled = true;
+      contadorEl.textContent = `Caso ${idx + 1} de ${casos.length}`;
+      ataqueEl.textContent = caso.ataque;
+      ataqueEl.classList.remove("calma");
+      ataqueEl.classList.add("toxica");
+      opcionesEl.innerHTML = "";
+
+      caso.opciones.forEach((opcion) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "opcion";
+        btn.textContent = opcion.texto;
+        btn.addEventListener("click", () => responder(opcion));
+        opcionesEl.appendChild(btn);
+      });
+
+      setFeedback("Selecciona la traducción que reconozca una necesidad de fondo.");
+    }
+
+    function responder(opcion) {
+      if (yaRespondido) return;
+      yaRespondido = true;
+      btnSiguiente.disabled = false;
+
+      if (opcion.correcta) {
+        dialogo += 12;
+        ataqueEl.classList.remove("toxica");
+        ataqueEl.classList.add("calma");
+        ataqueEl.textContent = opcion.texto;
+        setFeedback("Excelente reencuadre CNV. Identificaste la necesidad detrás del ataque y abriste espacio de diálogo.", "ok");
+      } else {
+        dialogo -= 12;
+        setFeedback("Esa respuesta mantiene el ciclo reactivo. En CNV, busca nombrar la necesidad (seguridad, claridad, participación, respeto).", "error");
+      }
+
+      actualizarMedidor();
+    }
+
+    btnSiguiente.addEventListener("click", () => {
+      if (idx < casos.length - 1) {
+        idx += 1;
+        cargarCaso();
+      } else {
+        const cierre = dialogo >= 70
+          ? "¡Buen trabajo! Elevaste el clima del diálogo y mostraste oído de mediación."
+          : "Terminaste los casos. Repite para fortalecer reencuadres basados en necesidades.";
+        setFeedback(cierre, dialogo >= 70 ? "ok" : "");
+        btnSiguiente.disabled = true;
+      }
+    });
+
+    btnReiniciar.addEventListener("click", () => {
+      idx = 0;
+      dialogo = 50;
+      actualizarMedidor();
+      cargarCaso();
+    });
+
+    actualizarMedidor();
+    cargarCaso();
+  </script>
+</body>
+</html>
