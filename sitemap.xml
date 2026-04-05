@@ -1,13 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main navigation pages (English) -->
   <url><loc>https://juapache.github.io/</loc></url>
   <url><loc>https://juapache.github.io/about.html</loc></url>
   <url><loc>https://juapache.github.io/research.html</loc></url>
   <url><loc>https://juapache.github.io/teaching.html</loc></url>
   <url><loc>https://juapache.github.io/contact.html</loc></url>
+  <url><loc>https://juapache.github.io/data-lab.html</loc></url>
+  <url><loc>https://juapache.github.io/blog.html</loc></url>
+  <!-- Main navigation pages (Spanish) -->
   <url><loc>https://juapache.github.io/index-es.html</loc></url>
   <url><loc>https://juapache.github.io/about-es.html</loc></url>
   <url><loc>https://juapache.github.io/research-es.html</loc></url>
   <url><loc>https://juapache.github.io/teaching-es.html</loc></url>
   <url><loc>https://juapache.github.io/contact-es.html</loc></url>
+  <url><loc>https://juapache.github.io/data-lab-es.html</loc></url>
+  <!-- Interactive tools -->
+  <url><loc>https://juapache.github.io/trust-paradox.html</loc></url>
+  <url><loc>https://juapache.github.io/trust-paradox-es.html</loc></url>
+  <url><loc>https://juapache.github.io/polarization-spiral.html</loc></url>
+  <url><loc>https://juapache.github.io/polarization-spiral-es.html</loc></url>
+  <url><loc>https://juapache.github.io/prisoners_dilemma_escalation.html</loc></url>
+  <url><loc>https://juapache.github.io/prisoners_dilemma_escalation-es.html</loc></url>
+  <url><loc>https://juapache.github.io/prisoners_dilemma_escalation-parte2.html</loc></url>
+  <url><loc>https://juapache.github.io/prisoners_dilemma_escalation-parte2-es.html</loc></url>
+  <!-- Lessons -->
+  <url><loc>https://juapache.github.io/lesson_intropc.html</loc></url>
+  <url><loc>https://juapache.github.io/lesson_intropc-es.html</loc></url>
+  <url><loc>https://juapache.github.io/lesson_peaceinnovation.html</loc></url>
+  <url><loc>https://juapache.github.io/lesson_peaceinnovation-l1.html</loc></url>
+  <!-- Case studies and courses -->
+  <url><loc>https://juapache.github.io/democracy-under-siege.html</loc></url>
+  <url><loc>https://juapache.github.io/democracia-en-crisis-cr.html</loc></url>
+  <url><loc>https://juapache.github.io/javeriana26.html</loc></url>
+  <!-- Blog posts -->
+  <url><loc>https://juapache.github.io/blog-posts/01-blog-post-title-here.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/2026-reading-list.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/being-notbeing.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/nos-atrevemos.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/programacion-segura-cr.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/secure-programming-cr.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/ser-noser.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/should-we-dare.html</loc></url>
+  <url><loc>https://juapache.github.io/blog-posts/the-best-is-yet-to-come.html</loc></url>
+  <!-- Activity pages (Javeriana 2026 course) -->
+  <url><loc>https://juapache.github.io/actividad-01.html</loc></url>
+  <url><loc>https://juapache.github.io/actividad-02.html</loc></url>
+  <url><loc>https://juapache.github.io/actividad-03.html</loc></url>
+  <url><loc>https://juapache.github.io/actividad-04.html</loc></url>
+  <url><loc>https://juapache.github.io/actividad-05.html</loc></url>
+  <url><loc>https://juapache.github.io/actividad-06.html</loc></url>
+  <url><loc>https://juapache.github.io/actividad-07.html</loc></url>
 </urlset>
