@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto Viento Sagrado | Evaluacion Interactiva</title>
+  <meta name="description" content="Evaluacion interactiva de transformacion de conflictos para el caso Proyecto Viento Sagrado." />
+  <style>
+    :root {
+      --bg: #f3f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef4fa;
+      --stroke: #d3deea;
+      --text: #17324a;
+      --muted: #56708a;
+      --primary: #1d6fa5;
+      --primary-dark: #14527a;
+      --ok: #1f8f6e;
+      --warn: #c3841a;
+      --danger: #b54747;
+      --shadow: 0 10px 28px rgba(24, 57, 88, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Inter", "Roboto", sans-serif;
+      background: linear-gradient(180deg, #edf4fb 0%, #f8fbff 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 24px 16px 36px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1f7eb8, #2f9a7b);
+      border-radius: 16px;
+      padding: 20px;
+      color: #f5fbff;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin: 0;
+      opacity: 0.95;
+      max-width: 950px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 14px 16px;
+      background: var(--surface-soft);
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    .panel-header h2,
+    .panel-header h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .panel-body {
+      padding: 14px 16px 16px;
+    }
+
+    .case-text p {
+      margin: 0 0 10px;
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .case-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .hint {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px dashed #8eb0cc;
+      background: #f5fafe;
+      color: #2f5a7c;
+      font-size: 0.88rem;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .btn {
+      border: 1px solid var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.12s ease, background 0.2s ease;
+      font-size: 0.9rem;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn.secondary {
+      background: #ffffff;
+      color: var(--primary-dark);
+      border-color: #94b5cf;
+    }
+
+    .btn.secondary:hover {
+      background: #eef5fc;
+    }
+
+    .options-list,
+    .selected-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .option-item,
+    .selected-item {
+      background: #ffffff;
+      border: 1px solid var(--stroke);
+      border-radius: 10px;
+      padding: 10px 11px;
+      cursor: pointer;
+      line-height: 1.38;
+      font-size: 0.92rem;
+      color: var(--text);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      transition: border-color 0.18s ease, transform 0.1s ease, box-shadow 0.18s ease;
+    }
+
+    .option-item:hover,
+    .selected-item:hover {
+      border-color: #7ea7c7;
+      box-shadow: 0 4px 12px rgba(19, 73, 117, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .option-num,
+    .selected-step {
+      flex: 0 0 auto;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      background: #ebf5ff;
+      color: #1b5d8d;
+      border: 1px solid #c7dff4;
+      margin-top: 1px;
+    }
+
+    .option-num {
+      min-width: auto;
+      padding: 0 10px;
+    }
+
+    .selected-step {
+      background: #e9f8f1;
+      color: #1e755c;
+      border-color: #bde7d6;
+    }
+
+    .selected-wrap {
+      margin-top: 14px;
+      border: 2px dashed #a9c5dd;
+      border-radius: 12px;
+      background: #f7fbff;
+      padding: 10px;
+      min-height: 180px;
+    }
+
+    .selected-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-block;
+      margin-top: 8px;
+      background: #e9f6ef;
+      color: #1f7a5f;
+      border: 1px solid #c4e5d8;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      font-weight: 700;
+    }
+
+    .empty-state {
+      color: #63819b;
+      font-size: 0.9rem;
+      padding: 10px 4px;
+    }
+
+    .feedback {
+      margin-top: 16px;
+      background: #f9fcff;
+      border: 1px solid var(--stroke);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .feedback h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .feedback ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .feedback li {
+      margin-bottom: 8px;
+      color: #24465f;
+      line-height: 1.45;
+    }
+
+    .feedback li:last-child {
+      margin-bottom: 0;
+    }
+
+    .level {
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid;
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .level.ok {
+      color: #176d54;
+      background: #e8f8f1;
+      border-color: #bce6d5;
+    }
+
+    .level.mid {
+      color: #8e620d;
+      background: #fff7e8;
+      border-color: #f2d7a0;
+    }
+
+    .level.bad {
+      color: #8f2f2f;
+      background: #fdeeee;
+      border-color: #efc3c3;
+    }
+
+    .dragging {
+      opacity: 0.55;
+    }
+
+    .drop-target {
+      border-color: #2a8ccf !important;
+      background: #eef8ff !important;
+    }
+
+    .section-gap {
+      margin-top: 14px;
+    }
+
+    @media (max-width: 1020px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-label="Introduccion">
+      <h1>Proyecto Viento Sagrado</h1>
+      <p>
+        Evaluacion interactiva de Transformacion de Conflictos: selecciona entre 6 y 8 acciones,
+        ordnalas en una ruta estrategica y recibe retroalimentacion cualitativa en cuatro ejes:
+        Desescalada, Legitimacion, Resolucion y Transformacion.
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Evaluacion interactiva">
+      <article class="panel">
+        <header class="panel-header">
+          <h2>Caso de estudio</h2>
+        </header>
+        <div class="panel-body case-text">
+          <p>
+            En la meseta de Piedra Blanca, EcoVolt impulsa un parque eolico de 250 MW con 50 aerogeneradores.
+            El Estado concedio el uso de suelo por 30 anos, pero la Comunidad Indigena Rayen denuncia que no hubo
+            Consulta Previa, Libre e Informada sobre un territorio con valor espiritual y de subsistencia.
+          </p>
+          <p>
+            La tension escalo: hay bloqueo territorial de 15 dias, orden judicial de desalojo en 12 horas,
+            riesgo de uso de fuerza publica y ruptura total de comunicacion entre la empresa y la comunidad.
+            Ademas, el financista internacional advirtio que congelara fondos ante posibles violaciones de derechos humanos.
+          </p>
+          <p>
+            Tu tarea: elegir entre 6 y 8 acciones de abordaje, ordenarlas en secuencia logica y construir una
+            estrategia de salida pacifica y sostenible.
+          </p>
+          <div class="hint">
+            Clave metodologica: primero desescalar, luego legitimar el proceso de dialogo, despues negociar
+            ajustes y finalmente acordar mecanismos de transformacion estructural.
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <header class="panel-header">
+          <h3>Opciones de abordaje (16)</h3>
+        </header>
+        <div class="panel-body">
+          <div class="status-row">
+            <div class="status" id="selectionStatus">Seleccionadas: 0 (debes elegir entre 6 y 8)</div>
+            <button class="btn secondary" id="shuffleBtn" type="button">Mezclar opciones</button>
+          </div>
+
+          <ul class="options-list" id="optionsList" aria-label="Lista de opciones disponibles"></ul>
+
+          <div class="section-gap">
+            <strong>Secuencia propuesta (1-8)</strong>
+            <div class="selected-wrap" id="selectedWrap">
+              <ul class="selected-list" id="selectedList" aria-label="Zona de aterrizaje"></ul>
+              <div class="empty-state" id="emptyState">Arrastra o haz clic en una opcion para agregarla a tu secuencia.</div>
+            </div>
+            <div class="selected-actions">
+              <button class="btn" id="evaluateBtn" type="button">Evaluar abordaje</button>
+              <button class="btn secondary" id="clearBtn" type="button">Limpiar secuencia</button>
+            </div>
+            <span class="pill">Regla: maximo 8 opciones, minimo 6.</span>
+          </div>
+
+          <section class="feedback" id="feedback" aria-live="polite" hidden>
+            <h3>Retroalimentacion cualitativa</h3>
+            <div id="feedbackBody"></div>
+          </section>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const optionsData = [
+      { id: 1, text: "Ejecutar la orden de desalojo judicial utilizando la fuerza publica para garantizar la libre circulacion y la continuidad de las obras." },
+      { id: 2, text: "Establecer una tregua de Paz Territorial de 15 dias, suspendiendo tanto el avance de la obra como la orden de desalojo para abrir una mesa de dialogo." },
+      { id: 3, text: "Realizar un peritaje cultural e historico independiente para mapear sitios sagrados y ajustar el diseno del parque eolico respetando esos puntos." },
+      { id: 4, text: "Iniciar una campana de desprestigio en medios contra lideres de la comunidad, acusandolos de frenar el desarrollo energetico del pais." },
+      { id: 5, text: "Solicitar la mediacion de un organismo internacional (ONU o CIDH) para actuar como garante neutral en las conversaciones." },
+      { id: 6, text: "Ofrecer pagos individuales en efectivo a miembros de la comunidad para que abandonen el bloqueo, sin pasar por su liderazgo tradicional." },
+      { id: 7, text: "Crear un fideicomiso de beneficios compartidos para reinvertir parte de las ganancias de energia en proyectos definidos por la comunidad." },
+      { id: 8, text: "Instalar torres de vigilancia y seguridad privada armada alrededor de la maquinaria para evitar sabotajes." },
+      { id: 9, text: "Implementar un proceso de Consulta Previa retroactiva y vinculante, supervisado por la Defensoria del Pueblo, para buscar consentimiento informado." },
+      { id: 10, text: "Garantizar acceso irrestricto y permanente de los comuneros a rutas de pastoreo y sitios de culto dentro del perimetro del proyecto." },
+      { id: 11, text: "Firmar un acta de Cero Represalias para evitar persecucion legal contra manifestantes a cambio del levantamiento del bloqueo." },
+      { id: 12, text: "Ignorar las demandas culturales argumentando que el interes nacional y la crisis climatica global prevalecen sobre intereses locales." },
+      { id: 13, text: "Negociar un plan de infraestructura basica (electrificacion rural, pozos de agua y clinicas) financiado por EcoVolt." },
+      { id: 14, text: "Capacitar y contratar de manera preferente a jovenes de la Comunidad Rayen para operacion y mantenimiento tecnico del parque." },
+      { id: 15, text: "Solicitar la intervencion inmediata del ejercito para declarar la meseta como zona de seguridad nacional y militarizar el area." },
+      { id: 16, text: "Reubicar los aerogeneradores mas conflictivos tras una mesa tecnica conjunta entre ingenieros de la empresa y expertos designados por la comunidad." }
+    ];
+
+    const harmfulIds = new Set([1, 4, 6, 8, 12, 15]);
+    const desescaladaIds = new Set([2, 11]);
+    const legitimacionIds = new Set([5, 9, 3]);
+    const resolucionIds = new Set([10, 16, 3]);
+    const transformacionIds = new Set([7, 13, 14, 16]);
+
+    const state = {
+      poolOrder: [],
+      selectedIds: [],
+      dragSource: null
+    };
+
+    const optionsList = document.getElementById("optionsList");
+    const selectedList = document.getElementById("selectedList");
+    const selectedWrap = document.getElementById("selectedWrap");
+    const selectionStatus = document.getElementById("selectionStatus");
+    const emptyState = document.getElementById("emptyState");
+    const feedback = document.getElementById("feedback");
+    const feedbackBody = document.getElementById("feedbackBody");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const evaluateBtn = document.getElementById("evaluateBtn");
+
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function initialize() {
+      state.poolOrder = shuffle(optionsData.map((o) => o.id));
+      render();
+    }
+
+    function findOption(id) {
+      return optionsData.find((o) => o.id === id);
+    }
+
+    function addOption(id) {
+      if (state.selectedIds.includes(id)) {
+        return;
+      }
+      if (state.selectedIds.length >= 8) {
+        alert("Solo puedes elegir hasta 8 opciones.");
+        return;
+      }
+      state.selectedIds.push(id);
+      render();
+    }
+
+    function removeOption(id) {
+      state.selectedIds = state.selectedIds.filter((itemId) => itemId !== id);
+      render();
+    }
+
+    function moveSelected(fromIndex, toIndex) {
+      if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0) {
+        return;
+      }
+      const copy = [...state.selectedIds];
+      const [moved] = copy.splice(fromIndex, 1);
+      copy.splice(toIndex, 0, moved);
+      state.selectedIds = copy;
+      render();
+    }
+
+    function renderPool() {
+      const availableIds = state.poolOrder.filter((id) => !state.selectedIds.includes(id));
+      optionsList.innerHTML = "";
+
+      availableIds.forEach((id) => {
+        const option = findOption(id);
+        const item = document.createElement("li");
+        item.className = "option-item";
+        item.draggable = true;
+        item.dataset.id = String(id);
+
+        item.innerHTML = `
+          <span class="option-num">Accion</span>
+          <span>${option.text}</span>
+        `;
+
+        item.addEventListener("click", () => addOption(id));
+
+        item.addEventListener("dragstart", (event) => {
+          state.dragSource = { source: "pool", id };
+          item.classList.add("dragging");
+          event.dataTransfer.setData("text/plain", JSON.stringify(state.dragSource));
+          event.dataTransfer.effectAllowed = "copyMove";
+        });
+
+        item.addEventListener("dragend", () => {
+          item.classList.remove("dragging");
+          state.dragSource = null;
+        });
+
+        optionsList.appendChild(item);
+      });
+    }
+
+    function renderSelected() {
+      selectedList.innerHTML = "";
+      emptyState.style.display = state.selectedIds.length ? "none" : "block";
+
+      state.selectedIds.forEach((id, index) => {
+        const option = findOption(id);
+        const item = document.createElement("li");
+        item.className = "selected-item";
+        item.draggable = true;
+        item.dataset.id = String(id);
+        item.dataset.index = String(index);
+
+        item.innerHTML = `
+          <span class="selected-step">${index + 1}</span>
+          <span>${option.text}</span>
+        `;
+
+        item.title = "Haz clic para remover. Arrastra para reordenar.";
+        item.addEventListener("click", () => removeOption(id));
+
+        item.addEventListener("dragstart", (event) => {
+          state.dragSource = { source: "selected", id, index };
+          item.classList.add("dragging");
+          event.dataTransfer.setData("text/plain", JSON.stringify(state.dragSource));
+          event.dataTransfer.effectAllowed = "move";
+        });
+
+        item.addEventListener("dragend", () => {
+          item.classList.remove("dragging");
+          state.dragSource = null;
+        });
+
+        item.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          item.classList.add("drop-target");
+        });
+
+        item.addEventListener("dragleave", () => item.classList.remove("drop-target"));
+
+        item.addEventListener("drop", (event) => {
+          event.preventDefault();
+          item.classList.remove("drop-target");
+          const payload = getPayload(event);
+          if (!payload) {
+            return;
+          }
+
+          if (payload.source === "pool") {
+            if (state.selectedIds.length >= 8) {
+              alert("Solo puedes elegir hasta 8 opciones.");
+              return;
+            }
+            const current = [...state.selectedIds];
+            if (!current.includes(payload.id)) {
+              current.splice(index, 0, payload.id);
+              state.selectedIds = current;
+              render();
+            }
+            return;
+          }
+
+          if (payload.source === "selected") {
+            moveSelected(payload.index, index);
+          }
+        });
+
+        selectedList.appendChild(item);
+      });
+    }
+
+    function getPayload(event) {
+      try {
+        const text = event.dataTransfer.getData("text/plain");
+        return JSON.parse(text);
+      } catch (error) {
+        return state.dragSource;
+      }
+    }
+
+    selectedWrap.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      selectedWrap.classList.add("drop-target");
+    });
+
+    selectedWrap.addEventListener("dragleave", () => {
+      selectedWrap.classList.remove("drop-target");
+    });
+
+    selectedWrap.addEventListener("drop", (event) => {
+      event.preventDefault();
+      selectedWrap.classList.remove("drop-target");
+      const payload = getPayload(event);
+      if (!payload) {
+        return;
+      }
+
+      if (payload.source === "pool") {
+        addOption(payload.id);
+      }
+    });
+
+    function renderStatus() {
+      const count = state.selectedIds.length;
+      selectionStatus.textContent = `Seleccionadas: ${count} (debes elegir entre 6 y 8)`;
+    }
+
+    function scoreLevel(messages) {
+      const negatives = messages.filter((msg) => msg.level === "bad").length;
+      const warnings = messages.filter((msg) => msg.level === "mid").length;
+
+      if (negatives >= 3) {
+        return { className: "bad", text: "Riesgo alto de escalada" };
+      }
+      if (negatives >= 1 || warnings >= 3) {
+        return { className: "mid", text: "Estrategia mixta con riesgos" };
+      }
+      return { className: "ok", text: "Enfoque favorable de transformacion" };
+    }
+
+    function evalDimension(title, conditionGood, goodText, warningText, badText) {
+      if (conditionGood === true) {
+        return { level: "ok", text: `${title}: ${goodText}` };
+      }
+      if (conditionGood === "warn") {
+        return { level: "mid", text: `${title}: ${warningText}` };
+      }
+      return { level: "bad", text: `${title}: ${badText}` };
+    }
+
+    function evaluateSelection() {
+      const selected = state.selectedIds;
+      const messages = [];
+
+      if (selected.length < 6 || selected.length > 8) {
+        feedback.hidden = false;
+        feedbackBody.innerHTML = "<p>Debes seleccionar entre 6 y 8 opciones para evaluar tu abordaje.</p>";
+        return;
+      }
+
+      const harmfulChosen = selected.filter((id) => harmfulIds.has(id));
+      if (harmfulChosen.length > 0) {
+        const harmfulText = harmfulChosen.join(", ");
+        messages.push({
+          level: "bad",
+          text: `Incluyes opciones de alto riesgo (${harmfulText}). Estas medidas escalan el conflicto, erosionan legitimidad y pueden implicar violaciones de derechos humanos.`
+        });
+      } else {
+        messages.push({
+          level: "ok",
+          text: "No incluyes acciones coercitivas o antipaticas; esto protege la posibilidad de una salida no violenta."
+        });
+      }
+
+      if (selected.includes(1)) {
+        messages.push({
+          level: "bad",
+          text: "Error critico: incluir desalojo forzoso (1) eleva la probabilidad de ruptura total de la paz y dano irreversible en la relacion Estado-comunidad." 
+        });
+      }
+
+      const firstTwo = selected.slice(0, 2);
+      const mid = selected.slice(2, 5);
+      const end = selected.slice(5, 8);
+
+      const hasEarlyDeescalation = firstTwo.some((id) => desescaladaIds.has(id));
+      messages.push(
+        evalDimension(
+          "Desescalada",
+          hasEarlyDeescalation,
+          "abres con medidas de contencion temprana, lo cual reduce el riesgo de violencia inmediata.",
+          "faltan medidas iniciales fuertes de contencion; la crisis puede mantenerse activa.",
+          "tu inicio no desescala la crisis. Con ultimatum de 12 horas, esto es estrategicamente debil."
+        )
+      );
+
+      if (firstTwo.some((id) => id === 13 || id === 14)) {
+        messages.push({
+          level: "mid",
+          text: "Colocar infraestructura (13) o empleo (14) en los pasos 1-2 es prematuro: no se construye confianza material sin detener primero la crisis." 
+        });
+      }
+
+      const treguaIndex = selected.indexOf(2);
+      if (treguaIndex >= selected.length - 2 && treguaIndex !== -1) {
+        messages.push({
+          level: "mid",
+          text: "La tregua (2) aparece demasiado tarde. Es una llave de entrada para detener escalada, no un cierre de proceso."
+        });
+      }
+
+      const consultaIndex = selected.indexOf(9);
+      if (consultaIndex === -1) {
+        messages.push({
+          level: "bad",
+          text: "Legitimacion: no incluyes Consulta Previa (9), que es la causa juridica-raiz del conflicto."
+        });
+      } else if (consultaIndex > 4) {
+        messages.push({
+          level: "mid",
+          text: "Legitimacion: incluyes Consulta Previa (9), pero demasiado tarde; deberia instalarse en la fase intermedia temprana." 
+        });
+      } else {
+        messages.push({
+          level: "ok",
+          text: "Legitimacion: ubicas Consulta Previa (9) en tiempo estrategico, fortaleciendo legalidad y reconocimiento reciproco." 
+        });
+      }
+
+      const hasMidDialogue = mid.some((id) => legitimacionIds.has(id));
+      messages.push(
+        evalDimension(
+          "Resolucion dialogica",
+          hasMidDialogue,
+          "la fase 3-5 contiene herramientas de garantia o reconocimiento que sostienen una mesa viable.",
+          "la fase intermedia tiene elementos parciales de dialogo, pero falta un anclaje institucional claro.",
+          "la fase 3-5 carece de mecanismos de legitimacion y dialogo; esto debilita cualquier acuerdo posterior."
+        )
+      );
+
+      const hasEndTransform = end.some((id) => transformacionIds.has(id));
+      messages.push(
+        evalDimension(
+          "Transformacion",
+          hasEndTransform,
+          "cierras con medidas estructurales de redistribucion y futuro compartido, favoreciendo sostenibilidad.",
+          "hay intenciones transformadoras, pero el cierre aun depende de medidas tacticas.",
+          "faltan acciones de transformacion estructural en la salida; el conflicto puede reaparecer."
+        )
+      );
+
+      const hasResolutionTool = selected.some((id) => resolucionIds.has(id));
+      messages.push(
+        evalDimension(
+          "Resolucion tecnica",
+          hasResolutionTool,
+          "incorporas ajustes tecnico-territoriales (acceso, peritaje o reubicacion), puenteando posiciones.",
+          "incluyes elementos tecnicos, pero no estan bien conectados con legitimacion comunitaria.",
+          "no incorporas mecanismos tecnico-territoriales concretos para viabilizar acuerdo operativo."
+        )
+      );
+
+      if (selected.includes(16)) {
+        messages.push({
+          level: "ok",
+          text: "Innovacion relevante: reubicar aerogeneradores (16) muestra integracion entre ingenieria y cosmovision indigena." 
+        });
+      }
+
+      const level = scoreLevel(messages);
+
+      const listHtml = messages
+        .map((msg) => `<li><strong>${msg.level === "bad" ? "Riesgo" : msg.level === "mid" ? "Atencion" : "Fortaleza"}:</strong> ${msg.text}</li>`)
+        .join("");
+
+      feedbackBody.innerHTML = `
+        <span class="level ${level.className}">${level.text}</span>
+        <ul>${listHtml}</ul>
+      `;
+
+      feedback.hidden = false;
+      feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function render() {
+      renderPool();
+      renderSelected();
+      renderStatus();
+    }
+
+    shuffleBtn.addEventListener("click", () => {
+      state.poolOrder = shuffle(state.poolOrder);
+      renderPool();
+    });
+
+    clearBtn.addEventListener("click", () => {
+      state.selectedIds = [];
+      feedback.hidden = true;
+      render();
+    });
+
+    evaluateBtn.addEventListener("click", evaluateSelection);
+
+    initialize();
+  </script>
+</body>
+</html>
